@@ -957,17 +957,27 @@
     async function loadTodayState() {
       if (!accessToken) return;
       const today = new Date().toISOString().slice(0, 10);
+
+      // init all states first so keys exist before restore
+      const deload = isDeloadWeek();
+      const allBlocks = [...(program.daily || []), ...(program.weekly[currentDay] || [])];
+      allBlocks.forEach(bkId => {
+        const block = program.blocks[bkId];
+        if (!block || block.type === 'flow') return;
+        block.exercises.forEach(ex => { if (ex.weighted || ex.sets) initState(ex, deload); });
+      });
+
       const rows = await getAllRows();
       rows.forEach(r => {
         if (!r[0] || r[0] !== today || r[1] !== currentDay) return;
-        const exId = r[5], setNum = parseInt(r[7]) - 1;
+        const exId = r[5];
+        const setIdx = parseInt(r[7]); // 0=warmup, 1..n=working sets, maps directly to array index
         const k = stateKey(currentDay, exId);
         if (!sessionLog[k]) return;
-        if (setNum >= 0 && setNum < sessionLog[k].sets.length) {
-          sessionLog[k].sets[setNum].done = r[10] === 'yes';
-          sessionLog[k].sets[setNum].rpe = r[9] ? parseInt(r[9]) : null;
+        if (setIdx >= 0 && setIdx < sessionLog[k].sets.length) {
+          sessionLog[k].sets[setIdx].done = r[10] === 'yes';
+          sessionLog[k].sets[setIdx].rpe = r[9] ? parseInt(r[9]) : null;
         }
-        if (r[8]) sessionLog[k].weight = r[8];
       });
       renderDay();
     }
@@ -1009,7 +1019,9 @@
     }
 
     function numSets(ex) {
-      return ex.sets || 1;
+      // warmup_weight adds a set 0
+      const base = ex.sets || 1;
+      return ex.warmup_weight != null ? base + 1 : base;
     }
 
     // ── STATE ─────────────────────────────────────────────────────────────────────
@@ -1034,16 +1046,27 @@
       return sessionLog[k] || null;
     }
 
+    function isWarmupSet(ex, setIdx) {
+      return ex.warmup_weight != null && setIdx === 0;
+    }
+
     function getSetWeight(ex, setIdx, totalSets) {
       const deload = isDeloadWeek();
       const deloadMult = deload ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
+      // set 0 is warmup — fixed weight, also deloaded
+      if (isWarmupSet(ex, setIdx)) {
+        return Math.round(ex.warmup_weight * deloadMult / 5) * 5;
+      }
+      // working sets — offset by 1 if warmup exists
+      const workingSetIdx = ex.warmup_weight != null ? setIdx - 1 : setIdx;
+      const workingSets = ex.warmup_weight != null ? totalSets - 1 : totalSets;
       if (!ex.working_weight) {
         const base = ex.prescribed_weight != null ? ex.prescribed_weight : null;
         return base != null ? Math.round(base * deloadMult / 5) * 5 : null;
       }
       const prog = ex.progression || [1.0];
-      const offset = prog.length - totalSets;
-      const adjustedIdx = Math.max(0, offset + setIdx);
+      const offset = prog.length - workingSets;
+      const adjustedIdx = Math.max(0, offset + workingSetIdx);
       const pct = prog[Math.min(adjustedIdx, prog.length - 1)];
       return Math.round(ex.working_weight * pct * deloadMult / 5) * 5;
     }
@@ -1144,30 +1167,21 @@
             </div>`;
 
               if (isOpen) {
-                // warmup row (check only, no RPE)
-                if (ex.warmup_note) {
-                  const wuKey = stateKey(currentDay, ex.id + '_wu');
-                  if (!sessionLog[wuKey]) sessionLog[wuKey] = { done: false };
-                  const wuDone = sessionLog[wuKey].done;
-                  html += `<div class="set-divider"></div>
-                <div class="set-row">
-                  <div class="set-num warmup-label"><div>W/U</div><div style="font-size:11px">${ex.warmup_note}</div></div>
-                  <div class="set-check warmup${wuDone ? ' done' : ''}" onclick="toggleWarmup('${ex.id}')">${wuDone ? '✓' : ''}</div>
-                  <div style="flex:1;font-family:'Syne Mono',monospace;font-size:11px;color:var(--muted);padding-left:8px">no log needed</div>
-                </div>`;
-                }
-                // per-set rows — always render for all exercises
                 st.sets.forEach((set, i) => {
                   const rpe = set.rpe;
                   const setW = getSetWeight(ex, i, st.sets.length);
-                  const isWorking = i === st.sets.length - 1;
+                  const isWorking = !isWarmupSet(ex, i);
+                  const isLastSet = i === st.sets.length - 1;
+                  const warmup = isWarmupSet(ex, i);
+                  const setLabel = warmup ? 'W/U' : `Set ${warmup ? i : (ex.warmup_weight != null ? i : i + 1)}`;
+                  const actualSetNum = warmup ? 0 : (ex.warmup_weight != null ? i : i + 1);
                   html += `<div class="set-divider"></div>
                 <div class="set-row">
-                  <div class="set-num">
-                    <div>Set ${i + 1}</div>
-                    ${setW != null ? `<div style="color:${isWorking ? 'var(--accent2)' : 'var(--sub)'};font-size:12px;font-family:'Syne Mono',monospace">${setW}lb</div>` : ''}
+                  <div class="set-num${warmup ? ' warmup-label' : ''}">
+                    <div>${warmup ? 'W/U' : `Set ${ex.warmup_weight != null ? i : i + 1}`}</div>
+                    ${setW != null ? `<div style="color:${warmup ? 'var(--muted)' : isLastSet ? 'var(--accent2)' : 'var(--sub)'};font-size:12px;font-family:'Syne Mono',monospace">${setW}lb</div>` : ''}
                   </div>
-                  <div class="set-check${set.done ? ' done' : ''}" onclick="toggleSet('${ex.id}','${ex.name}','${block.name}',${i})">${set.done ? '✓' : ''}</div>
+                  <div class="set-check${warmup ? ' warmup' : ''}${set.done ? ' done' : ''}" onclick="toggleSet('${ex.id}','${ex.name}','${block.name}',${i})">${set.done ? '✓' : ''}</div>
                   <div class="set-rpe-btns">
                     ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
                     const cls = rpe === n ? (n <= 6 ? 'sel-low' : n <= 8 ? 'sel-mid' : 'sel-high') : '';
@@ -1228,7 +1242,7 @@
       const st = getState(exId);
       if (!st) return;
       st.sets[setIdx].done = !st.sets[setIdx].done;
-      logSet(exId, exName, blockName, setIdx + 1, st.weight, st.sets[setIdx].rpe, st.sets[setIdx].done);
+      logSet(exId, exName, blockName, setIdx, st.weight, st.sets[setIdx].rpe, st.sets[setIdx].done);
       renderDay();
     }
 
@@ -1237,7 +1251,7 @@
       if (!st) return;
       st.sets[setIdx].rpe = val;
       st.sets[setIdx].done = true;
-      logSet(exId, exName, blockName, setIdx + 1, prescribedWeight || '', val, true);
+      logSet(exId, exName, blockName, setIdx, prescribedWeight || '', val, true);
       renderDay();
     }
 
@@ -1257,13 +1271,15 @@
       const rows = await fetchHistory();
 
       // Build date → { logged, completed } map
+      // Use exId+set0 only to avoid counting each set as separate exercise
       const dateMap = {};
       rows.forEach(r => {
-        const date = r[0];
+        const date = r[0], exId = r[5], setIdx = r[7];
         if (!date || !date.match(/^\d{4}/)) return;
         if (!dateMap[date]) dateMap[date] = { logged: new Set(), completed: new Set() };
-        dateMap[date].logged.add(r[5]);
-        if (r[10] === 'yes') dateMap[date].completed.add(r[5]);
+        // count each exercise once (by exId, not per set)
+        dateMap[date].logged.add(exId);
+        if (r[10] === 'yes') dateMap[date].completed.add(exId);
       });
 
       const today = new Date(); today.setHours(0, 0, 0, 0);

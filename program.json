@@ -154,7 +154,7 @@
           "weighted": true,
           "working_weight": 60,
           "progression": [0.75, 0.875, 1.0],
-          "warmup_note": "1×8 @ ~25lb"
+          "warmup_weight": 25
         },
         {
           "id": "ll2",
@@ -164,7 +164,7 @@
           "weighted": true,
           "working_weight": 145,
           "progression": [0.6, 0.8, 1.0],
-          "warmup_note": "1×5 @ ~60lb"
+          "warmup_weight": 60
         },
         {
           "id": "ll3",
@@ -175,7 +175,7 @@
           "working_weight": 55,
           "progression": [0.7, 0.85, 1.0],
           "note": "added weight lb (~25kg)",
-          "warmup_note": "1×5 bodyweight"
+          "warmup_weight": 0
         },
         { "id": "ll4", "name": "Plank hold", "sets": 3, "duration": 45 }
       ]
@@ -201,7 +201,7 @@
           "weighted": true,
           "working_weight": 90,
           "progression": [0.75, 0.875, 1.0],
-          "warmup_note": "1×8 @ ~35lb"
+          "warmup_weight": 35
         },
         {
           "id": "lu2",
@@ -211,7 +211,7 @@
           "weighted": true,
           "working_weight": 65,
           "progression": [0.75, 0.875, 1.0],
-          "warmup_note": "1×5 @ ~25lb"
+          "warmup_weight": 25
         },
         {
           "id": "lu3",
@@ -221,7 +221,7 @@
           "weighted": true,
           "working_weight": 95,
           "progression": [0.6, 0.8, 1.0],
-          "warmup_note": "1×8 @ ~40lb"
+          "warmup_weight": 40
         },
         {
           "id": "lu4",
@@ -232,7 +232,7 @@
           "weighted": true,
           "working_weight": 45,
           "progression": [0.75, 0.875, 1.0],
-          "warmup_note": "1×30s @ ~20lb"
+          "warmup_weight": 20
         }
       ]
     },
