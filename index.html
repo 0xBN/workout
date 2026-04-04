@@ -954,40 +954,53 @@
       invalidateCache();
     }
 
-    async function loadTodayState() {
+    async function loadDayState(day, dateStr) {
       if (!accessToken) return;
-      const today = new Date().toISOString().slice(0, 10);
+      const today = dateStr || new Date().toISOString().slice(0, 10);
 
-      // init all states first so keys exist before restore
+      // init all states for this day
       const deload = isDeloadWeek();
-      const allBlocks = [...(program.daily || []), ...(program.weekly[currentDay] || [])];
+      const allBlocks = [...(program.daily || []), ...(program.weekly[day] || [])];
       allBlocks.forEach(bkId => {
         const block = program.blocks[bkId];
         if (!block) return;
         if (block.type === 'flow') {
           const flowId = `flow-${bkId}`;
-          const k = stateKey(currentDay, flowId);
+          const k = stateKey(day, flowId);
           if (!sessionLog[k]) sessionLog[k] = { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
         } else {
-          block.exercises.forEach(ex => { if (ex.weighted || ex.sets) initState(ex, deload); });
+          block.exercises.forEach(ex => {
+            if (ex.weighted || ex.sets) {
+              const k = stateKey(day, ex.id);
+              if (!sessionLog[k]) {
+                const n = numSets(ex);
+                sessionLog[k] = {
+                  sets: Array.from({ length: n }, () => ({ done: false, rpe: null })),
+                  weight: '', prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : ''
+                };
+              }
+            }
+          });
         }
       });
 
       const rows = await getAllRows();
       rows.forEach(r => {
-        if (!r[0] || r[0] !== today || r[1] !== currentDay) return;
+        if (!r[0] || r[0] !== today || r[1] !== day) return;
         const exId = r[5];
         const rawSetNum = parseInt(r[7]);
-        const k = stateKey(currentDay, exId);
+        const k = stateKey(day, exId);
         if (!sessionLog[k]) return;
-        // flow blocks log set_num=1 but live at array index 0
-        // warmup sets log set_num=0, working sets log set_num=1,2,3 (same as array index)
         const setIdx = exId.startsWith('flow-') ? 0 : rawSetNum;
         if (setIdx >= 0 && setIdx < sessionLog[k].sets.length) {
           sessionLog[k].sets[setIdx].done = r[10] === 'yes';
           sessionLog[k].sets[setIdx].rpe = r[9] ? parseInt(r[9]) : null;
         }
       });
+    }
+
+    async function loadTodayState() {
+      await loadDayState(currentDay);
       renderDay();
     }
 
@@ -1035,7 +1048,7 @@
 
     // ── STATE ─────────────────────────────────────────────────────────────────────
 
-    function stateKey(day, exId) { return `${new Date().toISOString().slice(0, 10)}-${day}-${exId}`; }
+    function stateKey(day, exId, date) { const d = date || new Date().toISOString().slice(0, 10); return `${d}-${day}-${exId}`; }
 
     function initState(ex, deload) {
       const k = stateKey(currentDay, ex.id);
@@ -1264,19 +1277,18 @@
       renderDay();
     }
 
-    function toggleWarmup(exId) {
-      const k = stateKey(currentDay, exId + '_wu');
-      if (!sessionLog[k]) sessionLog[k] = { done: false };
-      sessionLog[k].done = !sessionLog[k].done;
-      renderDay();
-    }
-
     // ── HISTORY — HABIT GRID ─────────────────────────────────────────────────────
 
     async function renderHistory() {
       const el = document.getElementById('histContent');
       el.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
 
+      if (!accessToken) {
+        el.innerHTML = '<div class="history-empty">sign in to view history</div>';
+        return;
+      }
+
+      invalidateCache(); // always fetch fresh for history
       const rows = await fetchHistory();
 
       // Build date → { logged, completed } map
@@ -1350,7 +1362,9 @@
 
     function selectDay(day) {
       currentDay = day; openCards = {};
-      buildTabs(); renderDay(); switchView('main');
+      buildTabs(); renderDay();
+      if (accessToken) loadDayState(day).then(() => renderDay());
+      switchView('main');
     }
 
     function switchView(view) {
