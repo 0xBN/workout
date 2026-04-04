@@ -1292,24 +1292,24 @@
       const rows = await fetchHistory();
 
       // Build date → { logged, completed } map
-      // Use exId+set0 only to avoid counting each set as separate exercise
       const dateMap = {};
       rows.forEach(r => {
-        const date = r[0], exId = r[5], setIdx = r[7];
+        const date = r[0], exId = r[5];
         if (!date || !date.match(/^\d{4}/)) return;
         if (!dateMap[date]) dateMap[date] = { logged: new Set(), completed: new Set() };
-        // count each exercise once (by exId, not per set)
         dateMap[date].logged.add(exId);
         if (r[10] === 'yes') dateMap[date].completed.add(exId);
       });
 
-      const today = new Date(); today.setHours(0, 0, 0, 0);
-      const todayStr = today.toISOString().slice(0, 10);
+      // timezone-safe today string
+      const now = new Date();
+      const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
       // Start from Monday 16 weeks ago
-      const startDate = new Date(today);
-      const dow = today.getDay() === 0 ? 6 : today.getDay() - 1;
-      startDate.setDate(today.getDate() - dow - 15 * 7);
+      const startDate = new Date(now);
+      startDate.setHours(0, 0, 0, 0);
+      const dow = startDate.getDay() === 0 ? 6 : startDate.getDay() - 1;
+      startDate.setDate(startDate.getDate() - dow - 15 * 7);
 
       const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
@@ -1328,20 +1328,21 @@
         for (let d = 0; d < 7; d++) {
           const cell = new Date(weekStart);
           cell.setDate(weekStart.getDate() + d);
-          cell.setHours(0, 0, 0, 0);
-          const cellStr = cell.toISOString().slice(0, 10);
-          const isFuture = cell > today;
+          // timezone-safe date string
+          const cellStr = `${cell.getFullYear()}-${String(cell.getMonth() + 1).padStart(2, '0')}-${String(cell.getDate()).padStart(2, '0')}`;
+          const isFuture = cellStr > todayStr;
           const isToday = cellStr === todayStr;
           const data = dateMap[cellStr];
 
           let cls = 'habit-cell';
           if (isFuture) cls += ' future';
           else if (data && data.completed.size > 0) {
-            cls += data.completed.size >= data.logged.size ? ' full' : ' partial';
+            const ratio = data.completed.size / Math.max(data.logged.size, 1);
+            cls += ratio >= 0.75 ? ' full' : ' partial';
           }
           if (isToday) cls += ' today';
 
-          const tip = data ? `${cellStr}: ${data.completed.size}/${data.logged.size}` : cellStr;
+          const tip = data ? `${cellStr}: ${data.completed.size}/${data.logged.size} done` : cellStr;
           html += `<div class="${cls}" title="${tip}"></div>`;
         }
         html += `</div>`;
