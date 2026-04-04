@@ -748,7 +748,7 @@
         client_id: CLIENT_ID,
         scope: 'https://www.googleapis.com/auth/spreadsheets',
         prompt: '',
-        callback: (resp) => {
+        callback: async (resp) => {
           if (resp.error) {
             // Silent failed — show manual sign in button
             setAuthUI('err', 'tap to sign in');
