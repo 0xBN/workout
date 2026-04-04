@@ -2,7 +2,7 @@
   "meta": {
     "version": "1.1",
     "deload_rule": "first_week_of_month",
-    "deload_sets_multiplier": 0.5,
+    "deload_weight_multiplier": 0.5,
     "note": "Comeback program — finger injury recovery. Limit bouldering, max hangs, hangboard paused."
   },
 
@@ -153,7 +153,8 @@
           "note": "per leg",
           "weighted": true,
           "working_weight": 60,
-          "progression": [0.75, 0.875, 1.0]
+          "progression": [0.75, 0.875, 1.0],
+          "warmup_note": "1×8 @ ~25lb"
         },
         {
           "id": "ll2",
@@ -162,7 +163,8 @@
           "reps": 5,
           "weighted": true,
           "working_weight": 145,
-          "progression": [0.6, 0.8, 1.0]
+          "progression": [0.6, 0.8, 1.0],
+          "warmup_note": "1×5 @ ~60lb"
         },
         {
           "id": "ll3",
@@ -172,7 +174,8 @@
           "weighted": true,
           "working_weight": 55,
           "progression": [0.7, 0.85, 1.0],
-          "note": "added weight lb (~25kg)"
+          "note": "added weight lb (~25kg)",
+          "warmup_note": "1×5 bodyweight"
         },
         { "id": "ll4", "name": "Plank hold", "sets": 3, "duration": 45 }
       ]
@@ -197,7 +200,8 @@
           "reps": 8,
           "weighted": true,
           "working_weight": 90,
-          "progression": [0.75, 0.875, 1.0]
+          "progression": [0.75, 0.875, 1.0],
+          "warmup_note": "1×8 @ ~35lb"
         },
         {
           "id": "lu2",
@@ -206,7 +210,8 @@
           "reps": 5,
           "weighted": true,
           "working_weight": 65,
-          "progression": [0.75, 0.875, 1.0]
+          "progression": [0.75, 0.875, 1.0],
+          "warmup_note": "1×5 @ ~25lb"
         },
         {
           "id": "lu3",
@@ -215,7 +220,8 @@
           "reps": 8,
           "weighted": true,
           "working_weight": 95,
-          "progression": [0.6, 0.8, 1.0]
+          "progression": [0.6, 0.8, 1.0],
+          "warmup_note": "1×8 @ ~40lb"
         },
         {
           "id": "lu4",
@@ -225,7 +231,8 @@
           "note": "per side",
           "weighted": true,
           "working_weight": 45,
-          "progression": [0.75, 0.875, 1.0]
+          "progression": [0.75, 0.875, 1.0],
+          "warmup_note": "1×30s @ ~20lb"
         }
       ]
     },

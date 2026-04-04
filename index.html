@@ -520,7 +520,21 @@
       color: var(--red);
     }
 
-    /* REST / MISC */
+    .set-check.warmup {
+      border-color: var(--sub);
+      background: transparent;
+    }
+
+    .set-check.warmup.done {
+      background: var(--muted);
+      border-color: var(--muted);
+      color: var(--text);
+    }
+
+    .set-num.warmup-label {
+      color: var(--muted);
+    }
+
     .rest-day-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -670,6 +684,87 @@
         opacity: 1;
         transform: none;
       }
+    }
+
+    /* WARMUP SET */
+    .set-check.warmup.done {
+      background: var(--muted);
+      border-color: var(--muted);
+      color: var(--text);
+    }
+
+    .set-num.warmup-label div {
+      color: var(--muted);
+    }
+
+    /* HABIT GRID */
+    .habit-grid-wrap {
+      margin-bottom: 24px;
+    }
+
+    .habit-week {
+      display: grid;
+      grid-template-columns: 32px repeat(7, 1fr);
+      gap: 3px;
+      margin-bottom: 3px;
+      align-items: center;
+    }
+
+    .habit-week-label {
+      font-family: 'Syne Mono', monospace;
+      font-size: 9px;
+      color: var(--muted);
+      text-align: right;
+      padding-right: 4px;
+    }
+
+    .habit-day-hdr {
+      font-family: 'Syne Mono', monospace;
+      font-size: 9px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .habit-cell {
+      aspect-ratio: 1;
+      border-radius: 3px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .habit-cell.future {
+      opacity: 0.15;
+    }
+
+    .habit-cell.partial {
+      background: #3a5500;
+      border-color: #5a8000;
+    }
+
+    .habit-cell.full {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .habit-cell.today {
+      box-shadow: 0 0 0 2px var(--accent2);
+    }
+
+    .habit-legend {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      align-items: center;
+    }
+
+    .legend-pip {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -907,17 +1002,14 @@
     }
 
     function getRx(ex, deload) {
-      let sets = ex.sets;
-      if (deload && sets) sets = Math.max(1, Math.round(sets * (program.meta.deload_sets_multiplier || 0.5)));
-      if (ex.reps) return sets ? `${sets}×${ex.reps}` : String(ex.reps);
-      if (ex.duration) return sets ? `${sets}×${ex.duration}s` : `${ex.duration}s`;
+      const sets = ex.sets || 1;
+      if (ex.reps) return `${sets}×${ex.reps}`;
+      if (ex.duration) return `${sets}×${ex.duration}s`;
       return '';
     }
 
-    function numSets(ex, deload) {
-      if (!ex.sets) return 1;
-      if (deload) return Math.max(1, Math.round(ex.sets * (program.meta.deload_sets_multiplier || 0.5)));
-      return ex.sets;
+    function numSets(ex) {
+      return ex.sets || 1;
     }
 
     // ── STATE ─────────────────────────────────────────────────────────────────────
@@ -927,10 +1019,10 @@
     function initState(ex, deload) {
       const k = stateKey(currentDay, ex.id);
       if (!sessionLog[k]) {
-        const n = numSets(ex, deload);
+        const n = numSets(ex);
         sessionLog[k] = {
           sets: Array.from({ length: n }, () => ({ done: false, rpe: null })),
-          weight: ex.prescribed_weight != null ? String(ex.prescribed_weight) : '',
+          weight: '',
           prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : ''
         };
       }
@@ -942,11 +1034,18 @@
       return sessionLog[k] || null;
     }
 
-    function getSetWeight(ex, setIdx) {
-      if (!ex.working_weight) return ex.prescribed_weight != null ? ex.prescribed_weight : null;
+    function getSetWeight(ex, setIdx, totalSets) {
+      const deload = isDeloadWeek();
+      const deloadMult = deload ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
+      if (!ex.working_weight) {
+        const base = ex.prescribed_weight != null ? ex.prescribed_weight : null;
+        return base != null ? Math.round(base * deloadMult / 5) * 5 : null;
+      }
       const prog = ex.progression || [1.0];
-      const pct = prog[Math.min(setIdx, prog.length - 1)];
-      return Math.round(ex.working_weight * pct / 5) * 5;
+      const offset = prog.length - totalSets;
+      const adjustedIdx = Math.max(0, offset + setIdx);
+      const pct = prog[Math.min(adjustedIdx, prog.length - 1)];
+      return Math.round(ex.working_weight * pct * deloadMult / 5) * 5;
     }
 
     function isExDone(state) { return state && state.sets.length > 0 && state.sets.every(s => s.done); }
@@ -992,7 +1091,7 @@
       });
 
       let html = `
-    ${deload ? `<div class="deload-banner show">⚡ Deload week — sets reduced. Keep intensity the same.</div>` : ''}
+    ${deload ? `<div class="deload-banner show">⚡ Deload week — weights at 50%. Same sets and reps.</div>` : ''}
     <div class="day-title fade-in">${dayLabel}</div>
     <div class="day-meta">${dateStr}${deload ? ' · deload' : ''}</div>
     <div class="progress-wrap"><div class="progress-fill" style="width:${total ? (done / total * 100) : 0}%"></div></div>
@@ -1031,7 +1130,8 @@
               const allDone = isExDone(st);
               const isOpen = openCards[ex.id];
 
-              const workingW = ex.working_weight || ex.prescribed_weight;
+              const deloadMult = isDeloadWeek() ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
+              const workingW = ex.working_weight ? Math.round(ex.working_weight * deloadMult / 5) * 5 : ex.prescribed_weight;
 
               html += `<div class="ex-card${allDone ? ' all-done' : ''}" id="card-${ex.id}">
             <div class="ex-header" onclick="toggleCard('${ex.id}')">
@@ -1044,10 +1144,22 @@
             </div>`;
 
               if (isOpen) {
-                // per-set rows
+                // warmup row (check only, no RPE)
+                if (ex.warmup_note) {
+                  const wuKey = stateKey(currentDay, ex.id + '_wu');
+                  if (!sessionLog[wuKey]) sessionLog[wuKey] = { done: false };
+                  const wuDone = sessionLog[wuKey].done;
+                  html += `<div class="set-divider"></div>
+                <div class="set-row">
+                  <div class="set-num warmup-label"><div>W/U</div><div style="font-size:11px">${ex.warmup_note}</div></div>
+                  <div class="set-check warmup${wuDone ? ' done' : ''}" onclick="toggleWarmup('${ex.id}')">${wuDone ? '✓' : ''}</div>
+                  <div style="flex:1;font-family:'Syne Mono',monospace;font-size:11px;color:var(--muted);padding-left:8px">no log needed</div>
+                </div>`;
+                }
+                // per-set rows — always render for all exercises
                 st.sets.forEach((set, i) => {
                   const rpe = set.rpe;
-                  const setW = getSetWeight(ex, i);
+                  const setW = getSetWeight(ex, i, st.sets.length);
                   const isWorking = i === st.sets.length - 1;
                   html += `<div class="set-divider"></div>
                 <div class="set-row">
@@ -1129,44 +1241,84 @@
       renderDay();
     }
 
-    // ── HISTORY ──────────────────────────────────────────────────────────────────
+    function toggleWarmup(exId) {
+      const k = stateKey(currentDay, exId + '_wu');
+      if (!sessionLog[k]) sessionLog[k] = { done: false };
+      sessionLog[k].done = !sessionLog[k].done;
+      renderDay();
+    }
+
+    // ── HISTORY — HABIT GRID ─────────────────────────────────────────────────────
 
     async function renderHistory() {
       const el = document.getElementById('histContent');
       el.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
       const rows = await fetchHistory();
-      if (!rows.length) { el.innerHTML = '<div class="history-empty">no sessions logged yet</div>'; return; }
 
-      const grouped = {};
+      // Build date → { logged, completed } map
+      const dateMap = {};
       rows.forEach(r => {
-        if (!r[0]) return;
-        const key = `${r[0]}-${r[1]}`;
-        if (!grouped[key]) grouped[key] = { date: r[0], day: r[1], rows: [] };
-        grouped[key].rows.push(r);
+        const date = r[0];
+        if (!date || !date.match(/^\d{4}/)) return;
+        if (!dateMap[date]) dateMap[date] = { logged: new Set(), completed: new Set() };
+        dateMap[date].logged.add(r[5]);
+        if (r[10] === 'yes') dateMap[date].completed.add(r[5]);
       });
 
-      const keys = Object.keys(grouped).sort().reverse();
-      let html = '';
-      keys.slice(0, 30).forEach(k => {
-        const g = grouped[k];
-        // dedupe by exercise name, pick last set logged
-        const byEx = {};
-        g.rows.forEach(r => {
-          if (r[10] === 'yes') byEx[r[6]] = r;
-        });
-        const completed = Object.values(byEx);
-        if (!completed.length) return;
-        html += `<div class="hist-day"><div class="hist-date">${g.date} · ${g.day}</div>`;
-        completed.forEach(r => {
-          const parts = [];
-          if (r[8]) parts.push(r[8] + 'lb');
-          if (r[9]) parts.push('RPE ' + r[9]);
-          html += `<div class="hist-row"><span>${r[6]}</span><span class="hist-right">${parts.join(' · ') || '—'}</span></div>`;
-        });
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const todayStr = today.toISOString().slice(0, 10);
+
+      // Start from Monday 16 weeks ago
+      const startDate = new Date(today);
+      const dow = today.getDay() === 0 ? 6 : today.getDay() - 1;
+      startDate.setDate(today.getDate() - dow - 15 * 7);
+
+      const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+      let html = `<div class="habit-grid-wrap">
+    <div class="habit-week">
+      <div class="habit-week-label"></div>
+      ${DAY_LABELS.map(d => `<div class="habit-day-hdr">${d}</div>`).join('')}
+    </div>`;
+
+      for (let week = 0; week < 16; week++) {
+        const weekStart = new Date(startDate);
+        weekStart.setDate(startDate.getDate() + week * 7);
+        const wLabel = weekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        html += `<div class="habit-week"><div class="habit-week-label">${wLabel}</div>`;
+
+        for (let d = 0; d < 7; d++) {
+          const cell = new Date(weekStart);
+          cell.setDate(weekStart.getDate() + d);
+          cell.setHours(0, 0, 0, 0);
+          const cellStr = cell.toISOString().slice(0, 10);
+          const isFuture = cell > today;
+          const isToday = cellStr === todayStr;
+          const data = dateMap[cellStr];
+
+          let cls = 'habit-cell';
+          if (isFuture) cls += ' future';
+          else if (data && data.completed.size > 0) {
+            cls += data.completed.size >= data.logged.size ? ' full' : ' partial';
+          }
+          if (isToday) cls += ' today';
+
+          const tip = data ? `${cellStr}: ${data.completed.size}/${data.logged.size}` : cellStr;
+          html += `<div class="${cls}" title="${tip}"></div>`;
+        }
         html += `</div>`;
-      });
+      }
 
-      el.innerHTML = html || '<div class="history-empty">no completed exercises yet</div>';
+      html += `</div>
+    <div class="habit-legend">
+      <div class="legend-pip" style="background:var(--accent)"></div>full
+      <div class="legend-pip" style="background:#3a5500;border:1px solid #5a8000"></div>partial
+      <div class="legend-pip" style="background:var(--surface);border:1px solid var(--border)"></div>missed
+      <div style="margin-left:auto;color:var(--muted);font-size:10px">16 weeks</div>
+    </div>`;
+
+      el.innerHTML = html;
     }
 
     // ── NAV ──────────────────────────────────────────────────────────────────────
