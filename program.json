@@ -1,0 +1,259 @@
+{
+  "meta": {
+    "version": "1.0",
+    "deload_rule": "first_week_of_month",
+    "deload_sets_multiplier": 0.5
+  },
+
+  "daily": ["core_warmup", "finger_prehab"],
+
+  "weekly": {
+    "monday": ["limit_bouldering", "max_hangs"],
+    "tuesday": ["lift_lower_pull"],
+    "wednesday": ["climbing_4x4"],
+    "thursday": [],
+    "friday": ["limit_bouldering", "hangboard"],
+    "saturday": ["lift_upper_hinge"],
+    "sunday": ["zone2_recovery"]
+  },
+
+  "blocks": {
+    "core_warmup": {
+      "name": "Core / PT Warmup",
+      "type": "flow",
+      "flow_label": "Core & PT warmup",
+      "flow_sub": "bird dog · dead bug · clamshell · glute bridge · step-down · side plank",
+      "exercises": [
+        {
+          "id": "cw1",
+          "name": "Bird dog",
+          "sets": 2,
+          "reps": 10,
+          "note": "per side"
+        },
+        { "id": "cw2", "name": "Dead bug", "sets": 2, "reps": 10 },
+        {
+          "id": "cw3",
+          "name": "Clamshell",
+          "sets": 2,
+          "reps": 15,
+          "note": "per side"
+        },
+        { "id": "cw4", "name": "Glute bridge", "sets": 2, "reps": 15 },
+        {
+          "id": "cw5",
+          "name": "Eccentric step-down",
+          "sets": 3,
+          "reps": 10,
+          "note": "per side, slow 3-4s descent"
+        },
+        {
+          "id": "cw6",
+          "name": "Side plank",
+          "sets": 2,
+          "duration": 30,
+          "note": "per side"
+        }
+      ]
+    },
+
+    "finger_prehab": {
+      "name": "Abrahangs",
+      "type": "flow",
+      "flow_label": "Abrahangs",
+      "flow_sub": "~10 min · 6 grips · 40% effort · feet on floor",
+      "twice_daily": true,
+      "note": "~40% effort, feet on floor. Light strain on forearms only. 6hr min between sessions.",
+      "exercises": [
+        {
+          "id": "fp1",
+          "name": "4-finger open hand",
+          "duration": 10,
+          "rest": 50
+        },
+        {
+          "id": "fp2",
+          "name": "Front-3 open (idx/mid/ring)",
+          "duration": 10,
+          "rest": 50
+        },
+        {
+          "id": "fp3",
+          "name": "Front-2 open (idx/mid)",
+          "duration": 10,
+          "rest": 50
+        },
+        {
+          "id": "fp4",
+          "name": "Middle-2 open (mid/ring)",
+          "duration": 10,
+          "rest": 50
+        },
+        {
+          "id": "fp5",
+          "name": "Front-2 half crimp (idx/mid)",
+          "duration": 10,
+          "rest": 50
+        },
+        {
+          "id": "fp6",
+          "name": "Middle-2 half crimp (mid/ring)",
+          "duration": 10,
+          "rest": 50
+        }
+      ]
+    },
+
+    "limit_bouldering": {
+      "name": "Limit Bouldering",
+      "type": "checklist",
+      "exercises": [
+        { "id": "lb1", "name": "Warm-up problems", "reps": "5 problems V1→V4" },
+        {
+          "id": "lb2",
+          "name": "Hard problems (V7)",
+          "reps": "6 problems, max 10 tries"
+        }
+      ]
+    },
+
+    "max_hangs": {
+      "name": "Max Hangs",
+      "type": "checklist",
+      "exercises": [
+        {
+          "id": "mh1",
+          "name": "20mm edge hang",
+          "sets": 5,
+          "duration": 7,
+          "rest": 180,
+          "weighted": true,
+          "note": "rest 3 min between sets"
+        }
+      ]
+    },
+
+    "lift_lower_pull": {
+      "name": "Lift — Lower + Pull",
+      "type": "checklist",
+      "exercises": [
+        {
+          "id": "ll0",
+          "name": "Assisted pistol squat",
+          "sets": 3,
+          "reps": 5,
+          "note": "per side, pre-lift"
+        },
+        {
+          "id": "ll1",
+          "name": "Bulgarian split squat",
+          "sets": 3,
+          "reps": 8,
+          "note": "per leg",
+          "weighted": true
+        },
+        {
+          "id": "ll2",
+          "name": "Romanian deadlift",
+          "sets": 3,
+          "reps": 5,
+          "weighted": true
+        },
+        {
+          "id": "ll3",
+          "name": "Weighted pull-ups",
+          "sets": 3,
+          "reps": 5,
+          "weighted": true
+        },
+        { "id": "ll4", "name": "Plank hold", "sets": 3, "duration": 45 }
+      ]
+    },
+
+    "climbing_4x4": {
+      "name": "4×4 Norwegian",
+      "type": "checklist",
+      "exercises": [
+        { "id": "c4w", "name": "Warm-up problems", "reps": "5 problems V1→V3" },
+        { "id": "c4m", "name": "Continuous climbing (V3)", "reps": "15 rounds" }
+      ]
+    },
+
+    "hangboard": {
+      "name": "Hangboard",
+      "type": "checklist",
+      "exercises": [
+        {
+          "id": "hb1",
+          "name": "Half crimp",
+          "sets": 3,
+          "duration": 10,
+          "rest": 120,
+          "weighted": true
+        },
+        {
+          "id": "hb2",
+          "name": "3-finger drag",
+          "sets": 3,
+          "duration": 10,
+          "rest": 120,
+          "weighted": true
+        }
+      ]
+    },
+
+    "lift_upper_hinge": {
+      "name": "Lift — Upper + Hinge",
+      "type": "checklist",
+      "exercises": [
+        {
+          "id": "lu0",
+          "name": "Assisted pistol squat",
+          "sets": 3,
+          "reps": 5,
+          "note": "per side, pre-lift"
+        },
+        {
+          "id": "lu1",
+          "name": "Dumbbell bench press",
+          "sets": 3,
+          "reps": 8,
+          "weighted": true
+        },
+        {
+          "id": "lu2",
+          "name": "Overhead press (alt: incline)",
+          "sets": 3,
+          "reps": 5,
+          "weighted": true
+        },
+        {
+          "id": "lu3",
+          "name": "Hip thrust",
+          "sets": 3,
+          "reps": 8,
+          "weighted": true
+        },
+        {
+          "id": "lu4",
+          "name": "Suitcase hold",
+          "sets": 3,
+          "duration": 45,
+          "note": "per side",
+          "weighted": true
+        }
+      ]
+    },
+
+    "zone2_recovery": {
+      "name": "Zone 2 / Recovery",
+      "type": "checklist",
+      "note": "Pick one",
+      "exercises": [
+        { "id": "z1", "name": "Zone 2 cardio", "reps": "40 min bike/row/hike" },
+        { "id": "z2", "name": "Easy climbing", "reps": "10 problems V1–V3" },
+        { "id": "z3", "name": "Full rest", "reps": "—" }
+      ]
+    }
+  }
+}

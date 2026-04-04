@@ -3,184 +3,1106 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Workout — Hello World</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>workout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Syne+Mono&display=swap"
+    rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg: #111111;
+      --surface: #1e1e1e;
+      --border: #2e2e2e;
+      --muted: #555555;
+      --sub: #999999;
+      --text: #ffffff;
+      --accent: #c8f000;
+      --accent2: #ffc940;
+      --red: #ff5a5a;
+      --r: 8px;
     }
 
     body {
-      background: #0f0f0d;
-      color: #e8e8e0;
-      font-family: monospace;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 80px;
+      font-size: 14px;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px 0;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .wordmark {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -1px;
+    }
+
+    .auth-status {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .auth-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+
+    .auth-dot.connected {
+      background: var(--accent);
+    }
+
+    .auth-dot.error {
+      background: var(--red);
+    }
+
+    /* day tabs */
+    .day-tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .day-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab {
+      flex-shrink: 0;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--sub);
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .tab:hover {
+      color: var(--text);
+      border-color: var(--muted);
+    }
+
+    .tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0c0c0a;
+      font-weight: 700;
+    }
+
+    .tab.today-marker::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent2);
+    }
+
+    .tab.active.today-marker::after {
+      background: #0c0c0a;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      padding: 16px;
+    }
+
+    /* deload banner */
+    .deload-banner {
+      background: rgba(240, 192, 64, 0.1);
+      border: 1px solid rgba(240, 192, 64, 0.3);
+      border-radius: var(--r);
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--accent2);
+      display: none;
+    }
+
+    .deload-banner.show {
+      display: block;
+    }
+
+    /* day title */
+    .day-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .day-meta {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+
+    /* progress */
+    .progress-wrap {
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+
+    /* block */
+    .block {
+      margin-bottom: 24px;
+    }
+
+    .block-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .block-name {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--sub);
+    }
+
+    .block-badge {
+      font-family: 'Syne Mono', monospace;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(212, 240, 96, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(212, 240, 96, 0.2);
+    }
+
+    .block-note {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    /* exercise row */
+    .ex-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+
+    .ex-row:active {
+      background: #1a1a18;
+    }
+
+    .ex-row.done {
+      border-color: var(--muted);
+      background: #111110;
+    }
+
+    .ex-check {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--muted);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 13px;
+      color: transparent;
+    }
+
+    .ex-row.done .ex-check {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111;
+    }
+
+    /* flow block — single tap whole block */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+
+    .flow-row:active {
+      background: #282828;
+    }
+
+    .flow-row.done {
+      border-color: var(--muted);
+      background: #191919;
+    }
+
+    .flow-check {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--muted);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: transparent;
+      transition: all 0.2s;
+    }
+
+    .flow-row.done .flow-check {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111;
+    }
+
+    .flow-label {
+      font-weight: 700;
+      font-size: 15px;
+      transition: color 0.15s;
+    }
+
+    .flow-row.done .flow-label {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--muted);
+    }
+
+    .flow-sub {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 3px;
+    }
+
+    .flow-arrow {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .ex-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ex-name {
+      font-weight: 700;
+      font-size: 15px;
+      transition: color 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ex-row.done .ex-name {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--muted);
+    }
+
+    .ex-rx {
+      font-family: 'Syne Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 3px;
+    }
+
+    .ex-row.done .ex-rx {
+      color: var(--muted);
+    }
+
+    .ex-note-txt {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 2px;
+    }
+
+    /* weight chip */
+    .weight-chip {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .weight-chip.has-value {
+      color: var(--accent2);
+      border-color: var(--muted);
+    }
+
+    /* inline weight editor */
+    .weight-editor {
+      display: none;
+      padding: 10px 14px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--r) var(--r);
+      margin-top: -6px;
+      margin-bottom: 6px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .weight-editor.open {
+      display: flex;
+    }
+
+    .weight-label {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .weight-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 10px;
+      color: var(--text);
+      font-family: 'Syne Mono', monospace;
+      font-size: 13px;
+      -webkit-appearance: none;
+    }
+
+    .weight-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* last session hint */
+    .last-hint {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      padding: 0 14px 10px;
+      display: none;
+    }
+
+    .last-hint.show {
+      display: block;
+    }
+
+    .last-hint span {
+      color: var(--accent2);
+    }
+
+    /* rest day */
+    .rest-day-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+      text-align: center;
+    }
+
+    .rest-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .rest-label {
+      color: var(--sub);
+      font-size: 12px;
+      font-family: 'Syne Mono', monospace;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      display: flex;
+      padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+    }
+
+    .nav-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--sub);
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      padding: 6px 4px;
+      transition: color 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .nav-btn .icon {
+      font-size: 16px;
+    }
+
+    .nav-btn.active {
+      color: var(--accent);
+    }
+
+    /* ── VIEWS ── */
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    /* ── HISTORY VIEW ── */
+    .history-empty {
+      text-align: center;
+      color: var(--sub);
+      font-family: 'Syne Mono', monospace;
+      font-size: 12px;
+      padding: 48px 0;
+    }
+
+    .hist-day {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 12px 14px;
+      margin-bottom: 8px;
+    }
+
+    .hist-date {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      margin-bottom: 8px;
+    }
+
+    .hist-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hist-row:last-child {
+      border-bottom: none;
+    }
+
+    .hist-weight {
+      color: var(--accent2);
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+    }
+
+    /* ── LOADING ── */
+    .loading {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      gap: 20px;
-      padding: 24px;
-    }
-
-    h1 {
-      color: #c8f060;
-      font-size: 22px;
-    }
-
-    button {
-      background: #c8f060;
-      color: #0f0f0d;
-      border: none;
-      padding: 12px 24px;
-      font-family: monospace;
-      font-size: 14px;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      background: #4a4a44;
-      color: #888;
-      cursor: default;
-    }
-
-    #status {
-      font-size: 13px;
-      color: #888880;
-      text-align: center;
-      max-width: 320px;
-      line-height: 1.6;
-    }
-
-    #status.success {
-      color: #c8f060;
-    }
-
-    #status.error {
-      color: #f06060;
-    }
-
-    table {
-      border-collapse: collapse;
+      min-height: 60vh;
+      gap: 12px;
+      color: var(--sub);
+      font-family: 'Syne Mono', monospace;
       font-size: 12px;
-      margin-top: 8px;
     }
 
-    td,
-    th {
-      border: 1px solid #2a2a26;
-      padding: 6px 12px;
-      text-align: left;
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
     }
 
-    th {
-      color: #c8f060;
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* fade in */
+    .fade-in {
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <h1>workout / hello world</h1>
-  <div id="status">Click below to sign in with Google and test Sheets access.</div>
-  <button id="authBtn" onclick="handleAuth()">Sign in with Google</button>
-  <div id="result"></div>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-row">
+      <div class="wordmark">workout/</div>
+      <div class="auth-status">
+        <div class="auth-dot" id="authDot"></div>
+        <span id="authLabel">connecting…</span>
+      </div>
+    </div>
+    <div class="day-tabs" id="dayTabs"></div>
+  </div>
+
+  <!-- MAIN VIEW -->
+  <div id="mainView" class="view active">
+    <div class="content" id="mainContent">
+      <div class="loading">
+        <div class="spinner"></div>loading program…
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY VIEW -->
+  <div id="historyView" class="view">
+    <div class="content">
+      <div class="day-title" style="margin-bottom:4px">History</div>
+      <div class="day-meta" id="histMeta">your logged sessions</div>
+      <div id="histContent">
+        <div class="loading">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="navMain" onclick="switchView('main')">
+      <span class="icon">◈</span>Today
+    </button>
+    <button class="nav-btn" id="navHistory" onclick="switchView('history')">
+      <span class="icon">◎</span>History
+    </button>
+  </div>
 
   <!-- Google Identity Services -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://accounts.google.com/gsi/client" async></script>
 
   <script>
-    // ── CONFIG ──────────────────────────────────────────────────────
+    // ── CONFIG ───────────────────────────────────────────────────────────────────
     const CLIENT_ID = '674439380543-atvndeqpa9tpli755h879qabar53jneo.apps.googleusercontent.com';
     const SHEET_ID = '10ApiDRmdFru5giLImN_FYTBvAUUopjU0RpvTPHPvmrg';
-    const SHEET_NAME = 'Sheet1';
-    const SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
-    // ────────────────────────────────────────────────────────────────
+    const SHEET_TAB = 'log';
+    const PROGRAM_URL = './program.json';
+    // ─────────────────────────────────────────────────────────────────────────────
+
+    const DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     let accessToken = null;
+    let tokenExpiry = 0;
+    let program = null;
+    let currentDay = DAYS[new Date().getDay()];
+    let sessionLog = {}; // { exId: { done, weight } }
+    let historyCache = null;
+    let openWeightEditors = {};
 
-    function setStatus(msg, type = '') {
-      const el = document.getElementById('status');
-      el.textContent = msg;
-      el.className = type;
+    // ── AUTH ─────────────────────────────────────────────────────────────────────
+
+    function setAuthUI(state, label) {
+      const dot = document.getElementById('authDot');
+      const lbl = document.getElementById('authLabel');
+      dot.className = 'auth-dot' + (state === 'ok' ? ' connected' : state === 'err' ? ' error' : '');
+      lbl.textContent = label;
     }
 
-    function handleAuth() {
-      setStatus('Opening Google sign-in...');
+    function getTokenClient() {
+      return google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        prompt: '',
+        callback: (resp) => {
+          if (resp.error) { setAuthUI('err', 'auth failed'); return; }
+          accessToken = resp.access_token;
+          tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+          setAuthUI('ok', 'sheets connected');
+          ensureSheetHeader();
+        }
+      });
+    }
+
+    async function ensureToken() {
+      if (accessToken && Date.now() < tokenExpiry) return true;
+      return new Promise((resolve) => {
+        try {
+          const client = google.accounts.oauth2.initTokenClient({
+            client_id: CLIENT_ID,
+            scope: 'https://www.googleapis.com/auth/spreadsheets',
+            prompt: '',
+            callback: (resp) => {
+              if (resp.error) { setAuthUI('err', 'auth failed'); resolve(false); return; }
+              accessToken = resp.access_token;
+              tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+              setAuthUI('ok', 'sheets connected');
+              resolve(true);
+            }
+          });
+          client.requestAccessToken();
+        } catch (e) { resolve(false); }
+      });
+    }
+
+    function silentAuth() {
+      if (typeof google === 'undefined') {
+        setTimeout(silentAuth, 500); return;
+      }
+      setAuthUI('', 'signing in…');
       const client = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
-        scope: SCOPE,
-        callback: async (response) => {
-          if (response.error) {
-            setStatus('Auth error: ' + response.error, 'error');
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        prompt: '',
+        callback: (resp) => {
+          if (resp.error) {
+            // Silent failed — show manual sign in button
+            setAuthUI('err', 'tap to sign in');
+            document.getElementById('authLabel').style.cursor = 'pointer';
+            document.getElementById('authLabel').onclick = manualAuth;
             return;
           }
-          accessToken = response.access_token;
-          setStatus('Signed in! Writing test row to sheet...');
-          document.getElementById('authBtn').disabled = true;
-          await writeRow();
-          await readRows();
+          accessToken = resp.access_token;
+          tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+          setAuthUI('ok', 'sheets connected');
+          ensureSheetHeader();
         }
       });
       client.requestAccessToken();
     }
 
-    async function writeRow() {
-      const now = new Date().toISOString();
-      const row = [now, 'hello_world', 'test_exercise', '1', '3×8', '45', '8', 'Hello from workout app!'];
-
-      const res = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A1:H1:append?valueInputOption=RAW`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ values: [row] })
+    function manualAuth() {
+      setAuthUI('', 'signing in…');
+      document.getElementById('authLabel').onclick = null;
+      document.getElementById('authLabel').style.cursor = 'default';
+      const client = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        prompt: 'consent',
+        callback: (resp) => {
+          if (resp.error) { setAuthUI('err', 'failed — tap to retry'); return; }
+          accessToken = resp.access_token;
+          tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+          setAuthUI('ok', 'sheets connected');
+          ensureSheetHeader();
         }
-      );
-
-      if (!res.ok) {
-        const err = await res.json();
-        setStatus('Write error: ' + JSON.stringify(err), 'error');
-        return;
-      }
-      setStatus('Row written! Reading back from sheet...', 'success');
-    }
-
-    async function readRows() {
-      const res = await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A1:H10`,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` }
-        }
-      );
-
-      const data = await res.json();
-      const rows = data.values || [];
-
-      if (!rows.length) {
-        setStatus('No data found in sheet.', 'error');
-        return;
-      }
-
-      setStatus('✓ Success! Sheet is connected. Here\'s what\'s in it:', 'success');
-
-      const headers = ['date', 'day', 'exercise', 'set', 'prescribed', 'weight', 'rpe', 'notes'];
-      let html = '<table><tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr>';
-      rows.forEach(row => {
-        html += '<tr>' + row.map(cell => `<td>${cell}</td>`).join('') + '</tr>';
       });
-      html += '</table>';
-      document.getElementById('result').innerHTML = html;
-      document.getElementById('authBtn').textContent = 'Re-authenticate';
-      document.getElementById('authBtn').disabled = false;
+      client.requestAccessToken();
     }
+
+    // ── SHEETS ───────────────────────────────────────────────────────────────────
+
+    async function sheetsRequest(method, endpoint, body) {
+      if (!accessToken) return null;
+      const r = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}${endpoint}`, {
+        method,
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined
+      });
+      if (!r.ok) return null;
+      return r.json();
+    }
+
+    async function ensureSheetHeader() {
+      const data = await sheetsRequest('GET', `/values/${SHEET_TAB}!A1:J1`);
+      if (!data || !data.values || !data.values[0] || data.values[0][0] !== 'date') {
+        await sheetsRequest('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW`, {
+          values: [['date', 'day', 'week_num', 'is_deload', 'block', 'exercise_id', 'exercise_name', 'weight', 'completed', 'note']]
+        });
+      }
+    }
+
+    async function logExercise(exId, exName, blockName, weight, completed) {
+      if (!accessToken) return;
+      const date = new Date().toISOString().slice(0, 10);
+      const day = currentDay;
+      const weekNum = getWeekOfYear();
+      const isDeload = isDeloadWeek() ? 'yes' : 'no';
+      await sheetsRequest('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW`, {
+        values: [[date, day, weekNum, isDeload, blockName, exId, exName, weight || '', completed ? 'yes' : 'no', '']]
+      });
+    }
+
+    async function fetchHistory() {
+      if (!accessToken) return [];
+      const data = await sheetsRequest('GET', `/values/${SHEET_TAB}!A2:J500`);
+      return data?.values || [];
+    }
+
+    async function fetchLastWeight(exId) {
+      if (!accessToken) return null;
+      const rows = await fetchHistory();
+      const matches = rows.filter(r => r[5] === exId && r[7]);
+      if (!matches.length) return null;
+      return matches[matches.length - 1][7];
+    }
+
+    // ── PROGRAM ──────────────────────────────────────────────────────────────────
+
+    async function loadProgram() {
+      const r = await fetch(PROGRAM_URL);
+      program = await r.json();
+    }
+
+    function isDeloadWeek() {
+      return new Date().getDate() <= 7;
+    }
+
+    function getWeekOfYear() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 1);
+      return Math.ceil(((now - start) / 86400000 + start.getDay() + 1) / 7);
+    }
+
+    function getRx(ex, deload) {
+      let sets = ex.sets;
+      if (deload && sets) sets = Math.max(1, Math.round(sets * (program.meta.deload_sets_multiplier || 0.5)));
+      if (ex.reps) return sets ? `${sets}×${ex.reps}` : ex.reps;
+      if (ex.duration) return sets ? `${sets}×${ex.duration}s` : `${ex.duration}s`;
+      return '';
+    }
+
+    // ── RENDER ───────────────────────────────────────────────────────────────────
+
+    function buildTabs() {
+      const today = new Date().getDay();
+      const container = document.getElementById('dayTabs');
+      container.innerHTML = DAYS.map((d, i) => {
+        const isToday = i === today;
+        const isActive = d === currentDay;
+        return `<button class="tab${isActive ? ' active' : ''}${isToday ? ' today-marker' : ''}"
+      onclick="selectDay('${d}')">${DAY_SHORT[i]}</button>`;
+      }).join('');
+    }
+
+    function getSessionKey(day, exId) {
+      return `${new Date().toISOString().slice(0, 10)}-${day}-${exId}`;
+    }
+
+    function getState(exId) {
+      const k = getSessionKey(currentDay, exId);
+      if (!sessionLog[k]) sessionLog[k] = { done: false, weight: '' };
+      return sessionLog[k];
+    }
+
+    async function renderDay() {
+      const deload = isDeloadWeek();
+      const dayBlocks = [...(program.daily || []), ...(program.weekly[currentDay] || [])];
+      const dayObj = program.blocks;
+      const dayLabel = currentDay.charAt(0).toUpperCase() + currentDay.slice(1);
+      const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+      // count all exercises for progress
+      let totalEx = 0, doneEx = 0;
+      dayBlocks.forEach(bk => {
+        const block = dayObj[bk];
+        if (!block) return;
+        if (block.type === 'flow') {
+          totalEx++;
+          if (getState(`flow-${bk}`).done) doneEx++;
+        } else {
+          block.exercises.forEach(ex => {
+            totalEx++;
+            if (getState(ex.id).done) doneEx++;
+          });
+        }
+      });
+
+      let html = `
+    ${deload ? `<div class="deload-banner show">⚡ Deload week — sets reduced. Keep intensity the same.</div>` : ''}
+    <div class="day-title fade-in">${dayLabel}</div>
+    <div class="day-meta">${dateStr}${deload ? ' · deload' : ''}</div>
+    <div class="progress-wrap"><div class="progress-fill" style="width:${totalEx ? (doneEx / totalEx * 100) : 0}%"></div></div>
+  `;
+
+      if (dayBlocks.length === 0) {
+        html += `<div class="rest-day-card">
+      <div class="rest-icon">○</div>
+      <div class="rest-label">rest day</div>
+    </div>`;
+      } else {
+        for (const bkId of dayBlocks) {
+          const block = dayObj[bkId];
+          if (!block) continue;
+          html += `<div class="block">
+        <div class="block-header">
+          <div class="block-name">${block.name}</div>
+          ${block.twice_daily ? `<div class="block-badge">2×daily</div>` : ''}
+        </div>
+        ${block.note ? `<div class="block-note">${block.note}</div>` : ''}`;
+
+          if (block.type === 'flow') {
+            // Single-tap row for the whole block
+            const flowId = `flow-${bkId}`;
+            const state = getState(flowId);
+            html += `
+          <div class="flow-row${state.done ? ' done' : ''}" onclick="toggleDone('${flowId}','${block.flow_label}','${block.name}',false)">
+            <div class="flow-check">${state.done ? '✓' : ''}</div>
+            <div>
+              <div class="flow-label">${block.flow_label}</div>
+              <div class="flow-sub">${block.flow_sub || ''}</div>
+            </div>
+            <div class="flow-arrow">›</div>
+          </div>`;
+          } else {
+            for (const ex of block.exercises) {
+              const state = getState(ex.id);
+              const rx = getRx(ex, deload);
+              const hasWeight = ex.weighted;
+              const isOpen = openWeightEditors[ex.id];
+              const weightVal = state.weight;
+
+              html += `
+            <div class="ex-row${state.done ? ' done' : ''}" id="row-${ex.id}"
+                 onclick="toggleDone('${ex.id}','${ex.name}','${block.name}',${hasWeight})">
+              <div class="ex-check">${state.done ? '✓' : ''}</div>
+              <div class="ex-info">
+                <div class="ex-name">${ex.name}</div>
+                ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
+                ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
+              </div>
+              ${hasWeight ? `<div class="weight-chip${weightVal ? ' has-value' : ''}" 
+                id="chip-${ex.id}"
+                onclick="event.stopPropagation(); toggleWeight('${ex.id}')">${weightVal || 'wt'}</div>` : ''}
+            </div>
+            ${hasWeight ? `
+            <div class="last-hint" id="hint-${ex.id}"></div>
+            <div class="weight-editor${isOpen ? ' open' : ''}" id="wed-${ex.id}">
+              <div class="weight-label">Weight</div>
+              <input class="weight-input" type="text" inputmode="decimal" placeholder="e.g. 45 lb"
+                value="${weightVal}"
+                oninput="updateWeight('${ex.id}', this.value)"
+                onclick="event.stopPropagation()">
+            </div>` : ''}`;
+            }
+          }
+          html += `</div>`;
+        }
+      }
+
+      document.getElementById('mainContent').innerHTML = html;
+
+      // load last weight hints async
+      if (accessToken) {
+        for (const bkId of dayBlocks) {
+          const block = dayObj[bkId];
+          if (!block) continue;
+          for (const ex of block.exercises) {
+            if (ex.weighted) loadLastHint(ex.id);
+          }
+        }
+      }
+    }
+
+    async function loadLastHint(exId) {
+      const last = await fetchLastWeight(exId);
+      const el = document.getElementById(`hint-${exId}`);
+      if (el && last) {
+        el.innerHTML = `last session: <span>${last}</span>`;
+        el.classList.add('show');
+      }
+    }
+
+    function toggleDone(exId, exName, blockName, hasWeight) {
+      const state = getState(exId);
+      state.done = !state.done;
+      if (state.done && hasWeight && !state.weight) {
+        // auto-open weight editor on first completion if no weight set
+        openWeightEditors[exId] = true;
+      }
+      logExercise(exId, exName, blockName, state.weight, state.done);
+      renderDay();
+    }
+
+    function toggleWeight(exId) {
+      openWeightEditors[exId] = !openWeightEditors[exId];
+      const wed = document.getElementById(`wed-${exId}`);
+      if (wed) wed.classList.toggle('open', openWeightEditors[exId]);
+      if (openWeightEditors[exId]) {
+        setTimeout(() => {
+          const input = wed?.querySelector('.weight-input');
+          if (input) input.focus();
+        }, 50);
+      }
+    }
+
+    function updateWeight(exId, val) {
+      getState(exId).weight = val;
+      const chip = document.getElementById(`chip-${exId}`);
+      if (chip) {
+        chip.textContent = val || 'wt';
+        chip.classList.toggle('has-value', !!val);
+      }
+    }
+
+    // ── HISTORY VIEW ─────────────────────────────────────────────────────────────
+
+    async function renderHistory() {
+      const el = document.getElementById('histContent');
+      el.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+      const rows = await fetchHistory();
+      if (!rows.length) {
+        el.innerHTML = '<div class="history-empty">no sessions logged yet</div>';
+        return;
+      }
+
+      // group by date + day
+      const grouped = {};
+      rows.forEach(r => {
+        if (!r[0]) return;
+        const key = `${r[0]}-${r[1]}`;
+        if (!grouped[key]) grouped[key] = { date: r[0], day: r[1], rows: [] };
+        grouped[key].rows.push(r);
+      });
+
+      const keys = Object.keys(grouped).sort().reverse();
+      let html = '';
+      keys.slice(0, 30).forEach(k => {
+        const g = grouped[k];
+        const completed = g.rows.filter(r => r[8] === 'yes');
+        if (!completed.length) return;
+        html += `<div class="hist-day">
+      <div class="hist-date">${g.date} · ${g.day}</div>`;
+        completed.forEach(r => {
+          html += `<div class="hist-row">
+        <span>${r[6]}</span>
+        <span class="hist-weight">${r[7] || '—'}</span>
+      </div>`;
+        });
+        html += `</div>`;
+      });
+
+      el.innerHTML = html || '<div class="history-empty">no completed exercises yet</div>';
+    }
+
+    // ── NAV ──────────────────────────────────────────────────────────────────────
+
+    function selectDay(day) {
+      currentDay = day;
+      openWeightEditors = {};
+      buildTabs();
+      renderDay();
+      switchView('main');
+    }
+
+    function switchView(view) {
+      document.getElementById('mainView').classList.toggle('active', view === 'main');
+      document.getElementById('historyView').classList.toggle('active', view === 'history');
+      document.getElementById('navMain').classList.toggle('active', view === 'main');
+      document.getElementById('navHistory').classList.toggle('active', view === 'history');
+      if (view === 'history') renderHistory();
+    }
+
+    // ── INIT ─────────────────────────────────────────────────────────────────────
+
+    async function init() {
+      await loadProgram();
+      buildTabs();
+      renderDay();
+      // scroll active tab into view
+      setTimeout(() => {
+        const active = document.querySelector('.tab.active');
+        if (active) active.scrollIntoView({ inline: 'center', behavior: 'smooth' });
+      }, 100);
+      // auth after render so UI isn't blocked
+      setTimeout(silentAuth, 300);
+    }
+
+    init();
   </script>
 </body>
 
