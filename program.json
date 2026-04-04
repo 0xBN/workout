@@ -1,18 +1,19 @@
 {
   "meta": {
-    "version": "1.0",
+    "version": "1.1",
     "deload_rule": "first_week_of_month",
-    "deload_sets_multiplier": 0.5
+    "deload_sets_multiplier": 0.5,
+    "note": "Comeback program — finger injury recovery. Limit bouldering, max hangs, hangboard paused."
   },
 
   "daily": ["core_warmup", "finger_prehab"],
 
   "weekly": {
-    "monday": ["limit_bouldering", "max_hangs"],
+    "monday": ["easy_bouldering"],
     "tuesday": ["lift_lower_pull"],
-    "wednesday": ["climbing_4x4"],
+    "wednesday": ["speed_climbing"],
     "thursday": [],
-    "friday": ["limit_bouldering", "hangboard"],
+    "friday": ["easy_bouldering"],
     "saturday": ["lift_upper_hinge"],
     "sunday": ["zone2_recovery"]
   },
@@ -104,31 +105,30 @@
       ]
     },
 
-    "limit_bouldering": {
-      "name": "Limit Bouldering",
-      "type": "checklist",
+    "easy_bouldering": {
+      "name": "Bouldering",
+      "type": "flow",
+      "flow_label": "Easy bouldering",
+      "flow_sub": "no limit attempts · stay below threshold · feel it out",
       "exercises": [
-        { "id": "lb1", "name": "Warm-up problems", "reps": "5 problems V1→V4" },
         {
-          "id": "lb2",
-          "name": "Hard problems (V7)",
-          "reps": "6 problems, max 10 tries"
+          "id": "eb1",
+          "name": "Easy bouldering",
+          "reps": "open — no crimpy holds, stay comfortable"
         }
       ]
     },
 
-    "max_hangs": {
-      "name": "Max Hangs",
-      "type": "checklist",
+    "speed_climbing": {
+      "name": "Speed Climbing",
+      "type": "flow",
+      "flow_label": "Speed climbing",
+      "flow_sub": "high HR · no crimpy holds · replaces 4×4",
       "exercises": [
         {
-          "id": "mh1",
-          "name": "20mm edge hang",
-          "sets": 5,
-          "duration": 7,
-          "rest": 180,
-          "weighted": true,
-          "note": "rest 3 min between sets"
+          "id": "sc1",
+          "name": "Speed climbing",
+          "reps": "open — get heart rate up"
         }
       ]
     },
@@ -142,7 +142,8 @@
           "name": "Assisted pistol squat",
           "sets": 3,
           "reps": 5,
-          "note": "per side, pre-lift"
+          "note": "per side",
+          "prescribed_weight": 0
         },
         {
           "id": "ll1",
@@ -150,38 +151,124 @@
           "sets": 3,
           "reps": 8,
           "note": "per leg",
-          "weighted": true
+          "weighted": true,
+          "prescribed_weight": 60
         },
         {
           "id": "ll2",
           "name": "Romanian deadlift",
           "sets": 3,
           "reps": 5,
-          "weighted": true
+          "weighted": true,
+          "prescribed_weight": 145
         },
         {
           "id": "ll3",
           "name": "Weighted pull-ups",
           "sets": 3,
           "reps": 5,
-          "weighted": true
+          "weighted": true,
+          "prescribed_weight": 55,
+          "note": "added weight lb (~25kg)"
         },
         { "id": "ll4", "name": "Plank hold", "sets": 3, "duration": 45 }
       ]
     },
 
-    "climbing_4x4": {
-      "name": "4×4 Norwegian",
+    "lift_upper_hinge": {
+      "name": "Lift — Upper + Hinge",
       "type": "checklist",
       "exercises": [
-        { "id": "c4w", "name": "Warm-up problems", "reps": "5 problems V1→V3" },
-        { "id": "c4m", "name": "Continuous climbing (V3)", "reps": "15 rounds" }
+        {
+          "id": "lu0",
+          "name": "Assisted pistol squat",
+          "sets": 3,
+          "reps": 5,
+          "note": "per side",
+          "prescribed_weight": 0
+        },
+        {
+          "id": "lu1",
+          "name": "Dumbbell bench press",
+          "sets": 3,
+          "reps": 8,
+          "weighted": true,
+          "prescribed_weight": 90
+        },
+        {
+          "id": "lu2",
+          "name": "Overhead press (alt: incline)",
+          "sets": 3,
+          "reps": 5,
+          "weighted": true,
+          "prescribed_weight": 65
+        },
+        {
+          "id": "lu3",
+          "name": "Hip thrust",
+          "sets": 3,
+          "reps": 8,
+          "weighted": true,
+          "prescribed_weight": 95
+        },
+        {
+          "id": "lu4",
+          "name": "Suitcase hold",
+          "sets": 3,
+          "duration": 45,
+          "note": "per side",
+          "weighted": true,
+          "prescribed_weight": 45
+        }
       ]
     },
 
-    "hangboard": {
+    "zone2_recovery": {
+      "name": "Zone 2 / Recovery",
+      "type": "flow",
+      "flow_label": "Zone 2 / Recovery",
+      "flow_sub": "pick one: 40 min bike · row · hike · easy climbing · full rest",
+      "exercises": [
+        { "id": "z1", "name": "Zone 2 cardio", "reps": "40 min bike/row/hike" },
+        { "id": "z2", "name": "Easy climbing", "reps": "10 problems V1–V3" },
+        { "id": "z3", "name": "Full rest", "reps": "—" }
+      ]
+    },
+
+    "_paused_limit_bouldering": {
+      "name": "Limit Bouldering",
+      "type": "checklist",
+      "note": "PAUSED — finger injury",
+      "exercises": [
+        { "id": "lb1", "name": "Warm-up problems", "reps": "5 problems V1→V4" },
+        {
+          "id": "lb2",
+          "name": "Hard problems (V7)",
+          "reps": "6 problems, max 10 tries"
+        }
+      ]
+    },
+
+    "_paused_max_hangs": {
+      "name": "Max Hangs",
+      "type": "checklist",
+      "note": "PAUSED — finger injury",
+      "exercises": [
+        {
+          "id": "mh1",
+          "name": "20mm edge hang",
+          "sets": 5,
+          "duration": 7,
+          "rest": 180,
+          "weighted": true
+        }
+      ]
+    },
+
+    "_paused_hangboard": {
       "name": "Hangboard",
       "type": "checklist",
+      "note": "PAUSED — finger injury",
       "exercises": [
         {
           "id": "hb1",
@@ -202,57 +289,13 @@
       ]
     },
 
-    "lift_upper_hinge": {
-      "name": "Lift — Upper + Hinge",
+    "_paused_climbing_4x4": {
+      "name": "4×4 Norwegian",
       "type": "checklist",
+      "note": "PAUSED — replaced by speed climbing",
       "exercises": [
-        {
-          "id": "lu0",
-          "name": "Assisted pistol squat",
-          "sets": 3,
-          "reps": 5,
-          "note": "per side, pre-lift"
-        },
-        {
-          "id": "lu1",
-          "name": "Dumbbell bench press",
-          "sets": 3,
-          "reps": 8,
-          "weighted": true
-        },
-        {
-          "id": "lu2",
-          "name": "Overhead press (alt: incline)",
-          "sets": 3,
-          "reps": 5,
-          "weighted": true
-        },
-        {
-          "id": "lu3",
-          "name": "Hip thrust",
-          "sets": 3,
-          "reps": 8,
-          "weighted": true
-        },
-        {
-          "id": "lu4",
-          "name": "Suitcase hold",
-          "sets": 3,
-          "duration": 45,
-          "note": "per side",
-          "weighted": true
-        }
-      ]
-    },
-
-    "zone2_recovery": {
-      "name": "Zone 2 / Recovery",
-      "type": "checklist",
-      "note": "Pick one",
-      "exercises": [
-        { "id": "z1", "name": "Zone 2 cardio", "reps": "40 min bike/row/hike" },
-        { "id": "z2", "name": "Easy climbing", "reps": "10 problems V1–V3" },
-        { "id": "z3", "name": "Full rest", "reps": "—" }
+        { "id": "c4w", "name": "Warm-up problems", "reps": "5 problems V1→V3" },
+        { "id": "c4m", "name": "Continuous climbing (V3)", "reps": "15 rounds" }
       ]
     }
   }
