@@ -843,7 +843,7 @@
       const rows = await getAllRows();
       let existingIdx = -1;
       for (let i = 1; i < rows.length; i++) {
-        if (rows[i][0] === today && rows[i][5] === exId && String(rows[i][7]) === String(setNum)) {
+        if (rows[i][0] === today && rows[i][1] === currentDay && rows[i][5] === exId && String(rows[i][7]) === String(setNum)) {
           existingIdx = i + 1; break;
         }
       }
@@ -1020,8 +1020,6 @@
               const rx = getRx(ex, deload);
               const allDone = isExDone(st);
               const isOpen = openCards[ex.id];
-              const chipTxt = st.weight ? st.weight + 'lb' : (ex.prescribed_weight != null ? ex.prescribed_weight + 'lb' : 'wt');
-              const chipHas = !!(st.weight || ex.prescribed_weight != null);
 
               html += `<div class="ex-card${allDone ? ' all-done' : ''}" id="card-${ex.id}">
             <div class="ex-header" onclick="toggleCard('${ex.id}')">
@@ -1030,22 +1028,10 @@
                 ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
                 ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
               </div>
-              ${ex.weighted !== false ? `<div class="ex-chip${chipHas ? ' has-value' : ''}" id="chip-${ex.id}">${chipTxt}</div>` : ''}
+              ${ex.prescribed_weight != null ? `<div class="ex-chip has-value">${ex.prescribed_weight}lb</div>` : ''}
             </div>`;
 
               if (isOpen) {
-                // weight input
-                if (ex.weighted !== false) {
-                  html += `<div class="last-hint" id="hint-${ex.id}"></div>
-              <div class="weight-row">
-                <div class="weight-lbl">Weight</div>
-                <input class="weight-input" type="text" inputmode="decimal" placeholder="${ex.prescribed_weight != null ? ex.prescribed_weight + ' lb (prescribed)' : 'e.g. 45 lb'}"
-                  value="${st.weight}"
-                  oninput="updateWeight('${ex.id}','${ex.name}','${block.name}',this.value)"
-                  onclick="event.stopPropagation()">
-              </div>`;
-                }
-
                 // per-set rows
                 st.sets.forEach((set, i) => {
                   const rpe = set.rpe;
@@ -1057,7 +1043,7 @@
                   <div class="set-rpe-btns">
                     ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
                     const cls = rpe === n ? (n <= 6 ? 'sel-low' : n <= 8 ? 'sel-mid' : 'sel-high') : '';
-                    return `<button class="rpe-btn ${cls}" onclick="event.stopPropagation();setRpe('${ex.id}','${ex.name}','${block.name}',${i},${n})">${n}</button>`;
+                    return `<button class="rpe-btn ${cls}" onclick="event.stopPropagation();setRpe('${ex.id}','${ex.name}','${block.name}',${i},${n},${ex.prescribed_weight || 0})">${n}</button>`;
                   }).join('')}
                   </div>
                 </div>`;
@@ -1118,22 +1104,13 @@
       renderDay();
     }
 
-    function setRpe(exId, exName, blockName, setIdx, val) {
+    function setRpe(exId, exName, blockName, setIdx, val, prescribedWeight) {
       const st = getState(exId);
       if (!st) return;
       st.sets[setIdx].rpe = val;
-      // auto-mark done when RPE is tapped
       st.sets[setIdx].done = true;
-      logSet(exId, exName, blockName, setIdx + 1, st.weight, val, true);
+      logSet(exId, exName, blockName, setIdx + 1, prescribedWeight || '', val, true);
       renderDay();
-    }
-
-    function updateWeight(exId, exName, blockName, val) {
-      const st = getState(exId);
-      if (!st) return;
-      st.weight = val;
-      const chip = document.getElementById(`chip-${exId}`);
-      if (chip) { chip.textContent = val ? val + 'lb' : 'wt'; chip.classList.toggle('has-value', !!val); }
     }
 
     // ── HISTORY ──────────────────────────────────────────────────────────────────
