@@ -790,21 +790,11 @@
     </div>
   </div>
 
-  <div id="historyView" class="view">
-    <div class="content">
-      <div class="day-title" style="margin-bottom:4px">History</div>
-      <div class="day-meta">your logged sessions</div>
-      <div id="histContent">
-        <div class="loading">
-          <div class="spinner"></div>
-        </div>
-      </div>
-    </div>
+  </div>
   </div>
 
   <div class="bottom-nav">
     <button class="nav-btn active" id="navMain" onclick="switchView('main')"><span class="icon">◈</span>Today</button>
-    <button class="nav-btn" id="navHistory" onclick="switchView('history')"><span class="icon">◎</span>History</button>
   </div>
 
   <script src="https://accounts.google.com/gsi/client" async></script>
@@ -1295,10 +1285,7 @@
 
     function switchView(view) {
       document.getElementById('mainView').classList.toggle('active', view === 'main');
-      document.getElementById('historyView').classList.toggle('active', view === 'history');
       document.getElementById('navMain').classList.toggle('active', view === 'main');
-      document.getElementById('navHistory').classList.toggle('active', view === 'history');
-      if (view === 'history') renderHistory();
     }
 
     // ── INIT ─────────────────────────────────────────────────────────────────────
