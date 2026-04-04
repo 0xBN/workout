@@ -946,8 +946,10 @@
       if (!ex.working_weight) return ex.prescribed_weight != null ? ex.prescribed_weight : null;
       const prog = ex.progression || [1.0];
       const pct = prog[Math.min(setIdx, prog.length - 1)];
-      return Math.round(ex.working_weight * pct / 5) * 5; // round to nearest 5lb
+      return Math.round(ex.working_weight * pct / 5) * 5;
     }
+
+    function isExDone(state) { return state && state.sets.length > 0 && state.sets.every(s => s.done); }
 
     // ── RENDER ───────────────────────────────────────────────────────────────────
 
