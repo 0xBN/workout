@@ -963,8 +963,14 @@
       const allBlocks = [...(program.daily || []), ...(program.weekly[currentDay] || [])];
       allBlocks.forEach(bkId => {
         const block = program.blocks[bkId];
-        if (!block || block.type === 'flow') return;
-        block.exercises.forEach(ex => { if (ex.weighted || ex.sets) initState(ex, deload); });
+        if (!block) return;
+        if (block.type === 'flow') {
+          const flowId = `flow-${bkId}`;
+          const k = stateKey(currentDay, flowId);
+          if (!sessionLog[k]) sessionLog[k] = { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
+        } else {
+          block.exercises.forEach(ex => { if (ex.weighted || ex.sets) initState(ex, deload); });
+        }
       });
 
       const rows = await getAllRows();
