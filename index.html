@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workout — Hello World</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0f0f0d;
+      color: #e8e8e0;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 20px;
+      padding: 24px;
+    }
+
+    h1 {
+      color: #c8f060;
+      font-size: 22px;
+    }
+
+    button {
+      background: #c8f060;
+      color: #0f0f0d;
+      border: none;
+      padding: 12px 24px;
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #4a4a44;
+      color: #888;
+      cursor: default;
+    }
+
+    #status {
+      font-size: 13px;
+      color: #888880;
+      text-align: center;
+      max-width: 320px;
+      line-height: 1.6;
+    }
+
+    #status.success {
+      color: #c8f060;
+    }
+
+    #status.error {
+      color: #f06060;
+    }
+
+    table {
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    td,
+    th {
+      border: 1px solid #2a2a26;
+      padding: 6px 12px;
+      text-align: left;
+    }
+
+    th {
+      color: #c8f060;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>workout / hello world</h1>
+  <div id="status">Click below to sign in with Google and test Sheets access.</div>
+  <button id="authBtn" onclick="handleAuth()">Sign in with Google</button>
+  <div id="result"></div>
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────────────────
+    const CLIENT_ID = '674439380543-atvndeqpa9tpli755h879qabar53jneo.apps.googleusercontent.com';
+    const SHEET_ID = '10ApiDRmdFru5giLImN_FYTBvAUUopjU0RpvTPHPvmrg';
+    const SHEET_NAME = 'Sheet1';
+    const SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
+    // ────────────────────────────────────────────────────────────────
+
+    let accessToken = null;
+
+    function setStatus(msg, type = '') {
+      const el = document.getElementById('status');
+      el.textContent = msg;
+      el.className = type;
+    }
+
+    function handleAuth() {
+      setStatus('Opening Google sign-in...');
+      const client = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPE,
+        callback: async (response) => {
+          if (response.error) {
+            setStatus('Auth error: ' + response.error, 'error');
+            return;
+          }
+          accessToken = response.access_token;
+          setStatus('Signed in! Writing test row to sheet...');
+          document.getElementById('authBtn').disabled = true;
+          await writeRow();
+          await readRows();
+        }
+      });
+      client.requestAccessToken();
+    }
+
+    async function writeRow() {
+      const now = new Date().toISOString();
+      const row = [now, 'hello_world', 'test_exercise', '1', '3×8', '45', '8', 'Hello from workout app!'];
+
+      const res = await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A1:H1:append?valueInputOption=RAW`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ values: [row] })
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        setStatus('Write error: ' + JSON.stringify(err), 'error');
+        return;
+      }
+      setStatus('Row written! Reading back from sheet...', 'success');
+    }
+
+    async function readRows() {
+      const res = await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A1:H10`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        }
+      );
+
+      const data = await res.json();
+      const rows = data.values || [];
+
+      if (!rows.length) {
+        setStatus('No data found in sheet.', 'error');
+        return;
+      }
+
+      setStatus('✓ Success! Sheet is connected. Here\'s what\'s in it:', 'success');
+
+      const headers = ['date', 'day', 'exercise', 'set', 'prescribed', 'weight', 'rpe', 'notes'];
+      let html = '<table><tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr>';
+      rows.forEach(row => {
+        html += '<tr>' + row.map(cell => `<td>${cell}</td>`).join('') + '</tr>';
+      });
+      html += '</table>';
+      document.getElementById('result').innerHTML = html;
+      document.getElementById('authBtn').textContent = 'Re-authenticate';
+      document.getElementById('authBtn').disabled = false;
+    }
+  </script>
+</body>
+
+</html>
