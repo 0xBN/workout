@@ -152,7 +152,8 @@
           "reps": 8,
           "note": "per leg",
           "weighted": true,
-          "prescribed_weight": 60
+          "working_weight": 60,
+          "progression": [0.75, 0.875, 1.0]
         },
         {
           "id": "ll2",
@@ -160,7 +161,8 @@
           "sets": 3,
           "reps": 5,
           "weighted": true,
-          "prescribed_weight": 145
+          "working_weight": 145,
+          "progression": [0.6, 0.8, 1.0]
         },
         {
           "id": "ll3",
@@ -168,7 +170,8 @@
           "sets": 3,
           "reps": 5,
           "weighted": true,
-          "prescribed_weight": 55,
+          "working_weight": 55,
+          "progression": [0.7, 0.85, 1.0],
           "note": "added weight lb (~25kg)"
         },
         { "id": "ll4", "name": "Plank hold", "sets": 3, "duration": 45 }
@@ -193,7 +196,8 @@
           "sets": 3,
           "reps": 8,
           "weighted": true,
-          "prescribed_weight": 90
+          "working_weight": 90,
+          "progression": [0.75, 0.875, 1.0]
         },
         {
           "id": "lu2",
@@ -201,7 +205,8 @@
           "sets": 3,
           "reps": 5,
           "weighted": true,
-          "prescribed_weight": 65
+          "working_weight": 65,
+          "progression": [0.75, 0.875, 1.0]
         },
         {
           "id": "lu3",
@@ -209,7 +214,8 @@
           "sets": 3,
           "reps": 8,
           "weighted": true,
-          "prescribed_weight": 95
+          "working_weight": 95,
+          "progression": [0.6, 0.8, 1.0]
         },
         {
           "id": "lu4",
@@ -218,7 +224,8 @@
           "duration": 45,
           "note": "per side",
           "weighted": true,
-          "prescribed_weight": 45
+          "working_weight": 45,
+          "progression": [0.75, 0.875, 1.0]
         }
       ]
     },

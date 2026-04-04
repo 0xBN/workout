@@ -444,8 +444,11 @@
       font-family: 'Syne Mono', monospace;
       font-size: 11px;
       color: var(--sub);
-      width: 36px;
+      width: 44px;
       flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
     }
 
     .set-check {
@@ -939,7 +942,12 @@
       return sessionLog[k] || null;
     }
 
-    function isExDone(state) { return state && state.sets.every(s => s.done); }
+    function getSetWeight(ex, setIdx) {
+      if (!ex.working_weight) return ex.prescribed_weight != null ? ex.prescribed_weight : null;
+      const prog = ex.progression || [1.0];
+      const pct = prog[Math.min(setIdx, prog.length - 1)];
+      return Math.round(ex.working_weight * pct / 5) * 5; // round to nearest 5lb
+    }
 
     // ── RENDER ───────────────────────────────────────────────────────────────────
 
@@ -1021,6 +1029,8 @@
               const allDone = isExDone(st);
               const isOpen = openCards[ex.id];
 
+              const workingW = ex.working_weight || ex.prescribed_weight;
+
               html += `<div class="ex-card${allDone ? ' all-done' : ''}" id="card-${ex.id}">
             <div class="ex-header" onclick="toggleCard('${ex.id}')">
               <div class="ex-info" style="flex:1;min-width:0">
@@ -1028,22 +1038,26 @@
                 ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
                 ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
               </div>
-              ${ex.prescribed_weight != null ? `<div class="ex-chip has-value">${ex.prescribed_weight}lb</div>` : ''}
+              ${workingW != null ? `<div class="ex-chip has-value">${workingW}lb</div>` : ''}
             </div>`;
 
               if (isOpen) {
                 // per-set rows
                 st.sets.forEach((set, i) => {
                   const rpe = set.rpe;
-                  const rpeClass = rpe ? (rpe <= 6 ? 'sel-low' : rpe <= 8 ? 'sel-mid' : 'sel-high') : '';
+                  const setW = getSetWeight(ex, i);
+                  const isWorking = i === st.sets.length - 1;
                   html += `<div class="set-divider"></div>
                 <div class="set-row">
-                  <div class="set-num">Set ${i + 1}</div>
+                  <div class="set-num">
+                    <div>Set ${i + 1}</div>
+                    ${setW != null ? `<div style="color:${isWorking ? 'var(--accent2)' : 'var(--sub)'};font-size:12px;font-family:'Syne Mono',monospace">${setW}lb</div>` : ''}
+                  </div>
                   <div class="set-check${set.done ? ' done' : ''}" onclick="toggleSet('${ex.id}','${ex.name}','${block.name}',${i})">${set.done ? '✓' : ''}</div>
                   <div class="set-rpe-btns">
                     ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
                     const cls = rpe === n ? (n <= 6 ? 'sel-low' : n <= 8 ? 'sel-mid' : 'sel-high') : '';
-                    return `<button class="rpe-btn ${cls}" onclick="event.stopPropagation();setRpe('${ex.id}','${ex.name}','${block.name}',${i},${n},${ex.prescribed_weight || 0})">${n}</button>`;
+                    return `<button class="rpe-btn ${cls}" onclick="event.stopPropagation();setRpe('${ex.id}','${ex.name}','${block.name}',${i},${n},${setW || 0})">${n}</button>`;
                   }).join('')}
                   </div>
                 </div>`;
