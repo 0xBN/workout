@@ -977,9 +977,12 @@
       rows.forEach(r => {
         if (!r[0] || r[0] !== today || r[1] !== currentDay) return;
         const exId = r[5];
-        const setIdx = parseInt(r[7]); // 0=warmup, 1..n=working sets, maps directly to array index
+        const rawSetNum = parseInt(r[7]);
         const k = stateKey(currentDay, exId);
         if (!sessionLog[k]) return;
+        // flow blocks log set_num=1 but live at array index 0
+        // warmup sets log set_num=0, working sets log set_num=1,2,3 (same as array index)
+        const setIdx = exId.startsWith('flow-') ? 0 : rawSetNum;
         if (setIdx >= 0 && setIdx < sessionLog[k].sets.length) {
           sessionLog[k].sets[setIdx].done = r[10] === 'yes';
           sessionLog[k].sets[setIdx].rpe = r[9] ? parseInt(r[9]) : null;
