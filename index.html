@@ -759,7 +759,8 @@
           accessToken = resp.access_token;
           tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
           setAuthUI('ok', 'sheets connected');
-          ensureSheetHeader();
+          await ensureSheetHeader();
+          await loadTodayState();
         }
       });
       client.requestAccessToken();
@@ -773,12 +774,13 @@
         client_id: CLIENT_ID,
         scope: 'https://www.googleapis.com/auth/spreadsheets',
         prompt: 'consent',
-        callback: (resp) => {
+        callback: async (resp) => {
           if (resp.error) { setAuthUI('err', 'failed — tap to retry'); return; }
           accessToken = resp.access_token;
           tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
           setAuthUI('ok', 'sheets connected');
-          ensureSheetHeader();
+          await ensureSheetHeader();
+          await loadTodayState();
         }
       });
       client.requestAccessToken();
@@ -797,36 +799,89 @@
       return r.json();
     }
 
+    let headerEnsured = false;
     async function ensureSheetHeader() {
+      if (headerEnsured) return;
       const data = await sheetsRequest('GET', `/values/${SHEET_TAB}!A1:J1`);
       if (!data || !data.values || !data.values[0] || data.values[0][0] !== 'date') {
-        await sheetsRequest('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW`, {
+        await sheetsRequest('PUT', `/values/${SHEET_TAB}!A1:J1?valueInputOption=RAW`, {
           values: [['date', 'day', 'week_num', 'is_deload', 'block', 'exercise_id', 'exercise_name', 'weight', 'completed', 'note']]
         });
       }
+      headerEnsured = true;
     }
+
+    // Find row number of existing log entry for today + exId (1-based sheet row)
+    let allRowsCache = null;
+    async function getAllRows() {
+      if (allRowsCache) return allRowsCache;
+      const data = await sheetsRequest('GET', `/values/${SHEET_TAB}!A1:J1000`);
+      allRowsCache = data?.values || [];
+      return allRowsCache;
+    }
+    function invalidateCache() { allRowsCache = null; }
 
     async function logExercise(exId, exName, blockName, weight, completed) {
       if (!accessToken) return;
-      const date = new Date().toISOString().slice(0, 10);
-      const day = currentDay;
+      const today = new Date().toISOString().slice(0, 10);
       const weekNum = getWeekOfYear();
       const isDeload = isDeloadWeek() ? 'yes' : 'no';
-      await sheetsRequest('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW`, {
-        values: [[date, day, weekNum, isDeload, blockName, exId, exName, weight || '', completed ? 'yes' : 'no', '']]
+      const newRow = [today, currentDay, weekNum, isDeload, blockName, exId, exName, weight || '', completed ? 'yes' : 'no', ''];
+
+      // find existing row for today + this exId
+      const rows = await getAllRows();
+      let existingRowNum = -1;
+      for (let i = 1; i < rows.length; i++) {
+        if (rows[i][0] === today && rows[i][5] === exId) {
+          existingRowNum = i + 1; // 1-based
+          break;
+        }
+      }
+
+      if (existingRowNum > 0) {
+        // update in place
+        await sheetsRequest('PUT', `/values/${SHEET_TAB}!A${existingRowNum}:J${existingRowNum}?valueInputOption=RAW`, {
+          values: [newRow]
+        });
+      } else {
+        // append new row
+        await sheetsRequest('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, {
+          values: [newRow]
+        });
+      }
+      invalidateCache();
+    }
+
+    async function loadTodayState() {
+      if (!accessToken) return;
+      const today = new Date().toISOString().slice(0, 10);
+      const rows = await getAllRows();
+      rows.forEach(r => {
+        if (!r[0] || r[0] !== today) return;
+        const exId = r[5];
+        const weight = r[7] || '';
+        const completed = r[8] === 'yes';
+        const k = getSessionKey(currentDay, exId);
+        // only restore if this row matches current day
+        if (r[1] === currentDay) {
+          if (!sessionLog[k]) sessionLog[k] = { done: false, weight: '' };
+          sessionLog[k].done = completed;
+          if (weight) sessionLog[k].weight = weight;
+        }
       });
+      renderDay();
     }
 
     async function fetchHistory() {
       if (!accessToken) return [];
-      const data = await sheetsRequest('GET', `/values/${SHEET_TAB}!A2:J500`);
-      return data?.values || [];
+      const rows = await getAllRows();
+      return rows.slice(1).filter(r => r[0] && r[0] !== 'date');
     }
 
     async function fetchLastWeight(exId) {
-      if (!accessToken) return null;
       const rows = await fetchHistory();
-      const matches = rows.filter(r => r[5] === exId && r[7]);
+      const today = new Date().toISOString().slice(0, 10);
+      const matches = rows.filter(r => r[5] === exId && r[7] && r[0] !== today);
       if (!matches.length) return null;
       return matches[matches.length - 1][7];
     }
@@ -948,16 +1003,15 @@
 
               html += `
             <div class="ex-row${state.done ? ' done' : ''}" id="row-${ex.id}"
-                 onclick="toggleDone('${ex.id}','${ex.name}','${block.name}',${hasWeight})">
-              <div class="ex-check">${state.done ? '✓' : ''}</div>
+                 onclick="${hasWeight ? `toggleWeight('${ex.id}')` : `toggleDone('${ex.id}','${ex.name}','${block.name}',false)`}">
+              <div class="ex-check" onclick="event.stopPropagation(); toggleDone('${ex.id}','${ex.name}','${block.name}',${!!hasWeight})">${state.done ? '✓' : ''}</div>
               <div class="ex-info">
                 <div class="ex-name">${ex.name}</div>
                 ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
                 ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
               </div>
               ${hasWeight ? `<div class="weight-chip${weightVal ? ' has-value' : ''}" 
-                id="chip-${ex.id}"
-                onclick="event.stopPropagation(); toggleWeight('${ex.id}')">${weightVal || 'wt'}</div>` : ''}
+                id="chip-${ex.id}">${weightVal || 'wt'}</div>` : ''}
             </div>
             ${hasWeight ? `
             <div class="last-hint" id="hint-${ex.id}"></div>
