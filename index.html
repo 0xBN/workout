@@ -607,7 +607,77 @@
       }
     }
 
-    /* fade in */
+    /* rpe picker */
+    .rpe-picker {
+      display: none;
+      padding: 10px 14px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--r) var(--r);
+      margin-top: -6px;
+      margin-bottom: 6px;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rpe-picker.open {
+      display: flex;
+    }
+
+    .rpe-label {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .rpe-nums {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .rpe-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rpe-btn:active {
+      transform: scale(0.92);
+    }
+
+    .rpe-btn.selected-low {
+      background: #2a4a00;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .rpe-btn.selected-mid {
+      background: #4a3a00;
+      border-color: var(--accent2);
+      color: var(--accent2);
+    }
+
+    .rpe-btn.selected-high {
+      background: #4a1a1a;
+      border-color: var(--red);
+      color: var(--red);
+    }
+
     .fade-in {
       animation: fadeIn 0.3s ease forwards;
     }
@@ -690,8 +760,7 @@
     let tokenExpiry = 0;
     let program = null;
     let currentDay = DAYS[new Date().getDay()];
-    let sessionLog = {}; // { exId: { done, weight } }
-    let historyCache = null;
+    let sessionLog = {};
     let openWeightEditors = {};
 
     // ── AUTH ─────────────────────────────────────────────────────────────────────
@@ -703,46 +772,44 @@
       lbl.textContent = label;
     }
 
-    function getTokenClient() {
-      return google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/spreadsheets',
-        prompt: '',
-        callback: (resp) => {
-          if (resp.error) { setAuthUI('err', 'auth failed'); return; }
-          accessToken = resp.access_token;
-          tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
-          setAuthUI('ok', 'sheets connected');
-          ensureSheetHeader();
-        }
-      });
+    function saveToken(token, expiresIn) {
+      accessToken = token;
+      tokenExpiry = Date.now() + (expiresIn - 60) * 1000;
+      sessionStorage.setItem('wb_token', token);
+      sessionStorage.setItem('wb_expiry', tokenExpiry);
     }
 
-    async function ensureToken() {
-      if (accessToken && Date.now() < tokenExpiry) return true;
-      return new Promise((resolve) => {
-        try {
-          const client = google.accounts.oauth2.initTokenClient({
-            client_id: CLIENT_ID,
-            scope: 'https://www.googleapis.com/auth/spreadsheets',
-            prompt: '',
-            callback: (resp) => {
-              if (resp.error) { setAuthUI('err', 'auth failed'); resolve(false); return; }
-              accessToken = resp.access_token;
-              tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
-              setAuthUI('ok', 'sheets connected');
-              resolve(true);
-            }
-          });
-          client.requestAccessToken();
-        } catch (e) { resolve(false); }
-      });
+    function loadCachedToken() {
+      const token = sessionStorage.getItem('wb_token');
+      const expiry = parseInt(sessionStorage.getItem('wb_expiry') || '0');
+      if (token && Date.now() < expiry) {
+        accessToken = token;
+        tokenExpiry = expiry;
+        return true;
+      }
+      return false;
+    }
+
+    function showSignInButton() {
+      setAuthUI('err', 'sign in');
+      const lbl = document.getElementById('authLabel');
+      lbl.style.cursor = 'pointer';
+      lbl.style.textDecoration = 'underline';
+      lbl.onclick = manualAuth;
     }
 
     function silentAuth() {
       if (typeof google === 'undefined') {
-        setTimeout(silentAuth, 500); return;
+        setTimeout(silentAuth, 300); return;
       }
+
+      // check sessionStorage first
+      if (loadCachedToken()) {
+        setAuthUI('ok', 'sheets connected');
+        ensureSheetHeader().then(() => loadTodayState());
+        return;
+      }
+
       setAuthUI('', 'signing in…');
       const client = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
@@ -750,14 +817,10 @@
         prompt: '',
         callback: async (resp) => {
           if (resp.error) {
-            // Silent failed — show manual sign in button
-            setAuthUI('err', 'tap to sign in');
-            document.getElementById('authLabel').style.cursor = 'pointer';
-            document.getElementById('authLabel').onclick = manualAuth;
+            showSignInButton();
             return;
           }
-          accessToken = resp.access_token;
-          tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+          saveToken(resp.access_token, resp.expires_in);
           setAuthUI('ok', 'sheets connected');
           await ensureSheetHeader();
           await loadTodayState();
@@ -768,16 +831,17 @@
 
     function manualAuth() {
       setAuthUI('', 'signing in…');
-      document.getElementById('authLabel').onclick = null;
-      document.getElementById('authLabel').style.cursor = 'default';
+      const lbl = document.getElementById('authLabel');
+      lbl.style.cursor = 'default';
+      lbl.style.textDecoration = 'none';
+      lbl.onclick = null;
       const client = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
         scope: 'https://www.googleapis.com/auth/spreadsheets',
         prompt: 'consent',
         callback: async (resp) => {
-          if (resp.error) { setAuthUI('err', 'failed — tap to retry'); return; }
-          accessToken = resp.access_token;
-          tokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+          if (resp.error) { showSignInButton(); return; }
+          saveToken(resp.access_token, resp.expires_in);
           setAuthUI('ok', 'sheets connected');
           await ensureSheetHeader();
           await loadTodayState();
@@ -802,49 +866,45 @@
     let headerEnsured = false;
     async function ensureSheetHeader() {
       if (headerEnsured) return;
-      const data = await sheetsRequest('GET', `/values/${SHEET_TAB}!A1:J1`);
+      const data = await sheetsRequest('GET', `/values/${SHEET_TAB}!A1:K1`);
       if (!data || !data.values || !data.values[0] || data.values[0][0] !== 'date') {
-        await sheetsRequest('PUT', `/values/${SHEET_TAB}!A1:J1?valueInputOption=RAW`, {
-          values: [['date', 'day', 'week_num', 'is_deload', 'block', 'exercise_id', 'exercise_name', 'weight', 'completed', 'note']]
+        await sheetsRequest('PUT', `/values/${SHEET_TAB}!A1:K1?valueInputOption=RAW`, {
+          values: [['date', 'day', 'week_num', 'is_deload', 'block', 'exercise_id', 'exercise_name', 'weight', 'rpe', 'completed', 'note']]
         });
       }
       headerEnsured = true;
     }
 
-    // Find row number of existing log entry for today + exId (1-based sheet row)
     let allRowsCache = null;
     async function getAllRows() {
       if (allRowsCache) return allRowsCache;
-      const data = await sheetsRequest('GET', `/values/${SHEET_TAB}!A1:J1000`);
+      const data = await sheetsRequest('GET', `/values/${SHEET_TAB}!A1:K1000`);
       allRowsCache = data?.values || [];
       return allRowsCache;
     }
     function invalidateCache() { allRowsCache = null; }
 
-    async function logExercise(exId, exName, blockName, weight, completed) {
+    async function logExercise(exId, exName, blockName, weight, rpe, completed) {
       if (!accessToken) return;
       const today = new Date().toISOString().slice(0, 10);
       const weekNum = getWeekOfYear();
       const isDeload = isDeloadWeek() ? 'yes' : 'no';
-      const newRow = [today, currentDay, weekNum, isDeload, blockName, exId, exName, weight || '', completed ? 'yes' : 'no', ''];
+      const newRow = [today, currentDay, weekNum, isDeload, blockName, exId, exName, weight || '', rpe || '', completed ? 'yes' : 'no', ''];
 
-      // find existing row for today + this exId
       const rows = await getAllRows();
       let existingRowNum = -1;
       for (let i = 1; i < rows.length; i++) {
         if (rows[i][0] === today && rows[i][5] === exId) {
-          existingRowNum = i + 1; // 1-based
+          existingRowNum = i + 1;
           break;
         }
       }
 
       if (existingRowNum > 0) {
-        // update in place
-        await sheetsRequest('PUT', `/values/${SHEET_TAB}!A${existingRowNum}:J${existingRowNum}?valueInputOption=RAW`, {
+        await sheetsRequest('PUT', `/values/${SHEET_TAB}!A${existingRowNum}:K${existingRowNum}?valueInputOption=RAW`, {
           values: [newRow]
         });
       } else {
-        // append new row
         await sheetsRequest('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, {
           values: [newRow]
         });
@@ -859,14 +919,12 @@
       rows.forEach(r => {
         if (!r[0] || r[0] !== today) return;
         const exId = r[5];
-        const weight = r[7] || '';
-        const completed = r[8] === 'yes';
         const k = getSessionKey(currentDay, exId);
-        // only restore if this row matches current day
         if (r[1] === currentDay) {
-          if (!sessionLog[k]) sessionLog[k] = { done: false, weight: '' };
-          sessionLog[k].done = completed;
-          if (weight) sessionLog[k].weight = weight;
+          if (!sessionLog[k]) sessionLog[k] = { done: false, weight: '', rpe: null };
+          sessionLog[k].done = r[9] === 'yes';
+          if (r[7]) sessionLog[k].weight = r[7];
+          if (r[8]) sessionLog[k].rpe = parseInt(r[8]);
         }
       });
       renderDay();
@@ -878,12 +936,13 @@
       return rows.slice(1).filter(r => r[0] && r[0] !== 'date');
     }
 
-    async function fetchLastWeight(exId) {
+    async function fetchLastSession(exId) {
       const rows = await fetchHistory();
       const today = new Date().toISOString().slice(0, 10);
-      const matches = rows.filter(r => r[5] === exId && r[7] && r[0] !== today);
+      const matches = rows.filter(r => r[5] === exId && r[0] !== today);
       if (!matches.length) return null;
-      return matches[matches.length - 1][7];
+      const last = matches[matches.length - 1];
+      return { weight: last[7] || '', rpe: last[8] || '' };
     }
 
     // ── PROGRAM ──────────────────────────────────────────────────────────────────
@@ -930,7 +989,7 @@
 
     function getState(exId) {
       const k = getSessionKey(currentDay, exId);
-      if (!sessionLog[k]) sessionLog[k] = { done: false, weight: '' };
+      if (!sessionLog[k]) sessionLog[k] = { done: false, weight: '', rpe: null };
       return sessionLog[k];
     }
 
@@ -1001,17 +1060,19 @@
               const isOpen = openWeightEditors[ex.id];
               const weightVal = state.weight;
 
+              const rpeVal = state.rpe;
+              const rpeClass = rpeVal ? (rpeVal <= 6 ? 'selected-low' : rpeVal <= 8 ? 'selected-mid' : 'selected-high') : '';
+
               html += `
             <div class="ex-row${state.done ? ' done' : ''}" id="row-${ex.id}"
-                 onclick="${hasWeight ? `toggleWeight('${ex.id}')` : `toggleDone('${ex.id}','${ex.name}','${block.name}',false)`}">
+                 onclick="${hasWeight ? `toggleExpand('${ex.id}')` : `toggleDone('${ex.id}','${ex.name}','${block.name}',false)`}">
               <div class="ex-check" onclick="event.stopPropagation(); toggleDone('${ex.id}','${ex.name}','${block.name}',${!!hasWeight})">${state.done ? '✓' : ''}</div>
               <div class="ex-info">
                 <div class="ex-name">${ex.name}</div>
                 ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
                 ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
               </div>
-              ${hasWeight ? `<div class="weight-chip${weightVal ? ' has-value' : ''}" 
-                id="chip-${ex.id}">${weightVal || 'wt'}</div>` : ''}
+              ${hasWeight ? `<div class="weight-chip${weightVal ? ' has-value' : ''}" id="chip-${ex.id}">${weightVal ? `${weightVal}${rpeVal ? ` · ${rpeVal}` : ''}` : 'wt'}</div>` : ''}
             </div>
             ${hasWeight ? `
             <div class="last-hint" id="hint-${ex.id}"></div>
@@ -1021,6 +1082,15 @@
                 value="${weightVal}"
                 oninput="updateWeight('${ex.id}', this.value)"
                 onclick="event.stopPropagation()">
+            </div>
+            <div class="rpe-picker${isOpen ? ' open' : ''}" id="rpe-${ex.id}">
+              <div class="rpe-label">RPE</div>
+              <div class="rpe-nums">
+                ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
+                const cls = rpeVal === n ? (n <= 6 ? 'selected-low' : n <= 8 ? 'selected-mid' : 'selected-high') : '';
+                return `<button class="rpe-btn ${cls}" onclick="event.stopPropagation(); setRpe('${ex.id}','${ex.name}','${block.name}',${n})">${n}</button>`;
+              }).join('')}
+              </div>
             </div>` : ''}`;
             }
           }
@@ -1043,10 +1113,13 @@
     }
 
     async function loadLastHint(exId) {
-      const last = await fetchLastWeight(exId);
+      const last = await fetchLastSession(exId);
       const el = document.getElementById(`hint-${exId}`);
-      if (el && last) {
-        el.innerHTML = `last session: <span>${last}</span>`;
+      if (el && last && (last.weight || last.rpe)) {
+        const parts = [];
+        if (last.weight) parts.push(last.weight);
+        if (last.rpe) parts.push(`RPE ${last.rpe}`);
+        el.innerHTML = `last: <span>${parts.join(' · ')}</span>`;
         el.classList.add('show');
       }
     }
@@ -1054,18 +1127,17 @@
     function toggleDone(exId, exName, blockName, hasWeight) {
       const state = getState(exId);
       state.done = !state.done;
-      if (state.done && hasWeight && !state.weight) {
-        // auto-open weight editor on first completion if no weight set
-        openWeightEditors[exId] = true;
-      }
-      logExercise(exId, exName, blockName, state.weight, state.done);
+      if (state.done && hasWeight) openWeightEditors[exId] = true;
+      logExercise(exId, exName, blockName, state.weight, state.rpe, state.done);
       renderDay();
     }
 
-    function toggleWeight(exId) {
+    function toggleExpand(exId) {
       openWeightEditors[exId] = !openWeightEditors[exId];
       const wed = document.getElementById(`wed-${exId}`);
+      const rpe = document.getElementById(`rpe-${exId}`);
       if (wed) wed.classList.toggle('open', openWeightEditors[exId]);
+      if (rpe) rpe.classList.toggle('open', openWeightEditors[exId]);
       if (openWeightEditors[exId]) {
         setTimeout(() => {
           const input = wed?.querySelector('.weight-input');
@@ -1074,11 +1146,19 @@
       }
     }
 
+    function setRpe(exId, exName, blockName, val) {
+      const state = getState(exId);
+      state.rpe = val;
+      logExercise(exId, exName, blockName, state.weight, state.rpe, state.done);
+      renderDay();
+    }
+
     function updateWeight(exId, val) {
       getState(exId).weight = val;
       const chip = document.getElementById(`chip-${exId}`);
       if (chip) {
-        chip.textContent = val || 'wt';
+        const state = getState(exId);
+        chip.textContent = val ? `${val}${state.rpe ? ` · ${state.rpe}` : ''}` : 'wt';
         chip.classList.toggle('has-value', !!val);
       }
     }
