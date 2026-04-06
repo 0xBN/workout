@@ -1,21 +1,21 @@
 {
   "meta": {
-    "version": "1.1",
+    "version": "2.0",
     "deload_rule": "first_week_of_month",
     "deload_weight_multiplier": 0.5,
-    "note": "Comeback program — finger injury recovery. Limit bouldering, max hangs, hangboard paused."
+    "note": "Comeback program. Priority: mobility, climbing, longevity. Finger injury recovery."
   },
 
   "daily": ["core_warmup", "finger_prehab"],
 
   "weekly": {
-    "monday": ["easy_bouldering"],
-    "tuesday": ["lift_lower_pull"],
-    "wednesday": ["speed_climbing"],
-    "thursday": [],
-    "friday": ["easy_bouldering"],
-    "saturday": ["lift_upper_hinge"],
-    "sunday": ["zone2_recovery"]
+    "monday": ["easy_bouldering", "post_stretch_climb"],
+    "tuesday": ["lift_lower_pull", "post_stretch_lift"],
+    "wednesday": ["climbing_wed", "post_stretch_climb"],
+    "thursday": ["mobility_recovery"],
+    "friday": ["easy_bouldering", "post_stretch_climb"],
+    "saturday": ["lift_upper_hinge", "thoracic_rotation", "post_stretch_lift"],
+    "sunday": ["zone2_recovery", "post_stretch_climb"]
   },
 
   "blocks": {
@@ -23,7 +23,7 @@
       "name": "Core / PT Warmup",
       "type": "flow",
       "flow_label": "Core & PT warmup",
-      "flow_sub": "bird dog · dead bug · clamshell · glute bridge · step-down · side plank",
+      "flow_sub": "bird dog · dead bug · clamshell · glute bridge · step-down · side plank · copenhagen · band extensors",
       "exercises": [
         {
           "id": "cw1",
@@ -46,7 +46,7 @@
           "name": "Eccentric step-down",
           "sets": 3,
           "reps": 10,
-          "note": "per side, slow 3-4s descent"
+          "note": "per side, 3-4s descent"
         },
         {
           "id": "cw6",
@@ -54,6 +54,20 @@
           "sets": 2,
           "duration": 30,
           "note": "per side"
+        },
+        {
+          "id": "cw7",
+          "name": "Copenhagen plank",
+          "sets": 2,
+          "duration": 20,
+          "note": "per side — top leg on bench or chair"
+        },
+        {
+          "id": "cw8",
+          "name": "Band extensors",
+          "sets": 2,
+          "reps": 15,
+          "note": "per hand — gym only, skip at home"
         }
       ]
     },
@@ -62,45 +76,51 @@
       "name": "Abrahangs",
       "type": "flow",
       "flow_label": "Abrahangs",
-      "flow_sub": "~10 min · 6 grips · 40% effort · feet on floor",
+      "flow_sub": "~10 min · 40% effort · feet on floor · 6hr min between sessions",
       "twice_daily": true,
-      "note": "~40% effort, feet on floor. Light strain on forearms only. 6hr min between sessions.",
+      "note": "~40% effort, feet on floor. Light strain on forearms only.",
       "exercises": [
         {
           "id": "fp1",
-          "name": "4-finger open hand",
+          "name": "4-finger half crimp",
           "duration": 10,
-          "rest": 50
+          "rest": 20,
+          "sets": 6
         },
         {
           "id": "fp2",
-          "name": "Front-3 open (idx/mid/ring)",
+          "name": "3-finger drag",
           "duration": 10,
-          "rest": 50
+          "rest": 20,
+          "sets": 6
         },
         {
           "id": "fp3",
           "name": "Front-2 open (idx/mid)",
           "duration": 10,
-          "rest": 50
+          "rest": 20,
+          "sets": 2
         },
         {
           "id": "fp4",
           "name": "Middle-2 open (mid/ring)",
           "duration": 10,
-          "rest": 50
+          "rest": 20,
+          "sets": 2
         },
         {
           "id": "fp5",
           "name": "Front-2 half crimp (idx/mid)",
           "duration": 10,
-          "rest": 50
+          "rest": 20,
+          "sets": 2
         },
         {
           "id": "fp6",
           "name": "Middle-2 half crimp (mid/ring)",
           "duration": 10,
-          "rest": 50
+          "rest": 20,
+          "sets": 2
         }
       ]
     },
@@ -109,27 +129,22 @@
       "name": "Bouldering",
       "type": "flow",
       "flow_label": "Easy bouldering",
-      "flow_sub": "no limit attempts · stay below threshold · feel it out",
-      "exercises": [
-        {
-          "id": "eb1",
-          "name": "Easy bouldering",
-          "reps": "open — no crimpy holds, stay comfortable"
-        }
-      ]
+      "flow_sub": "no limit attempts · stay below threshold · no crimpy holds",
+      "exercises": [{ "id": "eb1", "name": "Easy bouldering", "reps": "open" }]
     },
 
-    "speed_climbing": {
-      "name": "Speed Climbing",
+    "climbing_wed": {
+      "name": "Wed — 4×4 or Speed",
       "type": "flow",
-      "flow_label": "Speed climbing",
-      "flow_sub": "high HR · no crimpy holds · replaces 4×4",
+      "flow_label": "Norwegian 4×4 or Speed climbing",
+      "flow_sub": "pick one — tap when done",
       "exercises": [
         {
-          "id": "sc1",
+          "id": "w4a",
           "name": "Speed climbing",
-          "reps": "open — get heart rate up"
-        }
+          "reps": "10× speed wall — HR to 4×4 zone"
+        },
+        { "id": "w4b", "name": "Norwegian 4×4", "reps": "15× continuous V3" }
       ]
     },
 
@@ -167,6 +182,13 @@
           "warmup_weight": 60
         },
         {
+          "id": "ll5",
+          "name": "Slider hamstring curl",
+          "sets": 3,
+          "reps": 8,
+          "note": "socks on floor, slow eccentric 3-4s"
+        },
+        {
           "id": "ll3",
           "name": "Weighted pull-ups",
           "sets": 3,
@@ -174,10 +196,20 @@
           "weighted": true,
           "working_weight": 55,
           "progression": [0.7, 0.85, 1.0],
-          "note": "added weight lb (~25kg)",
-          "warmup_weight": 0
+          "warmup_weight": 0,
+          "note": "added weight lb"
         },
-        { "id": "ll4", "name": "Plank hold", "sets": 3, "duration": 45 }
+        {
+          "id": "ll6",
+          "name": "Dumbbell row",
+          "sets": 3,
+          "reps": 8,
+          "note": "per side",
+          "weighted": true,
+          "working_weight": 45,
+          "progression": [0.75, 0.875, 1.0],
+          "warmup_weight": 20
+        }
       ]
     },
 
@@ -237,6 +269,147 @@
       ]
     },
 
+    "thoracic_rotation": {
+      "name": "Thoracic Mobility",
+      "type": "flow",
+      "flow_label": "Thoracic rotation",
+      "flow_sub": "cat-cow · thread the needle · 2 min",
+      "exercises": [
+        { "id": "tr1", "name": "Thoracic rotation", "reps": "2 min" }
+      ]
+    },
+
+    "mobility_recovery": {
+      "name": "Thursday Mobility",
+      "type": "checklist",
+      "exercises": [
+        {
+          "id": "th1",
+          "name": "QL foam roll",
+          "sets": 1,
+          "duration": 180,
+          "note": "left side focus — lateral to spine between last rib and hip"
+        },
+        {
+          "id": "th2",
+          "name": "McGill side bridge",
+          "sets": 3,
+          "duration": 30,
+          "note": "RIGHT side only — scoliosis correction"
+        },
+        { "id": "th3", "name": "Cat-cow", "sets": 1, "reps": 10 },
+        {
+          "id": "th4",
+          "name": "Thread the needle",
+          "sets": 2,
+          "reps": 8,
+          "note": "per side"
+        },
+        {
+          "id": "th5",
+          "name": "90/90 hip stretch",
+          "sets": 2,
+          "duration": 45,
+          "note": "per side"
+        },
+        {
+          "id": "th6",
+          "name": "Couch stretch",
+          "sets": 2,
+          "duration": 45,
+          "note": "per side — hip flexor"
+        },
+        {
+          "id": "th7",
+          "name": "Standing QL stretch",
+          "sets": 2,
+          "duration": 30,
+          "note": "left side — arm overhead, lean right"
+        },
+        {
+          "id": "th8",
+          "name": "Doorway chest stretch",
+          "sets": 2,
+          "duration": 30
+        },
+        {
+          "id": "th9",
+          "name": "Wrist extensor stretch",
+          "sets": 2,
+          "duration": 30,
+          "note": "per side"
+        }
+      ]
+    },
+
+    "post_stretch_climb": {
+      "name": "Post-Session Stretch",
+      "type": "flow",
+      "flow_label": "Post-session stretch",
+      "flow_sub": "chest · shoulders · wrists · hip flexors · QL",
+      "exercises": [
+        { "id": "psc1", "name": "Chest opener", "duration": 30 },
+        {
+          "id": "psc2",
+          "name": "Shoulder cross stretch",
+          "duration": 30,
+          "note": "per side"
+        },
+        {
+          "id": "psc3",
+          "name": "Wrist extensor stretch",
+          "duration": 30,
+          "note": "per side"
+        },
+        {
+          "id": "psc4",
+          "name": "Couch stretch",
+          "duration": 45,
+          "note": "per side"
+        },
+        {
+          "id": "psc5",
+          "name": "Standing QL stretch",
+          "duration": 30,
+          "note": "left side — arm overhead lean right"
+        }
+      ]
+    },
+
+    "post_stretch_lift": {
+      "name": "Post-Session Stretch",
+      "type": "flow",
+      "flow_label": "Post-session stretch",
+      "flow_sub": "hamstrings · hip flexors · QL · chest · wrists",
+      "exercises": [
+        {
+          "id": "psl1",
+          "name": "Standing hamstring stretch",
+          "duration": 40,
+          "note": "per side"
+        },
+        {
+          "id": "psl2",
+          "name": "Couch stretch",
+          "duration": 45,
+          "note": "per side"
+        },
+        {
+          "id": "psl3",
+          "name": "Standing QL stretch",
+          "duration": 30,
+          "note": "left side — arm overhead lean right"
+        },
+        { "id": "psl4", "name": "Chest opener", "duration": 30 },
+        {
+          "id": "psl5",
+          "name": "Wrist extensor stretch",
+          "duration": 30,
+          "note": "per side"
+        }
+      ]
+    },
+
     "zone2_recovery": {
       "name": "Zone 2 / Recovery",
       "type": "flow",
@@ -244,7 +417,7 @@
       "flow_sub": "pick one: 40 min bike · row · hike · easy climbing · full rest",
       "exercises": [
         { "id": "z1", "name": "Zone 2 cardio", "reps": "40 min bike/row/hike" },
-        { "id": "z2", "name": "Easy climbing", "reps": "10 problems V1–V3" },
+        { "id": "z2", "name": "Easy climbing", "reps": "V1–V3 only" },
         { "id": "z3", "name": "Full rest", "reps": "—" }
       ]
     },
@@ -300,16 +473,6 @@
           "rest": 120,
           "weighted": true
         }
-      ]
-    },
-
-    "_paused_climbing_4x4": {
-      "name": "4×4 Norwegian",
-      "type": "checklist",
-      "note": "PAUSED — replaced by speed climbing",
-      "exercises": [
-        { "id": "c4w", "name": "Warm-up problems", "reps": "5 problems V1→V3" },
-        { "id": "c4m", "name": "Continuous climbing (V3)", "reps": "15 rounds" }
       ]
     }
   }
