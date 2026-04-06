@@ -147,22 +147,6 @@
       padding: 16px;
     }
 
-    .deload-banner {
-      background: rgba(240, 192, 64, 0.1);
-      border: 1px solid rgba(240, 192, 64, 0.3);
-      border-radius: var(--r);
-      padding: 10px 14px;
-      margin-bottom: 16px;
-      font-family: 'Syne Mono', monospace;
-      font-size: 11px;
-      color: var(--accent2);
-      display: none;
-    }
-
-    .deload-banner.show {
-      display: block;
-    }
-
     .day-title {
       font-size: 32px;
       font-weight: 800;
@@ -774,6 +758,8 @@
   <div class="header">
     <div class="header-row">
       <div class="wordmark">workout/</div>
+      <button id="deloadBtn" onclick="toggleDeload()"
+        style="background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:'Syne Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;transition:all .2s">deload</button>
       <div class="auth-status">
         <div class="auth-dot" id="authDot"></div>
         <span id="authLabel">connecting…</span>
@@ -791,6 +777,10 @@
   </div>
 
   </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="navMain" onclick="switchView('main')"><span class="icon">◈</span>Today</button>
   </div>
 
   <script src="https://accounts.google.com/gsi/client" async></script>
@@ -812,6 +802,7 @@
     // sessionLog: { key: { sets: [{done, rpe}], weight, prescribed } }
     let sessionLog = {};
     let openCards = {};
+    let deloadMode = false;
 
     // ── AUTH ─────────────────────────────────────────────────────────────────────
 
@@ -1012,7 +1003,7 @@
       program = await r.json();
     }
 
-    function isDeloadWeek() { return new Date().getDate() <= 7; }
+    function isDeloadWeek() { return deloadMode; }
 
     function getWeekOfYear() {
       const now = new Date(), start = new Date(now.getFullYear(), 0, 1);
@@ -1059,8 +1050,7 @@
     }
 
     function getSetWeight(ex, setIdx, totalSets) {
-      const deload = isDeloadWeek();
-      const deloadMult = deload ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
+      const deloadMult = isDeloadWeek() ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
       // set 0 is warmup — fixed weight, also deloaded
       if (isWarmupSet(ex, setIdx)) {
         return Math.round(ex.warmup_weight * deloadMult / 5) * 5;
@@ -1082,6 +1072,21 @@
     function isExDone(state) { return state && state.sets.length > 0 && state.sets.every(s => s.done); }
 
     // ── RENDER ───────────────────────────────────────────────────────────────────
+
+    function toggleDeload() {
+      deloadMode = !deloadMode;
+      const btn = document.getElementById('deloadBtn');
+      if (deloadMode) {
+        btn.style.color = 'var(--accent2)';
+        btn.style.borderColor = 'var(--accent2)';
+        btn.textContent = 'deload ✓';
+      } else {
+        btn.style.color = 'var(--muted)';
+        btn.style.borderColor = 'var(--border)';
+        btn.textContent = 'deload';
+      }
+      renderDay();
+    }
 
     function buildTabs() {
       const today = new Date().getDay();
@@ -1122,9 +1127,8 @@
       });
 
       let html = `
-    ${deload ? `<div class="deload-banner show">⚡ Deload week — weights at 50%. Same sets and reps.</div>` : ''}
     <div class="day-title fade-in">${dayLabel}</div>
-    <div class="day-meta">${dateStr}${deload ? ' · deload' : ''}</div>
+    <div class="day-meta">${dateStr}</div>
     <div class="progress-wrap"><div class="progress-fill" style="width:${total ? (done / total * 100) : 0}%"></div></div>
   `;
 
