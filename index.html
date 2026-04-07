@@ -4,1605 +4,1286 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>timer/</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap"
+  <title>workout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Syne+Mono&display=swap"
     rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      -webkit-tap-highlight-color: transparent
+      -webkit-tap-highlight-color: transparent;
     }
 
     :root {
-      --bg: #0c0c0c;
-      --surface: #161616;
-      --border: #222;
-      --muted: #444;
-      --sub: #777;
-      --text: #f0f0f0;
-      --prepare: #ffb800;
-      --work: #00e64d;
-      --rest: #4da6ff;
-      --r: 10px;
+      --bg: #111111;
+      --surface: #1e1e1e;
+      --border: #2e2e2e;
+      --muted: #555555;
+      --sub: #999999;
+      --text: #ffffff;
+      --accent: #c8f000;
+      --accent2: #ffc940;
+      --red: #ff5a5a;
+      --r: 8px;
     }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'DM Mono', monospace;
+      font-family: 'Syne', sans-serif;
       min-height: 100vh;
-      overflow-x: hidden
+      padding-bottom: 16px;
+      font-size: 14px;
     }
 
-    /* ── HOME ── */
-    #home {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column
+    /* HEADER */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px 0;
     }
 
-    .home-header {
-      padding: 20px 16px 12px;
-      border-bottom: 1px solid var(--border)
-    }
-
-    .home-wordmark {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 40px;
-      letter-spacing: 2px;
-      color: var(--text);
-      line-height: 1
-    }
-
-    .home-sub {
-      font-size: 11px;
-      color: var(--sub);
-      margin-top: 2px;
-      letter-spacing: .08em
-    }
-
-    .home-body {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-      padding-bottom: 40px
-    }
-
-    .section-lbl {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .15em;
-      margin: 20px 0 10px
-    }
-
-    .section-lbl:first-child {
-      margin-top: 0
-    }
-
-    /* routine card */
-    .routine-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 14px 16px;
-      margin-bottom: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: border-color .15s;
-      user-select: none;
-    }
-
-    .routine-card:active {
-      border-color: var(--sub)
-    }
-
-    .routine-info {
-      flex: 1;
-      min-width: 0
-    }
-
-    .routine-name {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--text)
-    }
-
-    .routine-meta {
-      font-size: 11px;
-      color: var(--sub);
-      margin-top: 3px
-    }
-
-    .routine-dur {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 32px;
-      color: var(--muted);
-      flex-shrink: 0;
-      line-height: 1
-    }
-
-    .play-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--text);
-      color: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-
-    /* block pips */
-    .pip-row {
-      display: flex;
-      gap: 3px;
-      margin-top: 6px;
-      flex-wrap: wrap
-    }
-
-    .pip {
-      height: 5px;
-      border-radius: 3px;
-      flex: 1;
-      max-width: 32px;
-      min-width: 5px
-    }
-
-    .pip.prepare {
-      background: var(--prepare);
-      opacity: .8
-    }
-
-    .pip.work {
-      background: var(--work)
-    }
-
-    .pip.rest {
-      background: var(--rest);
-      opacity: .7
-    }
-
-    /* json paste */
-    .paste-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-      margin-bottom: 8px
-    }
-
-    .paste-hdr {
+    .header-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 14px;
-      cursor: pointer
-    }
-
-    .paste-hdr-lbl {
-      font-size: 12px;
-      color: var(--sub)
-    }
-
-    .paste-toggle {
-      color: var(--sub);
-      font-size: 20px;
-      line-height: 1
-    }
-
-    .paste-body {
-      display: none;
-      padding: 12px;
-      border-top: 1px solid var(--border)
-    }
-
-    .paste-body.open {
-      display: block
-    }
-
-    textarea.paste-input {
-      width: 100%;
-      min-height: 140px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 10px;
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      resize: vertical;
-      line-height: 1.5;
-    }
-
-    textarea.paste-input:focus {
-      outline: none;
-      border-color: var(--sub)
-    }
-
-    .paste-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 8px
-    }
-
-    .paste-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all .15s;
-    }
-
-    .paste-btn.run {
-      background: var(--text);
-      color: var(--bg);
-      border-color: var(--text)
-    }
-
-    .paste-btn:active {
-      opacity: .8
-    }
-
-    .paste-err {
-      font-size: 11px;
-      color: #ff4444;
-      margin-top: 6px;
-      display: none
-    }
-
-    .paste-err.show {
-      display: block
-    }
-
-    /* ── TIMER SCREEN ── */
-    #timerScreen {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 20px 120px;
-    }
-
-    #timerScreen.active {
-      display: flex
-    }
-
-    .timer-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      transition: background .4s ease;
-    }
-
-    .timer-bg.prepare {
-      background: #b87200
-    }
-
-    .timer-bg.work {
-      background: #006b28
-    }
-
-    .timer-bg.rest {
-      background: #174480
-    }
-
-    .timer-type {
-      font-size: 13px;
-      letter-spacing: .25em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      transition: color .3s;
-      font-weight: 500;
-      color: rgba(255, 255, 255, .75);
-    }
-
-    .timer-type.prepare {
-      color: rgba(255, 255, 255, .75)
-    }
-
-    .timer-type.work {
-      color: rgba(255, 255, 255, .75)
-    }
-
-    .timer-type.rest {
-      color: rgba(255, 255, 255, .75)
-    }
-
-    .timer-label {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(36px, 9vw, 54px);
-      letter-spacing: 1px;
-      line-height: 1;
-      text-align: center;
       margin-bottom: 12px;
-      min-height: 54px;
-      color: #fff;
     }
 
-    .timer-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(140px, 38vw, 220px);
-      line-height: .85;
-      letter-spacing: -6px;
-      text-align: center;
-      transition: color .2s, font-size .15s;
+    .wordmark {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -1px;
     }
 
-    .timer-num.prepare {
-      color: #fff
+    .auth-status {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .timer-num.work {
-      color: #fff
-    }
-
-    .timer-num.rest {
-      color: #fff
-    }
-
-    /* countdown: big white number, extra large */
-    .timer-num.countdown {
-      font-size: clamp(200px, 52vw, 300px)
-    }
-
-    .timer-set {
-      font-size: 13px;
-      color: rgba(255, 255, 255, .6);
-      margin-top: 16px;
-      letter-spacing: .08em
-    }
-
-    .timer-next {
-      font-size: 12px;
-      color: rgba(255, 255, 255, .45);
-      margin-top: 6px
-    }
-
-    .timer-next span {
-      color: rgba(255, 255, 255, .65)
-    }
-
-    /* progress bar */
-    .timer-prog-wrap {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+    .auth-dot {
+      width: 6px;
       height: 6px;
-      background: rgba(0, 0, 0, .3)
+      border-radius: 50%;
+      background: var(--muted);
+      flex-shrink: 0;
+      transition: background 0.3s;
     }
 
-    .timer-prog-fill {
-      height: 100%;
-      transition: width .1s linear, background .3s
+    .auth-dot.connected {
+      background: var(--accent);
     }
 
-    .timer-prog-fill.prepare {
-      background: rgba(255, 255, 255, .5)
+    .auth-dot.error {
+      background: var(--red);
     }
 
-    .timer-prog-fill.work {
-      background: rgba(255, 255, 255, .5)
+    .day-tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .timer-prog-fill.rest {
-      background: rgba(255, 255, 255, .5)
-    }
-
-    /* pause overlay when paused */
-    .timer-paused-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 5;
-      background: rgba(0, 0, 0, .55);
+    .day-tabs::-webkit-scrollbar {
       display: none;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 56px;
-      letter-spacing: 6px;
-      color: rgba(255, 255, 255, .4);
     }
 
-    .timer-paused-overlay.show {
-      display: flex
+    .tab {
+      flex-shrink: 0;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--sub);
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
     }
 
-    /* big center pause button */
-    .pause-center {
-      position: fixed;
-      bottom: 100px;
+    .tab:hover {
+      color: var(--text);
+      border-color: var(--muted);
+    }
+
+    .tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0c0c0a;
+      font-weight: 700;
+    }
+
+    .tab.today-marker::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 10;
-      width: 80px;
-      height: 80px;
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, .08);
-      border: 2px solid rgba(255, 255, 255, .2);
-      color: var(--text);
-      font-size: 28px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all .15s;
+      background: var(--accent2);
     }
 
-    .pause-center:active {
-      transform: translateX(-50%) scale(.92)
+    .tab.active.today-marker::after {
+      background: #0c0c0a;
     }
 
-    .pause-center.paused {
-      background: rgba(255, 255, 255, .15);
-      border-color: rgba(255, 255, 255, .5)
-    }
-
-    /* corner nav buttons */
-    .nav-back {
-      background: rgba(0, 0, 0, .3);
-      border-color: rgba(255, 255, 255, .2);
-      color: rgba(255, 255, 255, .7);
-      position: fixed;
-      bottom: 24px;
-      left: 20px;
-      z-index: 10;
-      height: 44px;
-      padding: 0 18px;
-      border-radius: 22px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--sub);
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .nav-skip {
-      background: rgba(0, 0, 0, .3);
-      border-color: rgba(255, 255, 255, .2);
-      color: rgba(255, 255, 255, .7);
-      position: fixed;
-      bottom: 24px;
-      right: 20px;
-      z-index: 10;
-      height: 44px;
-      padding: 0 18px;
-      border-radius: 22px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--sub);
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* stop button — top right, hold to activate */
-    .stop-btn {
-      position: fixed;
-      top: max(16px, env(safe-area-inset-top));
-      right: 16px;
-      z-index: 20;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, .2);
-      background: rgba(0, 0, 0, .3);
-      color: rgba(255, 255, 255, .6);
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .stop-ring {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: conic-gradient(#ff4444 0deg, transparent 0deg);
-    }
-
-    .stop-icon {
-      position: relative;
-      z-index: 1;
-      font-size: 13px
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      min-height: 100vh;
-      overflow-x: hidden
-    }
-
-    /* ── HOME ── */
-    #home {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column
-    }
-
-    .home-header {
-      padding: 20px 16px 12px;
-      border-bottom: 1px solid var(--border)
-    }
-
-    .home-wordmark {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 40px;
-      letter-spacing: 2px;
-      color: var(--text);
-      line-height: 1
-    }
-
-    .home-sub {
-      font-size: 11px;
-      color: var(--sub);
-      margin-top: 2px;
-      letter-spacing: .08em
-    }
-
-    .home-body {
-      flex: 1;
+    /* CONTENT */
+    .content {
       padding: 16px;
-      overflow-y: auto;
-      padding-bottom: 40px
     }
 
-    .section-lbl {
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .15em;
-      margin: 20px 0 10px
-    }
-
-    .section-lbl:first-child {
-      margin-top: 0
-    }
-
-    /* routine card */
-    .routine-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 14px 16px;
-      margin-bottom: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: border-color .15s;
-      user-select: none;
-    }
-
-    .routine-card:active {
-      border-color: var(--sub)
-    }
-
-    .routine-info {
-      flex: 1;
-      min-width: 0
-    }
-
-    .routine-name {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--text)
-    }
-
-    .routine-meta {
-      font-size: 11px;
-      color: var(--sub);
-      margin-top: 3px
-    }
-
-    .routine-dur {
-      font-family: 'Bebas Neue', sans-serif;
+    .day-title {
       font-size: 32px;
-      color: var(--muted);
-      flex-shrink: 0;
-      line-height: 1
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1;
+      margin-bottom: 4px;
     }
 
-    .play-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--text);
-      color: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-
-    /* block pips */
-    .pip-row {
-      display: flex;
-      gap: 3px;
-      margin-top: 6px;
-      flex-wrap: wrap
-    }
-
-    .pip {
-      height: 5px;
-      border-radius: 3px;
-      flex: 1;
-      max-width: 32px;
-      min-width: 5px
-    }
-
-    .pip.prepare {
-      background: var(--prepare);
-      opacity: .7
-    }
-
-    .pip.work {
-      background: var(--work)
-    }
-
-    .pip.rest {
-      background: var(--rest);
-      opacity: .6
-    }
-
-    /* json paste */
-    .paste-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-      margin-bottom: 8px
-    }
-
-    .paste-hdr {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
-      cursor: pointer
-    }
-
-    .paste-hdr-lbl {
-      font-size: 12px;
-      color: var(--sub)
-    }
-
-    .paste-toggle {
+    .day-meta {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
       color: var(--sub);
-      font-size: 20px;
-      line-height: 1
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
     }
 
-    .paste-body {
-      display: none;
-      padding: 12px;
-      border-top: 1px solid var(--border)
+    .progress-wrap {
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 20px;
+      overflow: hidden;
     }
 
-    .paste-body.open {
-      display: block
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.5s ease;
+      width: 0%;
     }
 
-    textarea.paste-input {
-      width: 100%;
-      min-height: 140px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 10px;
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
+    /* BLOCK */
+    .block {
+      margin-bottom: 24px;
+    }
+
+    .block-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .block-name {
       font-size: 11px;
-      resize: vertical;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--sub);
+    }
+
+    .block-badge {
+      font-family: 'Syne Mono', monospace;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(212, 240, 96, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(212, 240, 96, 0.2);
+    }
+
+    .block-note {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      margin-bottom: 8px;
       line-height: 1.5;
     }
 
-    textarea.paste-input:focus {
-      outline: none;
-      border-color: var(--sub)
-    }
-
-    .paste-actions {
+    /* FLOW ROW */
+    .flow-row {
       display: flex;
-      gap: 8px;
-      margin-top: 8px
-    }
-
-    .paste-btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 6px;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 14px;
+      background: var(--surface);
       border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
+      border-radius: var(--r);
+      margin-bottom: 6px;
       cursor: pointer;
-      transition: all .15s;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
     }
 
-    .paste-btn.run {
-      background: var(--text);
-      color: var(--bg);
-      border-color: var(--text)
+    .flow-row:active {
+      background: #282828;
     }
 
-    .paste-btn:active {
-      opacity: .8
+    .flow-row.done {
+      border-color: var(--muted);
+      background: #191919;
     }
 
-    .paste-err {
+    .flow-check {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--muted);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: transparent;
+      transition: all 0.2s;
+    }
+
+    .flow-row.done .flow-check {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111;
+    }
+
+    .flow-label {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .flow-row.done .flow-label {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--muted);
+    }
+
+    .flow-sub {
+      font-family: 'Syne Mono', monospace;
       font-size: 11px;
-      color: #ff4444;
-      margin-top: 6px;
-      display: none
+      color: var(--sub);
+      margin-top: 3px;
     }
 
-    .paste-err.show {
-      display: block
+    .flow-arrow {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 18px;
+      flex-shrink: 0;
     }
 
-    /* ── TIMER SCREEN ── */
-    #timerScreen {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 20px 100px;
-    }
-
-    #timerScreen.active {
-      display: flex
-    }
-
-    .timer-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      transition: background .5s ease;
-    }
-
-    .timer-bg.prepare {
-      background: #b87200
-    }
-
-    .timer-bg.work {
-      background: #006b28
-    }
-
-    .timer-bg.rest {
-      background: #174480
-    }
-
-    .timer-type {
-      font-size: 12px;
-      letter-spacing: .25em;
-      text-transform: uppercase;
+    /* EXERCISE CARD */
+    .ex-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
       margin-bottom: 8px;
-      transition: color .3s;
-    }
-
-    .timer-type.prepare {
-      color: rgba(255, 255, 255, .75)
-    }
-
-    .timer-type.work {
-      color: rgba(255, 255, 255, .75)
-    }
-
-    .timer-type.rest {
-      color: rgba(255, 255, 255, .75)
-    }
-
-    .timer-label {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(36px, 9vw, 54px);
-      letter-spacing: 1px;
-      line-height: 1;
-      text-align: center;
-      margin-bottom: 12px;
-      min-height: 54px;
-      color: #fff;
-    }
-
-    .timer-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(140px, 38vw, 220px);
-      line-height: .85;
-      letter-spacing: -6px;
-      text-align: center;
-      transition: color .3s;
-    }
-
-    .timer-num.prepare {
-      color: #fff
-    }
-
-    .timer-num.work {
-      color: #fff
-    }
-
-    .timer-num.rest {
-      color: #fff
-    }
-
-    .timer-num.countdown {
-      font-size: clamp(200px, 52vw, 300px)
-    }
-
-    .timer-set {
-      font-size: 13px;
-      color: rgba(255, 255, 255, .6);
-      margin-top: 16px;
-      letter-spacing: .08em
-    }
-
-    .timer-next {
-      font-size: 12px;
-      color: rgba(255, 255, 255, .45);
-      margin-top: 6px
-    }
-
-    .timer-next span {
-      color: rgba(255, 255, 255, .65)
-    }
-
-    /* progress bar */
-    .timer-prog-wrap {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: var(--muted)
-    }
-
-    .timer-prog-fill {
-      height: 100%;
-      transition: width .1s linear, background .3s
-    }
-
-    .timer-prog-fill.prepare {
-      background: rgba(255, 255, 255, .5)
-    }
-
-    .timer-prog-fill.work {
-      background: rgba(255, 255, 255, .5)
-    }
-
-    .timer-prog-fill.rest {
-      background: rgba(255, 255, 255, .5)
-    }
-
-    /* pause overlay when paused */
-    .timer-paused-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 5;
-      background: rgba(0, 0, 0, .6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 48px;
-      letter-spacing: 4px;
-      color: var(--sub);
-    }
-
-    .timer-paused-overlay.show {
-      display: flex
-    }
-
-    /* big center pause button */
-    .pause-center {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, .08);
-      border: 2px solid rgba(255, 255, 255, .2);
-      color: var(--text);
-      font-size: 28px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all .15s;
-    }
-
-    .pause-center:active {
-      transform: translateX(-50%) scale(.92)
-    }
-
-    .pause-center.paused {
-      background: rgba(255, 255, 255, .15);
-      border-color: rgba(255, 255, 255, .4)
-    }
-
-    /* corner nav buttons */
-    .nav-back {
-      background: rgba(0, 0, 0, .3);
-      border-color: rgba(255, 255, 255, .2);
-      color: rgba(255, 255, 255, .7);
-      position: fixed;
-      bottom: 24px;
-      left: 20px;
-      z-index: 10;
-      height: 44px;
-      padding: 0 18px;
-      border-radius: 22px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--sub);
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all .15s;
-    }
-
-    .nav-skip {
-      background: rgba(0, 0, 0, .3);
-      border-color: rgba(255, 255, 255, .2);
-      color: rgba(255, 255, 255, .7);
-      position: fixed;
-      bottom: 24px;
-      right: 20px;
-      z-index: 10;
-      height: 44px;
-      padding: 0 18px;
-      border-radius: 22px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--sub);
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all .15s;
-    }
-
-    /* stop button — top right, hold to activate */
-    .stop-btn {
-      position: fixed;
-      top: max(16px, env(safe-area-inset-top));
-      right: 16px;
-      z-index: 20;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, .2);
-      background: rgba(0, 0, 0, .3);
-      color: rgba(255, 255, 255, .6);
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       overflow: hidden;
     }
 
-    .stop-ring {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: conic-gradient(#ff4444 0deg, transparent 0deg);
-      transition: none;
+    .ex-card.all-done {
+      border-color: var(--muted);
     }
 
-    .stop-icon {
-      position: relative;
-      z-index: 1;
-      font-size: 13px
+    .ex-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
     }
 
-    /* ── DONE ── */
-    #doneScreen {
+    .ex-header:active {
+      background: #282828;
+    }
+
+    .ex-name {
+      flex: 1;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .ex-card.all-done .ex-name {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--muted);
+    }
+
+    .ex-rx {
+      font-family: 'Syne Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    .ex-card.all-done .ex-rx {
+      color: var(--muted);
+    }
+
+    .ex-note-txt {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 2px;
+    }
+
+    .ex-chip {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ex-chip.has-value {
+      color: var(--accent2);
+      border-color: var(--muted);
+    }
+
+    /* WEIGHT ROW */
+    .weight-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px 10px;
+    }
+
+    .weight-lbl {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .weight-input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      color: var(--text);
+      font-family: 'Syne Mono', monospace;
+      font-size: 14px;
+      -webkit-appearance: none;
+    }
+
+    .weight-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* LAST HINT */
+    .last-hint {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      padding: 0 14px 8px;
       display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
+    }
+
+    .last-hint.show {
+      display: block;
+    }
+
+    .last-hint span {
+      color: var(--accent2);
+    }
+
+    /* SET ROWS */
+    .set-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 14px;
+    }
+
+    .set-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+    }
+
+    .set-num {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      width: 44px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .set-check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--muted);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .set-check.done {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111;
+    }
+
+    .set-rpe-btns {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .rpe-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      color: var(--sub);
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rpe-btn:active {
+      transform: scale(0.9);
+    }
+
+    .rpe-btn.sel-low {
+      background: #2a4a00;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .rpe-btn.sel-mid {
+      background: #4a3a00;
+      border-color: var(--accent2);
+      color: var(--accent2);
+    }
+
+    .rpe-btn.sel-high {
+      background: #4a1a1a;
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .set-check.warmup {
+      border-color: var(--sub);
+      background: transparent;
+    }
+
+    .set-check.warmup.done {
+      background: var(--muted);
+      border-color: var(--muted);
+      color: var(--text);
+    }
+
+    .set-num.warmup-label {
+      color: var(--muted);
+    }
+
+    .rest-day-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+      text-align: center;
+    }
+
+    .rest-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .rest-label {
+      color: var(--sub);
+      font-size: 12px;
+      font-family: 'Syne Mono', monospace;
+    }
+
+    /* HISTORY */
+    .history-empty {
+      text-align: center;
+      color: var(--sub);
+      font-family: 'Syne Mono', monospace;
+      font-size: 12px;
+      padding: 48px 0;
+    }
+
+    .hist-day {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 12px 14px;
+      margin-bottom: 8px;
+    }
+
+    .hist-date {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      margin-bottom: 8px;
+    }
+
+    .hist-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hist-row:last-child {
+      border-bottom: none;
+    }
+
+    .hist-right {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--accent2);
+    }
+
+    /* BOTTOM NAV */
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .loading {
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      min-height: 60vh;
       gap: 12px;
-      padding: 24px;
-      background: var(--bg);
+      color: var(--sub);
+      font-family: 'Syne Mono', monospace;
+      font-size: 12px;
     }
 
-    #doneScreen.active {
-      display: flex
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
     }
 
-    .done-word {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 96px;
-      letter-spacing: 4px;
-      color: var(--work);
-      line-height: 1
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
-    .done-sub {
-      font-size: 13px;
-      color: var(--sub)
+    .fade-in {
+      animation: fadeIn 0.3s ease forwards;
     }
 
-    .done-back {
-      margin-top: 12px;
-      padding: 14px 32px;
-      border-radius: var(--r);
-      background: var(--text);
-      color: var(--bg);
-      border: none;
-      font-family: 'DM Mono', monospace;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* WARMUP SET */
+    .set-check.warmup.done {
+      background: var(--muted);
+      border-color: var(--muted);
+      color: var(--text);
+    }
+
+    .set-num.warmup-label div {
+      color: var(--muted);
+    }
+
+    /* HABIT GRID */
+    .habit-grid-wrap {
+      margin-bottom: 24px;
+    }
+
+    .habit-week {
+      display: grid;
+      grid-template-columns: 32px repeat(7, 1fr);
+      gap: 3px;
+      margin-bottom: 3px;
+      align-items: center;
+    }
+
+    .habit-week-label {
+      font-family: 'Syne Mono', monospace;
+      font-size: 9px;
+      color: var(--muted);
+      text-align: right;
+      padding-right: 4px;
+    }
+
+    .habit-day-hdr {
+      font-family: 'Syne Mono', monospace;
+      font-size: 9px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .habit-cell {
+      aspect-ratio: 1;
+      border-radius: 3px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .habit-cell.future {
+      opacity: 0.15;
+    }
+
+    .habit-cell.partial {
+      background: #3a5500;
+      border-color: #5a8000;
+    }
+
+    .habit-cell.full {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .habit-cell.today {
+      box-shadow: 0 0 0 2px var(--accent2);
+    }
+
+    .habit-legend {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      align-items: center;
+    }
+
+    .legend-pip {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      flex-shrink: 0;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HOME -->
-  <div id="home">
-    <div class="home-header">
-      <div class="home-wordmark">TIMER/</div>
-      <div class="home-sub">json-driven interval timer</div>
-      <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
-        <div style="font-size:10px;color:var(--sub);letter-spacing:.08em">VOICE</div>
-        <select id="voiceSel"
-          style="flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 8px;color:var(--text);font-family:'DM Mono',monospace;font-size:11px;-webkit-appearance:none">
-          <option>loading…</option>
-        </select>
+  <div class="header">
+    <div class="header-row">
+      <div class="wordmark">workout/</div>
+      <button id="deloadBtn" onclick="toggleDeload()"
+        style="background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:'Syne Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;transition:all .2s">deload</button>
+      <div class="auth-status">
+        <div class="auth-dot" id="authDot"></div>
+        <span id="authLabel">connecting…</span>
       </div>
     </div>
-    <div class="home-body">
-      <div class="section-lbl">Routines</div>
-      <div id="routineList"></div>
-      <div class="section-lbl">Custom JSON</div>
-      <div class="paste-wrap">
-        <div class="paste-hdr" onclick="togglePaste()">
-          <div class="paste-hdr-lbl">Paste a routine JSON</div>
-          <div class="paste-toggle" id="pasteToggle">+</div>
-        </div>
-        <div class="paste-body" id="pasteBody">
-          <textarea class="paste-input" id="pasteInput"
-            placeholder='{"name":"My Routine","sets":1,"blocks":[{"type":"prepare","label":"Get ready","duration":5},{"type":"work","label":"Exercise","duration":30,"countdown_last":3},{"type":"rest","duration":20}]}'></textarea>
-          <div class="paste-actions">
-            <button class="paste-btn" onclick="pasteExample()">Example</button>
-            <button class="paste-btn run" onclick="runPasted()">▶ Run</button>
-          </div>
-          <div class="paste-err" id="pasteErr"></div>
-        </div>
+    <div class="day-tabs" id="dayTabs"></div>
+  </div>
+
+  <div id="mainView" class="view active">
+    <div class="content" id="mainContent">
+      <div class="loading">
+        <div class="spinner"></div>loading program…
       </div>
     </div>
   </div>
 
-  <!-- DETAIL -->
-  <div id="detailScreen" style="display:none;min-height:100vh;flex-direction:column">
-    <div style="padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
-      <button onclick="closeDetail()"
-        style="background:none;border:none;color:var(--sub);font-size:22px;cursor:pointer;padding:0;line-height:1">←</button>
-      <div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px" id="detailName"></div>
-        <div style="font-size:11px;color:var(--sub)" id="detailMeta"></div>
-      </div>
-      <button id="detailPlay" onclick="startFromDetail()"
-        style="margin-left:auto;background:var(--text);color:var(--bg);border:none;border-radius:24px;padding:10px 22px;font-family:'DM Mono',monospace;font-size:13px;font-weight:500;cursor:pointer">▶
-        Start</button>
-    </div>
-    <div style="flex:1;overflow-y:auto;padding:12px 16px 40px" id="detailBlocks"></div>
   </div>
-
-  <!-- TIMER -->
-  <div id="timerScreen">
-    <div class="timer-bg" id="timerBg"></div>
-    <div class="timer-paused-overlay" id="pausedOverlay">PAUSED</div>
-
-    <button class="stop-btn" id="stopBtn">
-      <div class="stop-ring" id="stopRing"></div>
-      <div class="stop-icon">✕</div>
-    </button>
-
-    <div class="timer-type" id="timerType"></div>
-    <div class="timer-label" id="timerLabel"></div>
-    <div class="timer-num" id="timerNum">0</div>
-    <div class="timer-set" id="timerSet"></div>
-    <div class="timer-next" id="timerNext"></div>
-
-    <button class="pause-center" id="pauseBtn" onclick="togglePause()">⏸</button>
-    <button class="nav-back" onclick="backTimer()">← Back</button>
-    <button class="nav-skip" onclick="skipBlock()">Skip ›</button>
-
-    <div class="timer-prog-wrap">
-      <div class="timer-prog-fill" id="timerProg" style="width:0%"></div>
-    </div>
   </div>
-
-  <!-- DONE -->
-  <div id="doneScreen">
-    <div class="done-word">DONE</div>
-    <div class="done-sub" id="doneSub"></div>
-    <button class="done-back" onclick="backToHome()">← Back</button>
-  </div>
-
+  <script src="https://accounts.google.com/gsi/client" async></script>
   <script>
-    // ── ROUTINES ─────────────────────────────────────────────────────────────────
-    // Each routine is a JS object. To add more: just push to ROUTINES array below.
-    // Or load from JSON files — see loadRoutinesFromFolder() at bottom.
+    // ── CONFIG ───────────────────────────────────────────────────────────────────
+    const CLIENT_ID = '674439380543-atvndeqpa9tpli755h879qabar53jneo.apps.googleusercontent.com';
+    const SHEET_ID = '10ApiDRmdFru5giLImN_FYTBvAUUopjU0RpvTPHPvmrg';
+    const SHEET_TAB = 'log';
+    const PROGRAM_URL = './program.json';
+    // ─────────────────────────────────────────────────────────────────────────────
 
-    const ROUTINES = [];
+    const DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    // ── ENGINE ───────────────────────────────────────────────────────────────────
+    let accessToken = null;
+    let tokenExpiry = 0;
+    let program = null;
+    let currentDay = DAYS[new Date().getDay()];
+    // sessionLog: { key: { sets: [{done, rpe}], weight, prescribed } }
+    let sessionLog = {};
+    let openCards = {};
+    let deloadMode = false;
 
-    let routine = null, flat = [], blockIdx = 0, timeLeft = 0;
-    let totalTime = 0, elapsed = 0, paused = false, ticker = null;
-    let audioCtx = null;
+    // ── AUTH ─────────────────────────────────────────────────────────────────────
 
-    function expandBlocks(r) {
-      const sets = r.sets || 1;
-      const out = [];
-      for (let s = 0; s < sets; s++) {
-        r.blocks.forEach((b, bi) => {
-          const isLast = s === sets - 1 && bi === r.blocks.length - 1;
-          if (isLast && b.skip_on_last) return;
-          out.push({ ...b, setNum: s + 1, totalSets: sets });
+    function setAuthUI(state, label) {
+      document.getElementById('authDot').className = 'auth-dot' + (state === 'ok' ? ' connected' : state === 'err' ? ' error' : '');
+      document.getElementById('authLabel').textContent = label;
+    }
+
+    function saveToken(token, expiresIn) {
+      accessToken = token;
+      tokenExpiry = Date.now() + (expiresIn - 60) * 1000;
+      localStorage.setItem('wb_token', token);
+      localStorage.setItem('wb_expiry', String(tokenExpiry));
+      // silent refresh at 55 min so you never see the sign-in prompt mid-session
+      const refreshIn = (expiresIn - 300) * 1000;
+      if (refreshIn > 0) setTimeout(silentRefresh, refreshIn);
+    }
+
+    function silentRefresh() {
+      if (typeof google === 'undefined') return;
+      google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        prompt: '',
+        callback: (resp) => {
+          if (resp.error) return;
+          saveToken(resp.access_token, resp.expires_in);
+          setAuthUI('ok', 'sheets connected');
+        }
+      }).requestAccessToken();
+    }
+
+    function loadCachedToken() {
+      const token = localStorage.getItem('wb_token');
+      const expiry = parseInt(localStorage.getItem('wb_expiry') || '0');
+      if (token && Date.now() < expiry) { accessToken = token; tokenExpiry = expiry; return true; }
+      return false;
+    }
+
+    function showSignInButton() {
+      setAuthUI('err', 'sign in');
+      const lbl = document.getElementById('authLabel');
+      lbl.style.cursor = 'pointer';
+      lbl.style.textDecoration = 'underline';
+      lbl.onclick = manualAuth;
+    }
+
+    function silentAuth() {
+      if (typeof google === 'undefined') { setTimeout(silentAuth, 300); return; }
+      if (loadCachedToken()) {
+        setAuthUI('ok', 'sheets connected');
+        ensureSheetHeader().then(() => loadTodayState());
+        return;
+      }
+      setAuthUI('', 'signing in…');
+      google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        prompt: '',
+        callback: async (resp) => {
+          if (resp.error) { showSignInButton(); return; }
+          saveToken(resp.access_token, resp.expires_in);
+          setAuthUI('ok', 'sheets connected');
+          await ensureSheetHeader();
+          await loadTodayState();
+        }
+      }).requestAccessToken();
+    }
+
+    function manualAuth() {
+      setAuthUI('', 'signing in…');
+      const lbl = document.getElementById('authLabel');
+      lbl.style.cursor = 'default'; lbl.style.textDecoration = 'none'; lbl.onclick = null;
+      google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: 'https://www.googleapis.com/auth/spreadsheets',
+        prompt: 'consent',
+        callback: async (resp) => {
+          if (resp.error) { showSignInButton(); return; }
+          saveToken(resp.access_token, resp.expires_in);
+          setAuthUI('ok', 'sheets connected');
+          await ensureSheetHeader();
+          await loadTodayState();
+        }
+      }).requestAccessToken();
+    }
+
+    // ── SHEETS ───────────────────────────────────────────────────────────────────
+
+    async function sheetsReq(method, endpoint, body) {
+      if (!accessToken) return null;
+      const r = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}${endpoint}`, {
+        method,
+        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined
+      });
+      if (!r.ok) return null;
+      return r.json();
+    }
+
+    let headerEnsured = false;
+    async function ensureSheetHeader() {
+      if (headerEnsured) return;
+      const d = await sheetsReq('GET', `/values/${SHEET_TAB}!A1:K1`);
+      const firstCell = d?.values?.[0]?.[0];
+      if (firstCell !== 'date') {
+        await sheetsReq('PUT', `/values/${SHEET_TAB}!A1:K1?valueInputOption=RAW`, {
+          values: [['date', 'day', 'week_num', 'is_deload', 'block', 'exercise_id', 'exercise_name', 'set_num', 'weight', 'rpe', 'completed']]
         });
       }
-      return out;
+      headerEnsured = true;
     }
 
-    function totalDur(r) { return expandBlocks(r).reduce((s, b) => s + b.duration, 0); }
-    function activeDur(r) { return expandBlocks(r).filter(b => b.type === 'work').reduce((s, b) => s + b.duration, 0); }
-
-    function fmtDur(secs) {
-      const m = Math.floor(secs / 60), s = secs % 60;
-      return m > 0 ? `${m}:${String(s).padStart(2, '0')}` : `${s}s`;
+    let rowsCache = null;
+    async function getAllRows() {
+      if (rowsCache) return rowsCache;
+      const d = await sheetsReq('GET', `/values/${SHEET_TAB}!A1:K2000`);
+      rowsCache = d?.values || [];
+      return rowsCache;
     }
+    function invalidateCache() { rowsCache = null; }
 
-    function buildPips(r) {
-      return expandBlocks(r).map(b =>
-        `<div class="pip ${b.type}" title="${b.label || b.type} ${b.duration}s"></div>`
-      ).join('');
-    }
+    // cols: 0=date,1=day,2=week_num,3=is_deload,4=block,5=ex_id,6=ex_name,7=set_num,8=weight,9=rpe,10=completed
+    async function logSet(exId, exName, blockName, setNum, weight, rpe, completed) {
+      if (!accessToken) return;
+      const today = new Date().toISOString().slice(0, 10);
+      const row = [today, currentDay, getWeekOfYear(), isDeloadWeek() ? 'yes' : 'no',
+        blockName, exId, exName, setNum, weight || '', rpe || '', completed ? 'yes' : 'no'];
 
-    function startRoutine(r) {
-      routine = r; flat = expandBlocks(r);
-      blockIdx = 0; elapsed = 0;
-      totalTime = flat.reduce((s, b) => s + b.duration, 0);
-      paused = false;
-      document.getElementById('home').style.display = 'none';
-      document.getElementById('doneScreen').classList.remove('active');
-      document.getElementById('timerScreen').classList.add('active');
-      startBlock();
-    }
-
-    let detailRoutine = null;
-
-    function openDetail(r) {
-      detailRoutine = r;
-      document.getElementById('home').style.display = 'none';
-      const ds = document.getElementById('detailScreen');
-      ds.style.display = 'flex';
-      document.getElementById('detailName').textContent = r.name;
-      document.getElementById('detailMeta').textContent =
-        `${fmtDur(totalDur(r))} total · ${fmtDur(activeDur(r))} active`;
-
-      const blocks = expandBlocks(r);
-      const TYPE_COLOR = { prepare: 'var(--prepare)', work: 'var(--work)', rest: 'var(--rest)' };
-      const TYPE_LABEL = { prepare: 'PREPARE', work: 'WORK', rest: 'REST' };
-
-      let html = '';
-      let setNum = 0, prevSet = 0;
-      blocks.forEach((b, i) => {
-        if (b.totalSets > 1 && b.setNum !== prevSet) {
-          prevSet = b.setNum;
-          html += `<div style="font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:14px 0 6px">Set ${b.setNum} / ${b.totalSets}</div>`;
+      const rows = await getAllRows();
+      let existingIdx = -1;
+      for (let i = 1; i < rows.length; i++) {
+        if (rows[i][0] === today && rows[i][1] === currentDay && rows[i][5] === exId && String(rows[i][7]) === String(setNum)) {
+          existingIdx = i + 1; break;
         }
-        html += `<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:5px">
-      <div style="width:3px;height:36px;border-radius:2px;background:${TYPE_COLOR[b.type]};flex-shrink:0"></div>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:11px;color:${TYPE_COLOR[b.type]};letter-spacing:.1em">${TYPE_LABEL[b.type]}</div>
-        <div style="font-size:14px;font-weight:500;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${b.label || '—'}</div>
-      </div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--muted);flex-shrink:0">${b.duration}s</div>
-    </div>`;
-      });
-      document.getElementById('detailBlocks').innerHTML = html;
-    }
-
-    function closeDetail() {
-      document.getElementById('detailScreen').style.display = 'none';
-      document.getElementById('home').style.display = 'flex';
-    }
-
-    function startFromDetail() {
-      document.getElementById('detailScreen').style.display = 'none';
-      startRoutine(detailRoutine);
-    }
-
-    function loadVoices() {
-      const voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
-      const sel = document.getElementById('voiceSel');
-      if (!sel || !voices.length) return;
-      sel.innerHTML = voices.map((v, i) =>
-        `<option value="${i}">${v.name.replace('com.apple.ttsbundle.', '').replace('com.apple.speech.synthesis.voice.', '')}</option>`
-      ).join('');
-      // prefer a natural-sounding voice
-      const preferred = voices.findIndex(v =>
-        /samantha|karen|daniel|moira|siri|natural|neural|enhanced/i.test(v.name)
-      );
-      sel.value = preferred >= 0 ? preferred : 0;
-      selectedVoice = voices[preferred >= 0 ? preferred : 0];
-      sel.onchange = () => { selectedVoice = voices[parseInt(sel.value)]; };
-    }
-
-    function speak(text) {
-      if (!text || !window.speechSynthesis) return;
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      if (selectedVoice) u.voice = selectedVoice;
-      u.rate = 0.95; u.pitch = 1.0; u.volume = 1.0;
-      speechSynthesis.speak(u);
-    }
-
-    function startBlock() {
-      if (blockIdx >= flat.length) { finish(); return; }
-      const b = flat[blockIdx];
-      timeLeft = b.duration;
-
-      // announce based on type
-      if (b.type === 'prepare') {
-        speak(`${b.label}`);
-      } else if (b.type === 'work') {
-        speak('Start');
-      } else if (b.type === 'rest') {
-        speak(b.label || 'Rest');
       }
 
-      updateUI();
-      clearInterval(ticker);
-      ticker = setInterval(tick, 1000);
-    }
-
-    function tick() {
-      if (paused) return;
-      timeLeft--; elapsed++;
-      const b = flat[blockIdx];
-      const cd = b.countdown_last || 0;
-      if (cd > 0 && timeLeft > 0 && timeLeft <= cd) beep(300, .06);
-      if (timeLeft <= 0) {
-        beep(520, .12);
-        blockIdx++;
-        startBlock();
-        return;
-      }
-      updateUI();
-    }
-
-    function updateUI() {
-      if (blockIdx >= flat.length) return;
-      const b = flat[blockIdx];
-      const type = b.type;
-      const cd = b.countdown_last || 0;
-      const isCd = cd > 0 && timeLeft <= cd;
-
-      document.getElementById('timerBg').className = `timer-bg ${type}`;
-      document.getElementById('timerType').className = `timer-type ${type}`;
-      document.getElementById('timerType').textContent = type.toUpperCase();
-      document.getElementById('timerLabel').textContent = b.label || '';
-      document.getElementById('timerNum').className = `timer-num ${isCd ? 'countdown' : type}`;
-      document.getElementById('timerNum').textContent = timeLeft;
-      document.getElementById('timerProg').className = `timer-prog-fill ${type}`;
-      document.getElementById('timerProg').style.width = totalTime > 0 ? (elapsed / totalTime * 100) + '%' : '0%';
-
-      const si = b.totalSets > 1 ? `Set ${b.setNum} / ${b.totalSets}` : '';
-      document.getElementById('timerSet').textContent = si;
-
-      const next = flat[blockIdx + 1];
-      document.getElementById('timerNext').innerHTML = next
-        ? `Next: <span>${next.label || next.type} · ${next.duration}s</span>` : '';
-    }
-
-    function togglePause() {
-      paused = !paused;
-      const btn = document.getElementById('pauseBtn');
-      const overlay = document.getElementById('pausedOverlay');
-      btn.textContent = paused ? '▶' : '⏸';
-      btn.classList.toggle('paused', paused);
-      overlay.classList.toggle('show', paused);
-    }
-
-    // stop button — hold 3 seconds
-    let stopHoldTimer = null;
-    let stopHoldStart = null;
-    let stopRingAnim = null;
-
-    function startStopHold() {
-      stopHoldStart = Date.now();
-      stopRingAnim = setInterval(() => {
-        const elapsed = Date.now() - stopHoldStart;
-        const pct = Math.min(elapsed / 3000, 1);
-        const deg = pct * 360;
-        document.getElementById('stopRing').style.background =
-          `conic-gradient(#ff4444 ${deg}deg, transparent ${deg}deg)`;
-        if (pct >= 1) {
-          clearInterval(stopRingAnim);
-          stopTimer();
-        }
-      }, 30);
-    }
-
-    function cancelStopHold() {
-      if (stopRingAnim) clearInterval(stopRingAnim);
-      stopRingAnim = null; stopHoldStart = null;
-      document.getElementById('stopRing').style.background =
-        'conic-gradient(#ff4444 0deg, transparent 0deg)';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('stopBtn');
-      btn.addEventListener('mousedown', startStopHold);
-      btn.addEventListener('touchstart', e => { e.preventDefault(); startStopHold(); });
-      btn.addEventListener('mouseup', cancelStopHold);
-      btn.addEventListener('mouseleave', cancelStopHold);
-      btn.addEventListener('touchend', cancelStopHold);
-      btn.addEventListener('touchcancel', cancelStopHold);
-    });
-
-    function skipBlock() {
-      clearInterval(ticker);
-      elapsed += timeLeft; timeLeft = 0;
-      blockIdx++;
-      startBlock();
-    }
-
-    function backTimer() {
-      clearInterval(ticker);
-      speechSynthesis.cancel();
-      // if more than 2s elapsed on this block — restart it (like pressing back mid-song)
-      const blockElapsed = flat[blockIdx].duration - timeLeft;
-      if (blockElapsed > 2) {
-        elapsed -= blockElapsed;
-        if (elapsed < 0) elapsed = 0;
-        startBlock();
+      if (existingIdx > 0) {
+        await sheetsReq('PUT', `/values/${SHEET_TAB}!A${existingIdx}:K${existingIdx}?valueInputOption=RAW`, { values: [row] });
       } else {
-        // at the very start of this block — go to previous block
-        if (blockIdx > 0) {
-          blockIdx--;
-          elapsed -= flat[blockIdx].duration;
-          if (elapsed < 0) elapsed = 0;
-          startBlock();
+        await sheetsReq('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, { values: [row] });
+      }
+      invalidateCache();
+    }
+
+    async function loadDayState(day, dateStr) {
+      if (!accessToken) return;
+      const today = dateStr || new Date().toISOString().slice(0, 10);
+
+      // init all states for this day
+      const deload = isDeloadWeek();
+      const allBlocks = [...(program.daily || []), ...(program.weekly[day] || [])];
+      allBlocks.forEach(bkId => {
+        const block = program.blocks[bkId];
+        if (!block) return;
+        if (block.type === 'flow') {
+          const flowId = `flow-${bkId}`;
+          const k = stateKey(day, flowId);
+          if (!sessionLog[k]) sessionLog[k] = { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
         } else {
-          // already at first block — restart from top
-          blockIdx = 0; elapsed = 0;
-          startBlock();
+          block.exercises.forEach(ex => {
+            if (ex.weighted || ex.sets) {
+              const k = stateKey(day, ex.id);
+              if (!sessionLog[k]) {
+                const n = numSets(ex);
+                sessionLog[k] = {
+                  sets: Array.from({ length: n }, () => ({ done: false, rpe: null })),
+                  weight: '', prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : ''
+                };
+              }
+            }
+          });
+        }
+      });
+
+      const rows = await getAllRows();
+      rows.forEach(r => {
+        if (!r[0] || r[0] !== today || r[1] !== day) return;
+        const exId = r[5];
+        const rawSetNum = parseInt(r[7]);
+        const k = stateKey(day, exId);
+        if (!sessionLog[k]) return;
+        const setIdx = exId.startsWith('flow-') ? 0 : rawSetNum;
+        if (setIdx >= 0 && setIdx < sessionLog[k].sets.length) {
+          sessionLog[k].sets[setIdx].done = r[10] === 'yes';
+          sessionLog[k].sets[setIdx].rpe = r[9] ? parseInt(r[9]) : null;
+        }
+      });
+    }
+
+    async function loadTodayState() {
+      await loadDayState(currentDay);
+      renderDay();
+    }
+
+    async function fetchHistory() {
+      const rows = await getAllRows();
+      // skip header row and any header-looking rows
+      return rows.filter(r => r[0] && r[0] !== 'date' && r[0].match(/^\d{4}/));
+    }
+
+    async function fetchLastSession(exId) {
+      const rows = await fetchHistory();
+      const today = new Date().toISOString().slice(0, 10);
+      const matches = rows.filter(r => r[5] === exId && r[0] !== today && r[10] === 'yes');
+      if (!matches.length) return null;
+      const last = matches[matches.length - 1];
+      return { weight: last[8] || '', rpe: last[9] || '' };
+    }
+
+    // ── PROGRAM ──────────────────────────────────────────────────────────────────
+
+    async function loadProgram() {
+      const r = await fetch(PROGRAM_URL);
+      program = await r.json();
+    }
+
+    function isDeloadWeek() { return deloadMode; }
+
+    function getWeekOfYear() {
+      const now = new Date(), start = new Date(now.getFullYear(), 0, 1);
+      return Math.ceil(((now - start) / 86400000 + start.getDay() + 1) / 7);
+    }
+
+    function getRx(ex, deload) {
+      const sets = ex.sets || 1;
+      if (ex.reps) return `${sets}×${ex.reps}`;
+      if (ex.duration) return `${sets}×${ex.duration}s`;
+      return '';
+    }
+
+    function numSets(ex) {
+      // warmup_weight adds a set 0
+      const base = ex.sets || 1;
+      return ex.warmup_weight != null ? base + 1 : base;
+    }
+
+    // ── STATE ─────────────────────────────────────────────────────────────────────
+
+    function stateKey(day, exId, date) { const d = date || new Date().toISOString().slice(0, 10); return `${d}-${day}-${exId}`; }
+
+    function initState(ex, deload) {
+      const k = stateKey(currentDay, ex.id);
+      if (!sessionLog[k]) {
+        const n = numSets(ex);
+        sessionLog[k] = {
+          sets: Array.from({ length: n }, () => ({ done: false, rpe: null })),
+          weight: '',
+          prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : ''
+        };
+      }
+      return sessionLog[k];
+    }
+
+    function getState(exId) {
+      const k = stateKey(currentDay, exId);
+      return sessionLog[k] || null;
+    }
+
+    function isWarmupSet(ex, setIdx) {
+      return ex.warmup_weight != null && setIdx === 0;
+    }
+
+    function getSetWeight(ex, setIdx, totalSets) {
+      const deloadMult = isDeloadWeek() ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
+      // set 0 is warmup — fixed weight, also deloaded
+      if (isWarmupSet(ex, setIdx)) {
+        return Math.round(ex.warmup_weight * deloadMult / 5) * 5;
+      }
+      // working sets — offset by 1 if warmup exists
+      const workingSetIdx = ex.warmup_weight != null ? setIdx - 1 : setIdx;
+      const workingSets = ex.warmup_weight != null ? totalSets - 1 : totalSets;
+      if (!ex.working_weight) {
+        const base = ex.prescribed_weight != null ? ex.prescribed_weight : null;
+        return base != null ? Math.round(base * deloadMult / 5) * 5 : null;
+      }
+      const prog = ex.progression || [1.0];
+      const offset = prog.length - workingSets;
+      const adjustedIdx = Math.max(0, offset + workingSetIdx);
+      const pct = prog[Math.min(adjustedIdx, prog.length - 1)];
+      return Math.round(ex.working_weight * pct * deloadMult / 5) * 5;
+    }
+
+    function isExDone(state) { return state && state.sets.length > 0 && state.sets.every(s => s.done); }
+
+    // ── RENDER ───────────────────────────────────────────────────────────────────
+
+    function toggleDeload() {
+      deloadMode = !deloadMode;
+      const btn = document.getElementById('deloadBtn');
+      if (deloadMode) {
+        btn.style.color = 'var(--accent2)';
+        btn.style.borderColor = 'var(--accent2)';
+        btn.textContent = 'deload ✓';
+      } else {
+        btn.style.color = 'var(--muted)';
+        btn.style.borderColor = 'var(--border)';
+        btn.textContent = 'deload';
+      }
+      renderDay();
+    }
+
+    function buildTabs() {
+      const today = new Date().getDay();
+      document.getElementById('dayTabs').innerHTML = DAYS.map((d, i) => {
+        const isToday = i === today, isActive = d === currentDay;
+        return `<button class="tab${isActive ? ' active' : ''}${isToday ? ' today-marker' : ''}" onclick="selectDay('${d}')">${DAY_SHORT[i]}</button>`;
+      }).join('');
+    }
+
+    async function renderDay() {
+      const deload = isDeloadWeek();
+      const dayBlocks = [...(program.daily || []), ...(program.weekly[currentDay] || [])];
+      const dayObj = program.blocks;
+      const dayLabel = currentDay.charAt(0).toUpperCase() + currentDay.slice(1);
+      const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+      // init all states first
+      dayBlocks.forEach(bkId => {
+        const block = dayObj[bkId];
+        if (!block || block.type === 'flow') return;
+        block.exercises.forEach(ex => { if (ex.weighted || ex.sets) initState(ex, deload); });
+      });
+
+      // progress
+      let total = 0, done = 0;
+      dayBlocks.forEach(bkId => {
+        const block = dayObj[bkId];
+        if (!block) return;
+        if (block.type === 'flow') {
+          total++; const st = getState(`flow-${bkId}`); if (st?.sets[0]?.done) done++;
+        } else {
+          block.exercises.forEach(ex => {
+            total++;
+            const st = getState(ex.id);
+            if (isExDone(st)) done++;
+          });
+        }
+      });
+
+      let html = `
+    <div class="day-title fade-in">${dayLabel}</div>
+    <div class="day-meta">${dateStr}</div>
+    <div class="progress-wrap"><div class="progress-fill" style="width:${total ? (done / total * 100) : 0}%"></div></div>
+  `;
+
+      if (!dayBlocks.length) {
+        html += `<div class="rest-day-card"><div class="rest-icon">○</div><div class="rest-label">rest day</div></div>`;
+      } else {
+        for (const bkId of dayBlocks) {
+          const block = dayObj[bkId];
+          if (!block) continue;
+          html += `<div class="block">
+        <div class="block-header">
+          <div class="block-name">${block.name}</div>
+          ${block.twice_daily ? `<div class="block-badge">2×daily</div>` : ''}
+        </div>
+        ${block.note ? `<div class="block-note">${block.note}</div>` : ''}`;
+
+          if (block.type === 'flow') {
+            const flowId = `flow-${bkId}`;
+            const st = getState(flowId) || { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
+            if (!getState(flowId)) { const k = stateKey(currentDay, flowId); sessionLog[k] = st; }
+            html += `
+          <div class="flow-row${st.sets[0].done ? ' done' : ''}">
+            <div class="flow-check" onclick="toggleFlowDone('${flowId}','${block.flow_label || block.name}','${block.name}')">${st.sets[0].done ? '✓' : ''}</div>
+            <div style="flex:1;min-width:0">
+              <div class="flow-label">${block.flow_label || block.name}</div>
+              <div class="flow-sub">${block.flow_sub || ''}</div>
+            </div>
+            ${block.timer_routine ? `<button onclick="openTimer('${bkId}')" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-family:'Syne Mono',monospace;font-size:10px;color:var(--sub);cursor:pointer;flex-shrink:0">▶ timer</button>` : ''}
+            <div class="flow-arrow" style="cursor:default">›</div>
+          </div>`;
+          } else {
+            for (const ex of block.exercises) {
+              const st = initState(ex, deload);
+              const rx = getRx(ex, deload);
+              const allDone = isExDone(st);
+              const isOpen = openCards[ex.id];
+
+              const deloadMult = isDeloadWeek() ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
+              const workingW = ex.working_weight ? Math.round(ex.working_weight * deloadMult / 5) * 5 : ex.prescribed_weight;
+
+              html += `<div class="ex-card${allDone ? ' all-done' : ''}" id="card-${ex.id}">
+            <div class="ex-header" onclick="toggleCard('${ex.id}')">
+              <div class="ex-info" style="flex:1;min-width:0">
+                <div class="ex-name">${ex.name}</div>
+                ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
+                ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
+              </div>
+              ${workingW != null ? `<div class="ex-chip has-value">${workingW}lb</div>` : ''}
+            </div>`;
+
+              if (isOpen) {
+                st.sets.forEach((set, i) => {
+                  const rpe = set.rpe;
+                  const setW = getSetWeight(ex, i, st.sets.length);
+                  const isWorking = !isWarmupSet(ex, i);
+                  const isLastSet = i === st.sets.length - 1;
+                  const warmup = isWarmupSet(ex, i);
+                  const setLabel = warmup ? 'W/U' : `Set ${warmup ? i : (ex.warmup_weight != null ? i : i + 1)}`;
+                  const actualSetNum = warmup ? 0 : (ex.warmup_weight != null ? i : i + 1);
+                  html += `<div class="set-divider"></div>
+                <div class="set-row">
+                  <div class="set-num${warmup ? ' warmup-label' : ''}">
+                    <div>${warmup ? 'W/U' : `Set ${ex.warmup_weight != null ? i : i + 1}`}</div>
+                    ${setW != null ? `<div style="color:${warmup ? 'var(--muted)' : isLastSet ? 'var(--accent2)' : 'var(--sub)'};font-size:12px;font-family:'Syne Mono',monospace">${setW}lb</div>` : ''}
+                  </div>
+                  <div class="set-check${warmup ? ' warmup' : ''}${set.done ? ' done' : ''}" onclick="toggleSet('${ex.id}','${ex.name}','${block.name}',${i})">${set.done ? '✓' : ''}</div>
+                  <div class="set-rpe-btns">
+                    ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
+                    const cls = rpe === n ? (n <= 6 ? 'sel-low' : n <= 8 ? 'sel-mid' : 'sel-high') : '';
+                    return `<button class="rpe-btn ${cls}" onclick="event.stopPropagation();setRpe('${ex.id}','${ex.name}','${block.name}',${i},${n},${setW || 0})">${n}</button>`;
+                  }).join('')}
+                  </div>
+                </div>`;
+                });
+              }
+
+              html += `</div>`;
+            }
+          }
+          html += `</div>`;
         }
       }
-    }
 
-    function stopTimer() {
-      clearInterval(ticker);
-      speechSynthesis.cancel();
-      document.getElementById('timerScreen').classList.remove('active');
-      document.getElementById('home').style.display = 'flex';
-      // reset state
-      routine = null; flat = []; blockIdx = 0;
-    }
+      document.getElementById('mainContent').innerHTML = html;
 
-    function finish() {
-      clearInterval(ticker);
-      speechSynthesis.cancel();
-      document.getElementById('timerScreen').classList.remove('active');
-      document.getElementById('doneScreen').classList.add('active');
-      document.getElementById('doneSub').textContent = `${routine.name} · ${fmtDur(totalTime)}`;
-      beep(660, .18);
-      setTimeout(() => beep(880, .18), 220);
-      setTimeout(() => beep(1100, .18), 440);
-      setTimeout(() => speak('Session complete. Well done.'), 600);
-    }
-
-    function backToHome() {
-      document.getElementById('doneScreen').classList.remove('active');
-      document.getElementById('home').style.display = 'flex';
-    }
-
-    function beep(freq, vol) {
-      try {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const o = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        o.connect(g); g.connect(audioCtx.destination);
-        o.frequency.value = freq;
-        g.gain.setValueAtTime(vol, audioCtx.currentTime);
-        g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + .18);
-        o.start(); o.stop(audioCtx.currentTime + .18);
-      } catch (e) { }
-    }
-
-    // ── HOME ──────────────────────────────────────────────────────────────────────
-
-    function renderHome() {
-      const list = document.getElementById('routineList');
-      // if there's a paused routine in progress, show resume card first
-      if (routine && paused) {
-        const resumeCard = `<div class="routine-card" style="border-color:var(--work)" onclick="resumeTimer()">
-      <div class="routine-info">
-        <div class="routine-name" style="color:var(--work)">▶ Resume: ${routine.name}</div>
-        <div class="routine-meta">paused · ${fmtDur(timeLeft)} left on current block</div>
-      </div>
-    </div>`;
-        list.innerHTML = resumeCard + (ROUTINES.length ? ROUTINES.map((r, i) => routineCard(r, i)).join('') : '');
-        return;
-      }
-      if (!ROUTINES.length) {
-        list.innerHTML = '<div style="font-size:12px;color:var(--sub);padding:8px 0">No routines loaded. Paste JSON below.</div>';
-        return;
-      }
-      list.innerHTML = ROUTINES.map((r, i) => routineCard(r, i)).join('');
-    }
-
-    function routineCard(r, i) {
-      const active = activeDur(r);
-      return `<div class="routine-card" onclick="openDetail(ROUTINES[${i}])">
-    <div class="routine-info">
-      <div class="routine-name">${r.name}</div>
-      <div class="routine-meta">${expandBlocks(r).length} blocks · ${fmtDur(active)} active</div>
-      <div class="pip-row">${buildPips(r)}</div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;gap:2px">
-      <div class="routine-dur">${fmtDur(totalDur(r))}</div>
-      <div style="font-size:10px;color:var(--muted);letter-spacing:.06em">total</div>
-    </div>
-    <div class="play-btn" onclick="event.stopPropagation();startRoutine(ROUTINES[${i}])">▶</div>
-  </div>`;
-    }
-
-    function resumeTimer() {
-      document.getElementById('home').style.display = 'none';
-      document.getElementById('timerScreen').classList.add('active');
-      paused = false;
-      document.getElementById('pauseBtn').textContent = '⏸';
-      document.getElementById('pauseBtn').classList.remove('paused');
-      document.getElementById('pausedOverlay').classList.remove('show');
-      updateUI();
-      clearInterval(ticker);
-      ticker = setInterval(tick, 1000);
-    }
-
-    function togglePaste() {
-      const body = document.getElementById('pasteBody');
-      const tog = document.getElementById('pasteToggle');
-      const open = body.classList.toggle('open');
-      tog.textContent = open ? '−' : '+';
-    }
-
-    function pasteExample() {
-      document.getElementById('pasteInput').value = JSON.stringify({
-        name: "Example — 4F Crimp",
-        sets: 6,
-        blocks: [
-          { type: "prepare", label: "4F Crimp — get set", duration: 5 },
-          { type: "work", label: "4F Crimp", duration: 13, countdown_last: 3 },
-          { type: "rest", label: "Rest", duration: 20, skip_on_last: true }
-        ]
-      }, null, 2);
-      document.getElementById('pasteErr').classList.remove('show');
-    }
-
-    function runPasted() {
-      const raw = document.getElementById('pasteInput').value.trim();
-      const err = document.getElementById('pasteErr');
-      try {
-        const r = JSON.parse(raw);
-        if (!r.blocks || !Array.isArray(r.blocks)) throw new Error('Missing "blocks" array');
-        err.classList.remove('show');
-        startRoutine(r);
-      } catch (e) {
-        err.textContent = e.message;
-        err.classList.add('show');
+      // async: load last session hints
+      if (accessToken) {
+        dayBlocks.forEach(bkId => {
+          const block = dayObj[bkId];
+          if (!block || block.type === 'flow') return;
+          block.exercises.forEach(ex => { if (ex.weighted !== false) loadLastHint(ex.id); });
+        });
       }
     }
 
-    // ── LOAD ROUTINES FROM JSON FILES ─────────────────────────────────────────────
-    // Drop any .json file into /routines/ — it appears automatically.
-    // No index.json needed. Uses GitHub API to list folder contents.
-    // Falls back to index.json if not on GitHub Pages (e.g. localhost).
-
-    const GITHUB_REPO = '0xBN/interval-timer';
-    const GITHUB_BRANCH = 'main';
-
-    async function loadRoutines() {
-      let files = [];
-
-      try {
-        // Try GitHub API first
-        const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/routines?ref=${GITHUB_BRANCH}`;
-        const res = await fetch(apiUrl);
-        if (res.ok) {
-          const contents = await res.json();
-          files = contents
-            .filter(f => f.name.endsWith('.json'))
-            .map(f => f.name);
-        } else {
-          throw new Error('api failed');
-        }
-      } catch (e) {
-        // Fallback to index.json (localhost dev)
-        try {
-          const idx = await fetch('./routines/index.json');
-          if (idx.ok) files = await idx.json();
-        } catch (e2) { }
+    async function loadLastHint(exId) {
+      const last = await fetchLastSession(exId);
+      const el = document.getElementById(`hint-${exId}`);
+      if (el && last && (last.weight || last.rpe)) {
+        const parts = [];
+        if (last.weight) parts.push(last.weight + 'lb');
+        if (last.rpe) parts.push(`RPE ${last.rpe}`);
+        el.innerHTML = `last: <span>${parts.join(' · ')}</span>`;
+        el.classList.add('show');
       }
-
-      for (const f of files) {
-        try {
-          const res = await fetch(`./routines/${f}`);
-          if (res.ok) ROUTINES.push(await res.json());
-        } catch (e) { }
-      }
-
-      renderHome();
     }
 
-    loadRoutines().then(() => {
-      // ── URL PARAM LAUNCH ────────────────────────────────────────────────────────
-      // Must run after loadRoutines so renderHome() doesn't overwrite the timer screen
-      try {
-        const raw = new URLSearchParams(window.location.search).get('r');
-        if (!raw) return;
-        const routine = JSON.parse(raw);
-        if (!routine?.blocks) return;
-        startRoutine(routine);
-      } catch (e) {
-        console.error('URL param parse failed:', e);
-      }
-    });
-    // load voices — may fire async on some browsers
-    if (window.speechSynthesis) {
-      speechSynthesis.onvoiceschanged = loadVoices;
-      loadVoices();
+    // ── INTERACTIONS ─────────────────────────────────────────────────────────────
+
+    function openTimer(blockId) {
+      const routine = program.blocks[blockId]?.timer_routine;
+      if (!routine) return;
+      const encoded = encodeURIComponent(JSON.stringify(routine));
+      window.open(`https://0xbn.github.io/interval-timer/?r=${encoded}`, '_blank');
     }
+
+    function toggleCard(exId) {
+      openCards[exId] = !openCards[exId];
+      renderDay();
+    }
+
+    function toggleFlowDone(flowId, exName, blockName) {
+      const k = stateKey(currentDay, flowId);
+      if (!sessionLog[k]) sessionLog[k] = { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
+      sessionLog[k].sets[0].done = !sessionLog[k].sets[0].done;
+      logSet(flowId, exName, blockName, 1, '', null, sessionLog[k].sets[0].done);
+      renderDay();
+    }
+
+    function toggleSet(exId, exName, blockName, setIdx) {
+      const st = getState(exId);
+      if (!st) return;
+      st.sets[setIdx].done = !st.sets[setIdx].done;
+      logSet(exId, exName, blockName, setIdx, st.weight, st.sets[setIdx].rpe, st.sets[setIdx].done);
+      renderDay();
+    }
+
+    function setRpe(exId, exName, blockName, setIdx, val, prescribedWeight) {
+      const st = getState(exId);
+      if (!st) return;
+      st.sets[setIdx].rpe = val;
+      st.sets[setIdx].done = true;
+      logSet(exId, exName, blockName, setIdx, prescribedWeight || '', val, true);
+      renderDay();
+    }
+
+    // ── HISTORY — HABIT GRID ─────────────────────────────────────────────────────
+
+    async function renderHistory() {
+      const el = document.getElementById('histContent');
+      el.innerHTML = '<div class="history-empty">use the sheet for analysis</div>';
+    }
+
+    // ── NAV ──────────────────────────────────────────────────────────────────────
+
+    function selectDay(day) {
+      currentDay = day; openCards = {};
+      buildTabs(); renderDay();
+      if (accessToken) loadDayState(day).then(() => renderDay());
+      switchView('main');
+    }
+
+    function switchView(view) {
+      document.getElementById('mainView').classList.toggle('active', view === 'main');
+      document.getElementById('navMain').classList.toggle('active', view === 'main');
+    }
+
+    // ── INIT ─────────────────────────────────────────────────────────────────────
+
+    async function init() {
+      await loadProgram();
+      buildTabs();
+      renderDay();
+      setTimeout(() => {
+        document.querySelector('.tab.active')?.scrollIntoView({ inline: 'center', behavior: 'smooth' });
+      }, 100);
+      setTimeout(silentAuth, 300);
+    }
+
+    init();
   </script>
 </body>
 
