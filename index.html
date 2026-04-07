@@ -768,12 +768,19 @@
     function isExDone(state) { return state && state.sets.length > 0 && state.sets.every(s => s.done); }
 
     // ── TIMER LINK ────────────────────────────────────────────────────────────
+    const DEFAULT_REST = {
+      name: "Rest — 2 min",
+      sets: 1,
+      blocks: [{ "type": "rest", "label": "Rest", "duration": 120, "countdown_last": 10 }]
+    };
+
     function timerUrl(routine) {
       return TIMER_BASE + '?r=' + encodeURIComponent(JSON.stringify(routine));
     }
-    function timerLink(routine) {
-      if (!routine) return '';
-      return `<a href="${timerUrl(routine)}" target="_blank" onclick="event.stopPropagation()" class="timer-btn">▶ timer</a>`;
+    function timerLink(routine, useDefault = false) {
+      const r = routine || (useDefault ? DEFAULT_REST : null);
+      if (!r) return '';
+      return `<a href="${timerUrl(r)}" target="_blank" onclick="event.stopPropagation()" class="timer-btn">▶ timer</a>`;
     }
 
     // ── RENDER ────────────────────────────────────────────────────────────────
@@ -856,7 +863,7 @@ ${block.note ? `<div class="block-note">${block.note}</div>` : ''}`;
     ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
     ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
   </div>
-  ${timerLink(ex.timer_routine)}
+  ${timerLink(ex.timer_routine, true)}
   ${workingW != null ? `<div class="ex-chip has-value">${workingW}lb</div>` : ''}
 </div>`;
 
