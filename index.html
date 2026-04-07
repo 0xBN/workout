@@ -1237,6 +1237,13 @@
 
     // ── INTERACTIONS ─────────────────────────────────────────────────────────────
 
+    function openTimer(blockId) {
+      const routine = program.blocks[blockId]?.timer_routine;
+      if (!routine) return;
+      const encoded = encodeURIComponent(JSON.stringify(routine));
+      window.open(`https://0xbn.github.io/interval-timer/?r=${encoded}`, '_blank');
+    }
+
     function toggleCard(exId) {
       openCards[exId] = !openCards[exId];
       renderDay();
