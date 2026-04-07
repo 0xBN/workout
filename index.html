@@ -12,7 +12,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color: transparent
     }
 
     :root {
@@ -25,7 +25,7 @@
       --accent: #c8f000;
       --accent2: #ffc940;
       --red: #ff5a5a;
-      --r: 8px;
+      --r: 8px
     }
 
     body {
@@ -34,31 +34,30 @@
       font-family: 'Syne', sans-serif;
       min-height: 100vh;
       padding-bottom: 16px;
-      font-size: 14px;
+      font-size: 14px
     }
 
-    /* HEADER */
     .header {
       position: sticky;
       top: 0;
       z-index: 50;
       background: var(--bg);
       border-bottom: 1px solid var(--border);
-      padding: 12px 16px 0;
+      padding: 12px 16px 0
     }
 
     .header-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 12px
     }
 
     .wordmark {
       font-size: 20px;
       font-weight: 800;
       color: var(--accent);
-      letter-spacing: -1px;
+      letter-spacing: -1px
     }
 
     .auth-status {
@@ -67,7 +66,7 @@
       color: var(--sub);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 6px
     }
 
     .auth-dot {
@@ -76,15 +75,15 @@
       border-radius: 50%;
       background: var(--muted);
       flex-shrink: 0;
-      transition: background 0.3s;
+      transition: background .3s
     }
 
     .auth-dot.connected {
-      background: var(--accent);
+      background: var(--accent)
     }
 
     .auth-dot.error {
-      background: var(--red);
+      background: var(--red)
     }
 
     .day-tabs {
@@ -93,11 +92,11 @@
       overflow-x: auto;
       scrollbar-width: none;
       padding-bottom: 12px;
-      -webkit-overflow-scrolling: touch;
+      -webkit-overflow-scrolling: touch
     }
 
     .day-tabs::-webkit-scrollbar {
-      display: none;
+      display: none
     }
 
     .tab {
@@ -110,20 +109,20 @@
       font-family: 'Syne Mono', monospace;
       font-size: 11px;
       cursor: pointer;
-      transition: all 0.15s;
-      position: relative;
+      transition: all .15s;
+      position: relative
     }
 
     .tab:hover {
       color: var(--text);
-      border-color: var(--muted);
+      border-color: var(--muted)
     }
 
     .tab.active {
       background: var(--accent);
       border-color: var(--accent);
       color: #0c0c0a;
-      font-weight: 700;
+      font-weight: 700
     }
 
     .tab.today-marker::after {
@@ -135,16 +134,15 @@
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background: var(--accent2);
+      background: var(--accent2)
     }
 
     .tab.active.today-marker::after {
-      background: #0c0c0a;
+      background: #0c0c0a
     }
 
-    /* CONTENT */
     .content {
-      padding: 16px;
+      padding: 16px
     }
 
     .day-title {
@@ -152,7 +150,7 @@
       font-weight: 800;
       letter-spacing: -1.5px;
       line-height: 1;
-      margin-bottom: 4px;
+      margin-bottom: 4px
     }
 
     .day-meta {
@@ -160,8 +158,8 @@
       font-size: 10px;
       color: var(--sub);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 20px;
+      letter-spacing: .1em;
+      margin-bottom: 20px
     }
 
     .progress-wrap {
@@ -169,35 +167,34 @@
       background: var(--border);
       border-radius: 2px;
       margin-bottom: 20px;
-      overflow: hidden;
+      overflow: hidden
     }
 
     .progress-fill {
       height: 100%;
       background: var(--accent);
       border-radius: 2px;
-      transition: width 0.5s ease;
-      width: 0%;
+      transition: width .5s ease;
+      width: 0%
     }
 
-    /* BLOCK */
     .block {
-      margin-bottom: 24px;
+      margin-bottom: 24px
     }
 
     .block-header {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 10px
     }
 
     .block-name {
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--sub);
+      letter-spacing: .12em;
+      color: var(--sub)
     }
 
     .block-badge {
@@ -205,9 +202,9 @@
       font-size: 9px;
       padding: 2px 6px;
       border-radius: 4px;
-      background: rgba(212, 240, 96, 0.1);
+      background: rgba(212, 240, 96, .1);
       color: var(--accent);
-      border: 1px solid rgba(212, 240, 96, 0.2);
+      border: 1px solid rgba(212, 240, 96, .2)
     }
 
     .block-note {
@@ -215,10 +212,9 @@
       font-size: 10px;
       color: var(--sub);
       margin-bottom: 8px;
-      line-height: 1.5;
+      line-height: 1.5
     }
 
-    /* FLOW ROW */
     .flow-row {
       display: flex;
       align-items: center;
@@ -228,18 +224,17 @@
       border: 1px solid var(--border);
       border-radius: var(--r);
       margin-bottom: 6px;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      user-select: none;
+      transition: border-color .15s, background .15s;
+      user-select: none
     }
 
     .flow-row:active {
-      background: #282828;
+      background: #282828
     }
 
     .flow-row.done {
       border-color: var(--muted);
-      background: #191919;
+      background: #191919
     }
 
     .flow-check {
@@ -253,51 +248,59 @@
       justify-content: center;
       font-size: 13px;
       color: transparent;
-      transition: all 0.2s;
+      transition: all .2s;
+      cursor: pointer
     }
 
     .flow-row.done .flow-check {
       background: var(--accent);
       border-color: var(--accent);
-      color: #111;
+      color: #111
     }
 
     .flow-label {
       font-weight: 700;
-      font-size: 15px;
+      font-size: 15px
     }
 
     .flow-row.done .flow-label {
       color: var(--muted);
       text-decoration: line-through;
-      text-decoration-color: var(--muted);
+      text-decoration-color: var(--muted)
     }
 
     .flow-sub {
       font-family: 'Syne Mono', monospace;
       font-size: 11px;
       color: var(--sub);
-      margin-top: 3px;
+      margin-top: 3px
     }
 
-    .flow-arrow {
-      margin-left: auto;
-      color: var(--muted);
-      font-size: 18px;
+    .timer-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      cursor: pointer;
       flex-shrink: 0;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center
     }
 
-    /* EXERCISE CARD */
     .ex-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--r);
       margin-bottom: 8px;
-      overflow: hidden;
+      overflow: hidden
     }
 
     .ex-card.all-done {
-      border-color: var(--muted);
+      border-color: var(--muted)
     }
 
     .ex-header {
@@ -305,41 +308,41 @@
       align-items: center;
       gap: 10px;
       padding: 12px 14px;
-      cursor: pointer;
+      cursor: pointer
     }
 
     .ex-header:active {
-      background: #282828;
+      background: #282828
     }
 
     .ex-name {
       flex: 1;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 15px
     }
 
     .ex-card.all-done .ex-name {
       color: var(--muted);
       text-decoration: line-through;
-      text-decoration-color: var(--muted);
+      text-decoration-color: var(--muted)
     }
 
     .ex-rx {
       font-family: 'Syne Mono', monospace;
       font-size: 12px;
       color: var(--accent);
-      margin-top: 2px;
+      margin-top: 2px
     }
 
     .ex-card.all-done .ex-rx {
-      color: var(--muted);
+      color: var(--muted)
     }
 
     .ex-note-txt {
       font-family: 'Syne Mono', monospace;
       font-size: 11px;
       color: var(--sub);
-      margin-top: 2px;
+      margin-top: 2px
     }
 
     .ex-chip {
@@ -351,77 +354,25 @@
       border-radius: 6px;
       padding: 3px 8px;
       white-space: nowrap;
-      flex-shrink: 0;
+      flex-shrink: 0
     }
 
     .ex-chip.has-value {
       color: var(--accent2);
-      border-color: var(--muted);
+      border-color: var(--muted)
     }
 
-    /* WEIGHT ROW */
-    .weight-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 14px 10px;
-    }
-
-    .weight-lbl {
-      font-family: 'Syne Mono', monospace;
-      font-size: 10px;
-      color: var(--sub);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      white-space: nowrap;
-    }
-
-    .weight-input {
-      flex: 1;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 8px 10px;
-      color: var(--text);
-      font-family: 'Syne Mono', monospace;
-      font-size: 14px;
-      -webkit-appearance: none;
-    }
-
-    .weight-input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    /* LAST HINT */
-    .last-hint {
-      font-family: 'Syne Mono', monospace;
-      font-size: 10px;
-      color: var(--sub);
-      padding: 0 14px 8px;
-      display: none;
-    }
-
-    .last-hint.show {
-      display: block;
-    }
-
-    .last-hint span {
-      color: var(--accent2);
-    }
-
-    /* SET ROWS */
     .set-divider {
       height: 1px;
       background: var(--border);
-      margin: 0 14px;
+      margin: 0 14px
     }
 
     .set-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 14px;
+      padding: 10px 14px
     }
 
     .set-num {
@@ -432,7 +383,7 @@
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 1px
     }
 
     .set-check {
@@ -447,14 +398,32 @@
       font-size: 11px;
       color: transparent;
       cursor: pointer;
-      transition: all 0.2s;
-      flex-shrink: 0;
+      transition: all .2s
     }
 
     .set-check.done {
       background: var(--accent);
       border-color: var(--accent);
-      color: #111;
+      color: #111
+    }
+
+    .set-check.warmup {
+      border-color: var(--sub);
+      background: transparent
+    }
+
+    .set-check.warmup.done {
+      background: var(--muted);
+      border-color: var(--muted);
+      color: var(--text)
+    }
+
+    .set-num.warmup-label {
+      color: var(--muted)
+    }
+
+    .set-num.warmup-label div {
+      color: var(--muted)
     }
 
     .set-rpe-btns {
@@ -462,7 +431,7 @@
       gap: 4px;
       flex: 1;
       justify-content: flex-end;
-      flex-wrap: wrap;
+      flex-wrap: wrap
     }
 
     .rpe-btn {
@@ -476,47 +445,32 @@
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all .15s;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: center
     }
 
     .rpe-btn:active {
-      transform: scale(0.9);
+      transform: scale(.9)
     }
 
     .rpe-btn.sel-low {
       background: #2a4a00;
       border-color: var(--accent);
-      color: var(--accent);
+      color: var(--accent)
     }
 
     .rpe-btn.sel-mid {
       background: #4a3a00;
       border-color: var(--accent2);
-      color: var(--accent2);
+      color: var(--accent2)
     }
 
     .rpe-btn.sel-high {
       background: #4a1a1a;
       border-color: var(--red);
-      color: var(--red);
-    }
-
-    .set-check.warmup {
-      border-color: var(--sub);
-      background: transparent;
-    }
-
-    .set-check.warmup.done {
-      background: var(--muted);
-      border-color: var(--muted);
-      color: var(--text);
-    }
-
-    .set-num.warmup-label {
-      color: var(--muted);
+      color: var(--red)
     }
 
     .rest-day-card {
@@ -524,70 +478,26 @@
       border: 1px solid var(--border);
       border-radius: var(--r);
       padding: 32px;
-      text-align: center;
+      text-align: center
     }
 
     .rest-icon {
       font-size: 36px;
-      margin-bottom: 12px;
+      margin-bottom: 12px
     }
 
     .rest-label {
       color: var(--sub);
       font-size: 12px;
-      font-family: 'Syne Mono', monospace;
+      font-family: 'Syne Mono', monospace
     }
-
-    /* HISTORY */
-    .history-empty {
-      text-align: center;
-      color: var(--sub);
-      font-family: 'Syne Mono', monospace;
-      font-size: 12px;
-      padding: 48px 0;
-    }
-
-    .hist-day {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 12px 14px;
-      margin-bottom: 8px;
-    }
-
-    .hist-date {
-      font-family: 'Syne Mono', monospace;
-      font-size: 10px;
-      color: var(--sub);
-      margin-bottom: 8px;
-    }
-
-    .hist-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      padding: 4px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .hist-row:last-child {
-      border-bottom: none;
-    }
-
-    .hist-right {
-      font-family: 'Syne Mono', monospace;
-      font-size: 11px;
-      color: var(--accent2);
-    }
-
-    /* BOTTOM NAV */
 
     .view {
-      display: none;
+      display: none
     }
 
     .view.active {
-      display: block;
+      display: block
     }
 
     .loading {
@@ -599,7 +509,7 @@
       gap: 12px;
       color: var(--sub);
       font-family: 'Syne Mono', monospace;
-      font-size: 12px;
+      font-size: 12px
     }
 
     .spinner {
@@ -608,116 +518,34 @@
       border: 2px solid var(--border);
       border-top-color: var(--accent);
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      animation: spin .8s linear infinite
     }
 
     @keyframes spin {
       to {
-        transform: rotate(360deg);
+        transform: rotate(360deg)
       }
     }
 
     .fade-in {
-      animation: fadeIn 0.3s ease forwards;
+      animation: fadeIn .3s ease forwards
     }
 
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(6px)
       }
 
       to {
         opacity: 1;
-        transform: none;
+        transform: none
       }
-    }
-
-    /* WARMUP SET */
-    .set-check.warmup.done {
-      background: var(--muted);
-      border-color: var(--muted);
-      color: var(--text);
-    }
-
-    .set-num.warmup-label div {
-      color: var(--muted);
-    }
-
-    /* HABIT GRID */
-    .habit-grid-wrap {
-      margin-bottom: 24px;
-    }
-
-    .habit-week {
-      display: grid;
-      grid-template-columns: 32px repeat(7, 1fr);
-      gap: 3px;
-      margin-bottom: 3px;
-      align-items: center;
-    }
-
-    .habit-week-label {
-      font-family: 'Syne Mono', monospace;
-      font-size: 9px;
-      color: var(--muted);
-      text-align: right;
-      padding-right: 4px;
-    }
-
-    .habit-day-hdr {
-      font-family: 'Syne Mono', monospace;
-      font-size: 9px;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    .habit-cell {
-      aspect-ratio: 1;
-      border-radius: 3px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-
-    .habit-cell.future {
-      opacity: 0.15;
-    }
-
-    .habit-cell.partial {
-      background: #3a5500;
-      border-color: #5a8000;
-    }
-
-    .habit-cell.full {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .habit-cell.today {
-      box-shadow: 0 0 0 2px var(--accent2);
-    }
-
-    .habit-legend {
-      display: flex;
-      gap: 12px;
-      margin-top: 10px;
-      font-family: 'Syne Mono', monospace;
-      font-size: 10px;
-      color: var(--sub);
-      align-items: center;
-    }
-
-    .legend-pip {
-      width: 12px;
-      height: 12px;
-      border-radius: 2px;
-      flex-shrink: 0;
     }
   </style>
 </head>
 
 <body>
-
   <div class="header">
     <div class="header-row">
       <div class="wordmark">workout/</div>
@@ -739,208 +567,144 @@
     </div>
   </div>
 
-  </div>
-  </div>
   <script src="https://accounts.google.com/gsi/client" async></script>
   <script>
-    // ── CONFIG ───────────────────────────────────────────────────────────────────
     const CLIENT_ID = '674439380543-atvndeqpa9tpli755h879qabar53jneo.apps.googleusercontent.com';
     const SHEET_ID = '10ApiDRmdFru5giLImN_FYTBvAUUopjU0RpvTPHPvmrg';
     const SHEET_TAB = 'log';
     const PROGRAM_URL = './program.json';
-    // ─────────────────────────────────────────────────────────────────────────────
+    const TIMER_BASE = 'https://0xbn.github.io/interval-timer/';
 
     const DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    let accessToken = null;
-    let tokenExpiry = 0;
-    let program = null;
+    let accessToken = null, tokenExpiry = 0, program = null;
     let currentDay = DAYS[new Date().getDay()];
-    // sessionLog: { key: { sets: [{done, rpe}], weight, prescribed } }
-    let sessionLog = {};
-    let openCards = {};
-    let deloadMode = false;
+    let sessionLog = {}, openCards = {}, deloadMode = false;
 
-    // ── AUTH ─────────────────────────────────────────────────────────────────────
-
+    // ── AUTH ──────────────────────────────────────────────────────────────────
     function setAuthUI(state, label) {
       document.getElementById('authDot').className = 'auth-dot' + (state === 'ok' ? ' connected' : state === 'err' ? ' error' : '');
       document.getElementById('authLabel').textContent = label;
     }
-
     function saveToken(token, expiresIn) {
       accessToken = token;
       tokenExpiry = Date.now() + (expiresIn - 60) * 1000;
       localStorage.setItem('wb_token', token);
       localStorage.setItem('wb_expiry', String(tokenExpiry));
-      // silent refresh at 55 min so you never see the sign-in prompt mid-session
       const refreshIn = (expiresIn - 300) * 1000;
       if (refreshIn > 0) setTimeout(silentRefresh, refreshIn);
     }
-
     function silentRefresh() {
       if (typeof google === 'undefined') return;
       google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/spreadsheets',
-        prompt: '',
-        callback: (resp) => {
-          if (resp.error) return;
-          saveToken(resp.access_token, resp.expires_in);
-          setAuthUI('ok', 'sheets connected');
-        }
+        client_id: CLIENT_ID, scope: 'https://www.googleapis.com/auth/spreadsheets', prompt: '',
+        callback: (resp) => { if (resp.error) return; saveToken(resp.access_token, resp.expires_in); setAuthUI('ok', 'sheets connected'); }
       }).requestAccessToken();
     }
-
     function loadCachedToken() {
       const token = localStorage.getItem('wb_token');
       const expiry = parseInt(localStorage.getItem('wb_expiry') || '0');
       if (token && Date.now() < expiry) { accessToken = token; tokenExpiry = expiry; return true; }
       return false;
     }
-
     function showSignInButton() {
       setAuthUI('err', 'sign in');
       const lbl = document.getElementById('authLabel');
-      lbl.style.cursor = 'pointer';
-      lbl.style.textDecoration = 'underline';
-      lbl.onclick = manualAuth;
+      lbl.style.cursor = 'pointer'; lbl.style.textDecoration = 'underline'; lbl.onclick = manualAuth;
     }
-
     function silentAuth() {
       if (typeof google === 'undefined') { setTimeout(silentAuth, 300); return; }
-      if (loadCachedToken()) {
-        setAuthUI('ok', 'sheets connected');
-        ensureSheetHeader().then(() => loadTodayState());
-        return;
-      }
+      if (loadCachedToken()) { setAuthUI('ok', 'sheets connected'); ensureSheetHeader().then(() => loadTodayState()); return; }
       setAuthUI('', 'signing in…');
       google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/spreadsheets',
-        prompt: '',
+        client_id: CLIENT_ID, scope: 'https://www.googleapis.com/auth/spreadsheets', prompt: '',
         callback: async (resp) => {
           if (resp.error) { showSignInButton(); return; }
           saveToken(resp.access_token, resp.expires_in);
           setAuthUI('ok', 'sheets connected');
-          await ensureSheetHeader();
-          await loadTodayState();
+          await ensureSheetHeader(); await loadTodayState();
         }
       }).requestAccessToken();
     }
-
     function manualAuth() {
       setAuthUI('', 'signing in…');
       const lbl = document.getElementById('authLabel');
       lbl.style.cursor = 'default'; lbl.style.textDecoration = 'none'; lbl.onclick = null;
       google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/spreadsheets',
-        prompt: 'consent',
+        client_id: CLIENT_ID, scope: 'https://www.googleapis.com/auth/spreadsheets', prompt: 'consent',
         callback: async (resp) => {
           if (resp.error) { showSignInButton(); return; }
           saveToken(resp.access_token, resp.expires_in);
           setAuthUI('ok', 'sheets connected');
-          await ensureSheetHeader();
-          await loadTodayState();
+          await ensureSheetHeader(); await loadTodayState();
         }
       }).requestAccessToken();
     }
 
-    // ── SHEETS ───────────────────────────────────────────────────────────────────
-
+    // ── SHEETS ────────────────────────────────────────────────────────────────
     async function sheetsReq(method, endpoint, body) {
       if (!accessToken) return null;
       const r = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}${endpoint}`, {
-        method,
-        headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        method, headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: body ? JSON.stringify(body) : undefined
       });
       if (!r.ok) return null;
       return r.json();
     }
-
     let headerEnsured = false;
     async function ensureSheetHeader() {
       if (headerEnsured) return;
       const d = await sheetsReq('GET', `/values/${SHEET_TAB}!A1:K1`);
-      const firstCell = d?.values?.[0]?.[0];
-      if (firstCell !== 'date') {
+      if (d?.values?.[0]?.[0] !== 'date') {
         await sheetsReq('PUT', `/values/${SHEET_TAB}!A1:K1?valueInputOption=RAW`, {
           values: [['date', 'day', 'week_num', 'is_deload', 'block', 'exercise_id', 'exercise_name', 'set_num', 'weight', 'rpe', 'completed']]
         });
       }
       headerEnsured = true;
     }
-
     let rowsCache = null;
     async function getAllRows() {
       if (rowsCache) return rowsCache;
       const d = await sheetsReq('GET', `/values/${SHEET_TAB}!A1:K2000`);
-      rowsCache = d?.values || [];
-      return rowsCache;
+      rowsCache = d?.values || []; return rowsCache;
     }
     function invalidateCache() { rowsCache = null; }
-
-    // cols: 0=date,1=day,2=week_num,3=is_deload,4=block,5=ex_id,6=ex_name,7=set_num,8=weight,9=rpe,10=completed
     async function logSet(exId, exName, blockName, setNum, weight, rpe, completed) {
       if (!accessToken) return;
       const today = new Date().toISOString().slice(0, 10);
-      const row = [today, currentDay, getWeekOfYear(), isDeloadWeek() ? 'yes' : 'no',
-        blockName, exId, exName, setNum, weight || '', rpe || '', completed ? 'yes' : 'no'];
-
+      const row = [today, currentDay, getWeekOfYear(), isDeloadWeek() ? 'yes' : 'no', blockName, exId, exName, setNum, weight || '', rpe || '', completed ? 'yes' : 'no'];
       const rows = await getAllRows();
-      let existingIdx = -1;
+      let idx = -1;
       for (let i = 1; i < rows.length; i++) {
-        if (rows[i][0] === today && rows[i][1] === currentDay && rows[i][5] === exId && String(rows[i][7]) === String(setNum)) {
-          existingIdx = i + 1; break;
-        }
+        if (rows[i][0] === today && rows[i][1] === currentDay && rows[i][5] === exId && String(rows[i][7]) === String(setNum)) { idx = i + 1; break; }
       }
-
-      if (existingIdx > 0) {
-        await sheetsReq('PUT', `/values/${SHEET_TAB}!A${existingIdx}:K${existingIdx}?valueInputOption=RAW`, { values: [row] });
-      } else {
-        await sheetsReq('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, { values: [row] });
-      }
+      if (idx > 0) { await sheetsReq('PUT', `/values/${SHEET_TAB}!A${idx}:K${idx}?valueInputOption=RAW`, { values: [row] }); }
+      else { await sheetsReq('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, { values: [row] }); }
       invalidateCache();
     }
-
-    async function loadDayState(day, dateStr) {
+    async function loadDayState(day) {
       if (!accessToken) return;
-      const today = dateStr || new Date().toISOString().slice(0, 10);
-
-      // init all states for this day
-      const deload = isDeloadWeek();
+      const today = new Date().toISOString().slice(0, 10);
       const allBlocks = [...(program.daily || []), ...(program.weekly[day] || [])];
       allBlocks.forEach(bkId => {
-        const block = program.blocks[bkId];
-        if (!block) return;
+        const block = program.blocks[bkId]; if (!block) return;
         if (block.type === 'flow') {
-          const flowId = `flow-${bkId}`;
-          const k = stateKey(day, flowId);
+          const k = stateKey(day, `flow-${bkId}`);
           if (!sessionLog[k]) sessionLog[k] = { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
         } else {
           block.exercises.forEach(ex => {
             if (ex.weighted || ex.sets) {
               const k = stateKey(day, ex.id);
-              if (!sessionLog[k]) {
-                const n = numSets(ex);
-                sessionLog[k] = {
-                  sets: Array.from({ length: n }, () => ({ done: false, rpe: null })),
-                  weight: '', prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : ''
-                };
-              }
+              if (!sessionLog[k]) sessionLog[k] = { sets: Array.from({ length: numSets(ex) }, () => ({ done: false, rpe: null })), weight: '', prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : '' };
             }
           });
         }
       });
-
       const rows = await getAllRows();
       rows.forEach(r => {
         if (!r[0] || r[0] !== today || r[1] !== day) return;
-        const exId = r[5];
-        const rawSetNum = parseInt(r[7]);
+        const exId = r[5], rawSetNum = parseInt(r[7]);
         const k = stateKey(day, exId);
         if (!sessionLog[k]) return;
         const setIdx = exId.startsWith('flow-') ? 0 : rawSetNum;
@@ -950,18 +714,11 @@
         }
       });
     }
-
-    async function loadTodayState() {
-      await loadDayState(currentDay);
-      renderDay();
-    }
-
+    async function loadTodayState() { await loadDayState(currentDay); renderDay(); }
     async function fetchHistory() {
       const rows = await getAllRows();
-      // skip header row and any header-looking rows
       return rows.filter(r => r[0] && r[0] !== 'date' && r[0].match(/^\d{4}/));
     }
-
     async function fetchLastSession(exId) {
       const rows = await fetchHistory();
       const today = new Date().toISOString().slice(0, 10);
@@ -971,98 +728,63 @@
       return { weight: last[8] || '', rpe: last[9] || '' };
     }
 
-    // ── PROGRAM ──────────────────────────────────────────────────────────────────
-
-    async function loadProgram() {
-      const r = await fetch(PROGRAM_URL);
-      program = await r.json();
-    }
-
+    // ── PROGRAM ───────────────────────────────────────────────────────────────
+    async function loadProgram() { const r = await fetch(PROGRAM_URL); program = await r.json(); }
     function isDeloadWeek() { return deloadMode; }
-
     function getWeekOfYear() {
       const now = new Date(), start = new Date(now.getFullYear(), 0, 1);
       return Math.ceil(((now - start) / 86400000 + start.getDay() + 1) / 7);
     }
-
-    function getRx(ex, deload) {
+    function getRx(ex) {
       const sets = ex.sets || 1;
       if (ex.reps) return `${sets}×${ex.reps}`;
       if (ex.duration) return `${sets}×${ex.duration}s`;
       return '';
     }
-
-    function numSets(ex) {
-      // warmup_weight adds a set 0
-      const base = ex.sets || 1;
-      return ex.warmup_weight != null ? base + 1 : base;
-    }
-
-    // ── STATE ─────────────────────────────────────────────────────────────────────
-
-    function stateKey(day, exId, date) { const d = date || new Date().toISOString().slice(0, 10); return `${d}-${day}-${exId}`; }
-
-    function initState(ex, deload) {
+    function numSets(ex) { return ex.warmup_weight != null ? (ex.sets || 1) + 1 : (ex.sets || 1); }
+    function stateKey(day, exId) { return `${new Date().toISOString().slice(0, 10)}-${day}-${exId}`; }
+    function initState(ex) {
       const k = stateKey(currentDay, ex.id);
-      if (!sessionLog[k]) {
-        const n = numSets(ex);
-        sessionLog[k] = {
-          sets: Array.from({ length: n }, () => ({ done: false, rpe: null })),
-          weight: '',
-          prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : ''
-        };
-      }
+      if (!sessionLog[k]) sessionLog[k] = { sets: Array.from({ length: numSets(ex) }, () => ({ done: false, rpe: null })), weight: '', prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : '' };
       return sessionLog[k];
     }
-
-    function getState(exId) {
-      const k = stateKey(currentDay, exId);
-      return sessionLog[k] || null;
-    }
-
-    function isWarmupSet(ex, setIdx) {
-      return ex.warmup_weight != null && setIdx === 0;
-    }
-
+    function getState(exId) { return sessionLog[stateKey(currentDay, exId)] || null; }
+    function isWarmupSet(ex, setIdx) { return ex.warmup_weight != null && setIdx === 0; }
     function getSetWeight(ex, setIdx, totalSets) {
       const deloadMult = isDeloadWeek() ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
-      // set 0 is warmup — fixed weight, also deloaded
-      if (isWarmupSet(ex, setIdx)) {
-        return Math.round(ex.warmup_weight * deloadMult / 5) * 5;
-      }
-      // working sets — offset by 1 if warmup exists
-      const workingSetIdx = ex.warmup_weight != null ? setIdx - 1 : setIdx;
-      const workingSets = ex.warmup_weight != null ? totalSets - 1 : totalSets;
+      if (isWarmupSet(ex, setIdx)) return Math.round(ex.warmup_weight * deloadMult / 5) * 5;
+      const wIdx = ex.warmup_weight != null ? setIdx - 1 : setIdx;
+      const wSets = ex.warmup_weight != null ? totalSets - 1 : totalSets;
       if (!ex.working_weight) {
         const base = ex.prescribed_weight != null ? ex.prescribed_weight : null;
         return base != null ? Math.round(base * deloadMult / 5) * 5 : null;
       }
       const prog = ex.progression || [1.0];
-      const offset = prog.length - workingSets;
-      const adjustedIdx = Math.max(0, offset + workingSetIdx);
-      const pct = prog[Math.min(adjustedIdx, prog.length - 1)];
+      const offset = prog.length - wSets;
+      const adjIdx = Math.max(0, offset + wIdx);
+      const pct = prog[Math.min(adjIdx, prog.length - 1)];
       return Math.round(ex.working_weight * pct * deloadMult / 5) * 5;
     }
-
     function isExDone(state) { return state && state.sets.length > 0 && state.sets.every(s => s.done); }
 
-    // ── RENDER ───────────────────────────────────────────────────────────────────
+    // ── TIMER LINK ────────────────────────────────────────────────────────────
+    function timerUrl(routine) {
+      return TIMER_BASE + '?r=' + encodeURIComponent(JSON.stringify(routine));
+    }
+    function timerLink(routine) {
+      if (!routine) return '';
+      return `<a href="${timerUrl(routine)}" target="_blank" onclick="event.stopPropagation()" class="timer-btn">▶ timer</a>`;
+    }
 
+    // ── RENDER ────────────────────────────────────────────────────────────────
     function toggleDeload() {
       deloadMode = !deloadMode;
       const btn = document.getElementById('deloadBtn');
-      if (deloadMode) {
-        btn.style.color = 'var(--accent2)';
-        btn.style.borderColor = 'var(--accent2)';
-        btn.textContent = 'deload ✓';
-      } else {
-        btn.style.color = 'var(--muted)';
-        btn.style.borderColor = 'var(--border)';
-        btn.textContent = 'deload';
-      }
+      btn.style.color = deloadMode ? 'var(--accent2)' : 'var(--muted)';
+      btn.style.borderColor = deloadMode ? 'var(--accent2)' : 'var(--border)';
+      btn.textContent = deloadMode ? 'deload ✓' : 'deload';
       renderDay();
     }
-
     function buildTabs() {
       const today = new Date().getDay();
       document.getElementById('dayTabs').innerHTML = DAYS.map((d, i) => {
@@ -1070,7 +792,6 @@
         return `<button class="tab${isActive ? ' active' : ''}${isToday ? ' today-marker' : ''}" onclick="selectDay('${d}')">${DAY_SHORT[i]}</button>`;
       }).join('');
     }
-
     async function renderDay() {
       const deload = isDeloadWeek();
       const dayBlocks = [...(program.daily || []), ...(program.weekly[currentDay] || [])];
@@ -1078,108 +799,89 @@
       const dayLabel = currentDay.charAt(0).toUpperCase() + currentDay.slice(1);
       const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-      // init all states first
       dayBlocks.forEach(bkId => {
-        const block = dayObj[bkId];
-        if (!block || block.type === 'flow') return;
-        block.exercises.forEach(ex => { if (ex.weighted || ex.sets) initState(ex, deload); });
+        const block = dayObj[bkId]; if (!block || block.type === 'flow') return;
+        block.exercises.forEach(ex => { if (ex.weighted || ex.sets) initState(ex); });
       });
 
-      // progress
       let total = 0, done = 0;
       dayBlocks.forEach(bkId => {
-        const block = dayObj[bkId];
-        if (!block) return;
+        const block = dayObj[bkId]; if (!block) return;
         if (block.type === 'flow') {
           total++; const st = getState(`flow-${bkId}`); if (st?.sets[0]?.done) done++;
         } else {
-          block.exercises.forEach(ex => {
-            total++;
-            const st = getState(ex.id);
-            if (isExDone(st)) done++;
-          });
+          block.exercises.forEach(ex => { total++; if (isExDone(getState(ex.id))) done++; });
         }
       });
 
-      let html = `
-    <div class="day-title fade-in">${dayLabel}</div>
-    <div class="day-meta">${dateStr}</div>
-    <div class="progress-wrap"><div class="progress-fill" style="width:${total ? (done / total * 100) : 0}%"></div></div>
-  `;
+      let html = `<div class="day-title fade-in">${dayLabel}</div>
+<div class="day-meta">${dateStr}</div>
+<div class="progress-wrap"><div class="progress-fill" style="width:${total ? (done / total * 100) : 0}%"></div></div>`;
 
       if (!dayBlocks.length) {
         html += `<div class="rest-day-card"><div class="rest-icon">○</div><div class="rest-label">rest day</div></div>`;
       } else {
         for (const bkId of dayBlocks) {
-          const block = dayObj[bkId];
-          if (!block) continue;
+          const block = dayObj[bkId]; if (!block) continue;
           html += `<div class="block">
-        <div class="block-header">
-          <div class="block-name">${block.name}</div>
-          ${block.twice_daily ? `<div class="block-badge">2×daily</div>` : ''}
-        </div>
-        ${block.note ? `<div class="block-note">${block.note}</div>` : ''}`;
+<div class="block-header"><div class="block-name">${block.name}</div>${block.twice_daily ? `<div class="block-badge">2×daily</div>` : ''}</div>
+${block.note ? `<div class="block-note">${block.note}</div>` : ''}`;
 
           if (block.type === 'flow') {
             const flowId = `flow-${bkId}`;
             const st = getState(flowId) || { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
-            if (!getState(flowId)) { const k = stateKey(currentDay, flowId); sessionLog[k] = st; }
-            html += `
-          <div class="flow-row${st.sets[0].done ? ' done' : ''}">
-            <div class="flow-check" onclick="toggleFlowDone('${flowId}','${block.flow_label || block.name}','${block.name}')">${st.sets[0].done ? '✓' : ''}</div>
-            <div style="flex:1;min-width:0">
-              <div class="flow-label">${block.flow_label || block.name}</div>
-              <div class="flow-sub">${block.flow_sub || ''}</div>
-            </div>
-            ${block.timer_routine ? `<button onclick="openTimer('${bkId}')" style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-family:'Syne Mono',monospace;font-size:10px;color:var(--sub);cursor:pointer;flex-shrink:0">▶ timer</button>` : ''}
-            <div class="flow-arrow" style="cursor:default">›</div>
-          </div>`;
+            if (!getState(flowId)) { sessionLog[stateKey(currentDay, flowId)] = st; }
+            html += `<div class="flow-row${st.sets[0].done ? ' done' : ''}">
+  <div class="flow-check" onclick="toggleFlowDone('${flowId}','${block.flow_label || block.name}','${block.name}')">${st.sets[0].done ? '✓' : ''}</div>
+  <div style="flex:1;min-width:0">
+    <div class="flow-label">${block.flow_label || block.name}</div>
+    <div class="flow-sub">${block.flow_sub || ''}</div>
+  </div>
+  ${timerLink(block.timer_routine)}
+  <div style="color:var(--muted);font-size:18px;flex-shrink:0">›</div>
+</div>`;
           } else {
             for (const ex of block.exercises) {
-              const st = initState(ex, deload);
-              const rx = getRx(ex, deload);
+              const st = initState(ex);
+              const rx = getRx(ex);
               const allDone = isExDone(st);
               const isOpen = openCards[ex.id];
-
               const deloadMult = isDeloadWeek() ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
               const workingW = ex.working_weight ? Math.round(ex.working_weight * deloadMult / 5) * 5 : ex.prescribed_weight;
 
               html += `<div class="ex-card${allDone ? ' all-done' : ''}" id="card-${ex.id}">
-            <div class="ex-header" onclick="toggleCard('${ex.id}')">
-              <div class="ex-info" style="flex:1;min-width:0">
-                <div class="ex-name">${ex.name}</div>
-                ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
-                ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
-              </div>
-              ${workingW != null ? `<div class="ex-chip has-value">${workingW}lb</div>` : ''}
-            </div>`;
+<div class="ex-header" onclick="toggleCard('${ex.id}')">
+  <div class="ex-info" style="flex:1;min-width:0">
+    <div class="ex-name">${ex.name}</div>
+    ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
+    ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
+  </div>
+  ${timerLink(ex.timer_routine)}
+  ${workingW != null ? `<div class="ex-chip has-value">${workingW}lb</div>` : ''}
+</div>`;
 
               if (isOpen) {
                 st.sets.forEach((set, i) => {
                   const rpe = set.rpe;
                   const setW = getSetWeight(ex, i, st.sets.length);
-                  const isWorking = !isWarmupSet(ex, i);
                   const isLastSet = i === st.sets.length - 1;
                   const warmup = isWarmupSet(ex, i);
-                  const setLabel = warmup ? 'W/U' : `Set ${warmup ? i : (ex.warmup_weight != null ? i : i + 1)}`;
-                  const actualSetNum = warmup ? 0 : (ex.warmup_weight != null ? i : i + 1);
                   html += `<div class="set-divider"></div>
-                <div class="set-row">
-                  <div class="set-num${warmup ? ' warmup-label' : ''}">
-                    <div>${warmup ? 'W/U' : `Set ${ex.warmup_weight != null ? i : i + 1}`}</div>
-                    ${setW != null ? `<div style="color:${warmup ? 'var(--muted)' : isLastSet ? 'var(--accent2)' : 'var(--sub)'};font-size:12px;font-family:'Syne Mono',monospace">${setW}lb</div>` : ''}
-                  </div>
-                  <div class="set-check${warmup ? ' warmup' : ''}${set.done ? ' done' : ''}" onclick="toggleSet('${ex.id}','${ex.name}','${block.name}',${i})">${set.done ? '✓' : ''}</div>
-                  <div class="set-rpe-btns">
-                    ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
+<div class="set-row">
+  <div class="set-num${warmup ? ' warmup-label' : ''}">
+    <div>${warmup ? 'W/U' : `Set ${ex.warmup_weight != null ? i : i + 1}`}</div>
+    ${setW != null ? `<div style="color:${warmup ? 'var(--muted)' : isLastSet ? 'var(--accent2)' : 'var(--sub)'};font-size:12px;font-family:'Syne Mono',monospace">${setW}lb</div>` : ''}
+  </div>
+  <div class="set-check${warmup ? ' warmup' : ''}${set.done ? ' done' : ''}" onclick="toggleSet('${ex.id}','${ex.name}','${block.name}',${i})">${set.done ? '✓' : ''}</div>
+  <div class="set-rpe-btns">
+    ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
                     const cls = rpe === n ? (n <= 6 ? 'sel-low' : n <= 8 ? 'sel-mid' : 'sel-high') : '';
                     return `<button class="rpe-btn ${cls}" onclick="event.stopPropagation();setRpe('${ex.id}','${ex.name}','${block.name}',${i},${n},${setW || 0})">${n}</button>`;
                   }).join('')}
-                  </div>
-                </div>`;
+  </div>
+</div>`;
                 });
               }
-
               html += `</div>`;
             }
           }
@@ -1188,12 +890,9 @@
       }
 
       document.getElementById('mainContent').innerHTML = html;
-
-      // async: load last session hints
       if (accessToken) {
         dayBlocks.forEach(bkId => {
-          const block = dayObj[bkId];
-          if (!block || block.type === 'flow') return;
+          const block = dayObj[bkId]; if (!block || block.type === 'flow') return;
           block.exercises.forEach(ex => { if (ex.weighted !== false) loadLastHint(ex.id); });
         });
       }
@@ -1211,20 +910,8 @@
       }
     }
 
-    // ── INTERACTIONS ─────────────────────────────────────────────────────────────
-
-    function openTimer(blockId) {
-      const routine = program.blocks[blockId]?.timer_routine;
-      if (!routine) return;
-      const encoded = encodeURIComponent(JSON.stringify(routine));
-      window.open(`https://0xbn.github.io/interval-timer/?r=${encoded}`, '_blank');
-    }
-
-    function toggleCard(exId) {
-      openCards[exId] = !openCards[exId];
-      renderDay();
-    }
-
+    // ── INTERACTIONS ──────────────────────────────────────────────────────────
+    function toggleCard(exId) { openCards[exId] = !openCards[exId]; renderDay(); }
     function toggleFlowDone(flowId, exName, blockName) {
       const k = stateKey(currentDay, flowId);
       if (!sessionLog[k]) sessionLog[k] = { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
@@ -1232,57 +919,33 @@
       logSet(flowId, exName, blockName, 1, '', null, sessionLog[k].sets[0].done);
       renderDay();
     }
-
     function toggleSet(exId, exName, blockName, setIdx) {
-      const st = getState(exId);
-      if (!st) return;
+      const st = getState(exId); if (!st) return;
       st.sets[setIdx].done = !st.sets[setIdx].done;
       logSet(exId, exName, blockName, setIdx, st.weight, st.sets[setIdx].rpe, st.sets[setIdx].done);
       renderDay();
     }
-
     function setRpe(exId, exName, blockName, setIdx, val, prescribedWeight) {
-      const st = getState(exId);
-      if (!st) return;
-      st.sets[setIdx].rpe = val;
-      st.sets[setIdx].done = true;
+      const st = getState(exId); if (!st) return;
+      st.sets[setIdx].rpe = val; st.sets[setIdx].done = true;
       logSet(exId, exName, blockName, setIdx, prescribedWeight || '', val, true);
       renderDay();
     }
 
-    // ── HISTORY — HABIT GRID ─────────────────────────────────────────────────────
-
-    async function renderHistory() {
-      const el = document.getElementById('histContent');
-      el.innerHTML = '<div class="history-empty">use the sheet for analysis</div>';
-    }
-
-    // ── NAV ──────────────────────────────────────────────────────────────────────
-
+    // ── NAV ───────────────────────────────────────────────────────────────────
     function selectDay(day) {
       currentDay = day; openCards = {};
       buildTabs(); renderDay();
       if (accessToken) loadDayState(day).then(() => renderDay());
-      switchView('main');
     }
 
-    function switchView(view) {
-      document.getElementById('mainView').classList.toggle('active', view === 'main');
-      document.getElementById('navMain').classList.toggle('active', view === 'main');
-    }
-
-    // ── INIT ─────────────────────────────────────────────────────────────────────
-
+    // ── INIT ──────────────────────────────────────────────────────────────────
     async function init() {
       await loadProgram();
-      buildTabs();
-      renderDay();
-      setTimeout(() => {
-        document.querySelector('.tab.active')?.scrollIntoView({ inline: 'center', behavior: 'smooth' });
-      }, 100);
+      buildTabs(); renderDay();
+      setTimeout(() => { document.querySelector('.tab.active')?.scrollIntoView({ inline: 'center', behavior: 'smooth' }); }, 100);
       setTimeout(silentAuth, 300);
     }
-
     init();
   </script>
 </body>

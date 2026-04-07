@@ -394,7 +394,19 @@
           "weighted": true,
           "working_weight": 60,
           "progression": [0.75, 0.875, 1.0],
-          "warmup_weight": 25
+          "warmup_weight": 25,
+          "timer_routine": {
+            "name": "Rest \u2014 Bulgarian split squat",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 120,
+                "countdown_last": 10
+              }
+            ]
+          }
         },
         {
           "id": "ll2",
@@ -404,7 +416,19 @@
           "weighted": true,
           "working_weight": 145,
           "progression": [0.6, 0.8, 1.0],
-          "warmup_weight": 60
+          "warmup_weight": 60,
+          "timer_routine": {
+            "name": "Rest \u2014 Romanian deadlift",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 120,
+                "countdown_last": 10
+              }
+            ]
+          }
         },
         {
           "id": "ll5",
@@ -422,7 +446,19 @@
           "working_weight": 55,
           "progression": [0.7, 0.85, 1.0],
           "warmup_weight": 0,
-          "note": "added weight lb"
+          "note": "added weight lb",
+          "timer_routine": {
+            "name": "Rest \u2014 Weighted pull-ups",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 120,
+                "countdown_last": 10
+              }
+            ]
+          }
         },
         {
           "id": "ll6",
@@ -433,7 +469,19 @@
           "weighted": true,
           "working_weight": 45,
           "progression": [0.75, 0.875, 1.0],
-          "warmup_weight": 20
+          "warmup_weight": 20,
+          "timer_routine": {
+            "name": "Rest \u2014 Dumbbell row",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 120,
+                "countdown_last": 10
+              }
+            ]
+          }
         }
       ]
     },
@@ -457,7 +505,19 @@
           "weighted": true,
           "working_weight": 90,
           "progression": [0.75, 0.875, 1.0],
-          "warmup_weight": 35
+          "warmup_weight": 35,
+          "timer_routine": {
+            "name": "Rest \u2014 Dumbbell bench press",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 120,
+                "countdown_last": 10
+              }
+            ]
+          }
         },
         {
           "id": "lu2",
@@ -467,7 +527,19 @@
           "weighted": true,
           "working_weight": 65,
           "progression": [0.75, 0.875, 1.0],
-          "warmup_weight": 25
+          "warmup_weight": 25,
+          "timer_routine": {
+            "name": "Rest \u2014 Overhead press (alt: incline)",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 120,
+                "countdown_last": 10
+              }
+            ]
+          }
         },
         {
           "id": "lu3",
@@ -477,7 +549,19 @@
           "weighted": true,
           "working_weight": 95,
           "progression": [0.6, 0.8, 1.0],
-          "warmup_weight": 40
+          "warmup_weight": 40,
+          "timer_routine": {
+            "name": "Rest \u2014 Hip thrust",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 120,
+                "countdown_last": 10
+              }
+            ]
+          }
         },
         {
           "id": "lu4",
@@ -488,7 +572,19 @@
           "weighted": true,
           "working_weight": 45,
           "progression": [0.75, 0.875, 1.0],
-          "warmup_weight": 20
+          "warmup_weight": 20,
+          "timer_routine": {
+            "name": "Rest \u2014 Suitcase hold",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 120,
+                "countdown_last": 10
+              }
+            ]
+          }
         }
       ]
     },
