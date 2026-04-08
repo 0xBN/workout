@@ -707,7 +707,26 @@
         const exId = r[5], rawSetNum = parseInt(r[7]);
         const k = stateKey(day, exId);
         if (!sessionLog[k]) return;
-        const setIdx = exId.startsWith('flow-') ? 0 : rawSetNum;
+        // flow blocks: always index 0
+        // warmup sets: logged as 0, maps to index 0
+        // working sets: logged as 1,2,3 — for exercises with warmup that's index 1,2,3
+        //               for exercises without warmup, logged as 1,2,3 but array is 0,1,2 — subtract 1
+        let setIdx;
+        if (exId.startsWith('flow-')) {
+          setIdx = 0;
+        } else {
+          // check if this exercise has a warmup set
+          const hasWarmup = (() => {
+            for (const bkId of allBlocks) {
+              const block = program.blocks[bkId];
+              if (!block || block.type === 'flow') continue;
+              const ex = block.exercises.find(e => e.id === exId);
+              if (ex) return ex.warmup_weight != null;
+            }
+            return false;
+          })();
+          setIdx = hasWarmup ? rawSetNum : rawSetNum - 1;
+        }
         if (setIdx >= 0 && setIdx < sessionLog[k].sets.length) {
           sessionLog[k].sets[setIdx].done = r[10] === 'yes';
           sessionLog[k].sets[setIdx].rpe = r[9] ? parseInt(r[9]) : null;
