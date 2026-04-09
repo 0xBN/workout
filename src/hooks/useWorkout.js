@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { sheetsReq } from '../services/googleSheets';
 import { getTargetDateStr } from '../utils/dateHelpers';
 
+// NAMED EXPORT: Required for the { useWorkout } import in App.jsx
 export const useWorkout = (token, sheetId, currentDay, program) => {
   const [sessionLog, setSessionLog] = useState({});
   const [loading, setLoading] = useState(false);
@@ -9,33 +10,40 @@ export const useWorkout = (token, sheetId, currentDay, program) => {
   const fetchState = useCallback(async () => {
     if (!token || !program) return;
     setLoading(true);
+    const dateStr = getTargetDateStr(currentDay);
+    
     try {
-      const dateStr = getTargetDateStr(currentDay);
-      const data = await sheetsReq('GET', `/values/log!A1:K2000`, null, token, sheetId);
+      const data = await sheetsReq('GET', `/values/log!A1:K1000`, null, token, sheetId);
       const rows = data?.values || [];
-      
       const dayState = {};
-      rows.forEach(r => {
-        if (r[0] === dateStr && r[1] === currentDay) {
+
+      rows.forEach((r) => {
+        const sheetDate = String(r[0]).trim();
+        const sheetDay = String(r[1]).toLowerCase().trim();
+        const targetDay = currentDay.toLowerCase().trim();
+
+        if (sheetDate === dateStr && sheetDay === targetDay) {
           const exId = r[5];
-          const setIdx = parseInt(r[7]);
+          const setIdx = parseInt(r[7]) || 0;
           if (!dayState[exId]) dayState[exId] = { sets: [] };
-          dayState[exId].sets[setIdx] = { 
+          
+          const targetIdx = exId.startsWith('flow-') ? 0 : setIdx;
+          dayState[exId].sets[targetIdx] = { 
             done: r[10] === 'yes', 
-            rpe: r[9] ? parseInt(r[9]) : null,
+            rpe: r[9] ? parseInt(r[9]) : null, 
             weight: r[8] 
           };
         }
       });
+      
       setSessionLog(prev => ({ ...prev, [dateStr]: dayState }));
-    } catch (e) {
-      console.error("Fetch error:", e);
-    } finally {
-      setLoading(false);
+    } catch (e) { 
+      console.error("[SYNC ERROR]", e); 
+    } finally { 
+      setLoading(false); 
     }
   }, [token, sheetId, currentDay, program]);
 
   useEffect(() => { fetchState(); }, [fetchState]);
-
   return { sessionLog, setSessionLog, loading, refresh: fetchState };
 };

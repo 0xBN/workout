@@ -2,7 +2,7 @@ import React from 'react';
 import ExerciseCard from './ExerciseCard';
 import FlowRow from './FlowRow';
 
-const WorkoutBlock = ({ block, state, onLog, isDeload }) => {
+const WorkoutBlock = ({ blockId, block, state, onLog, isDeload }) => {
   if (!block) return null;
   return (
     <div className="workout-block" style={{ marginBottom: '24px' }}>
@@ -10,10 +10,22 @@ const WorkoutBlock = ({ block, state, onLog, isDeload }) => {
         {block.name}
       </div>
       {block.type === 'flow' ? (
-        <FlowRow block={block} state={state} onLog={onLog} />
+        <FlowRow
+          blockId={blockId}
+          block={block}
+          state={state}
+          onLog={onLog}
+        />
       ) : (
         block.exercises?.map((ex) => (
-          <ExerciseCard key={ex.id} ex={ex} state={state?.[ex.id]} onLog={onLog} isDeload={isDeload} />
+          <ExerciseCard
+            key={ex.id}
+            blockName={block.name}
+            ex={ex}
+            state={state?.[ex.id]}
+            onLog={onLog}
+            isDeload={isDeload}
+          />
         ))
       )}
     </div>

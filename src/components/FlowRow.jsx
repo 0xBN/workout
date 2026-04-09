@@ -1,8 +1,8 @@
 import React from 'react';
 const TIMER_BASE = 'https://0xbn.github.io/interval-timer/';
 
-const FlowRow = ({ block, state, onLog }) => {
-  const flowId = `flow-${block.name}`;
+const FlowRow = ({ blockId, block, state, onLog }) => {
+  const flowId = `flow-${blockId}`;
   const isDone = state?.[flowId]?.sets?.[0]?.done || false;
   const openTimer = (e) => {
     e.stopPropagation();
@@ -10,7 +10,7 @@ const FlowRow = ({ block, state, onLog }) => {
   };
   return (
     <div className={`flow-row ${isDone ? 'done' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '16px 14px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--r)', marginBottom: '6px' }}>
-      <div onClick={() => onLog({ id: flowId, name: block.name }, 0, '', null, !isDone)} style={{ width: '26px', height: '26px', borderRadius: '50%', border: '2px solid var(--muted)', background: isDone ? 'var(--accent)' : 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#111' }}>
+      <div onClick={() => onLog({ id: flowId, name: block.name }, 0, '', null, !isDone, block.name)} style={{ width: '26px', height: '26px', borderRadius: '50%', border: '2px solid var(--muted)', background: isDone ? 'var(--accent)' : 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#111' }}>
         {isDone ? '✓' : ''}
       </div>
       <div style={{ flex: 1 }}>

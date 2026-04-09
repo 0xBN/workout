@@ -1,6 +1,6 @@
 export const DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
-export const getTargetDateStr = (dayName) => {
+export const getTargetDate = (dayName) => {
   const today = new Date();
   const todayIdx = today.getDay();
   const targetIdx = DAYS.indexOf(dayName.toLowerCase());
@@ -10,8 +10,10 @@ export const getTargetDateStr = (dayName) => {
   
   const d = new Date(today);
   d.setDate(today.getDate() + diff);
-  
-  // This format (M/D/YYYY) usually matches Google Sheets default.
-  // If your sheet uses YYYY-MM-DD, change this to d.toISOString().split('T')[0]
-  return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+  return d;
 };
+
+export const formatLocalDate = (date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+export const getTargetDateStr = (dayName) => formatLocalDate(getTargetDate(dayName));

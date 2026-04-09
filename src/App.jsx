@@ -35,27 +35,33 @@ function App() {
     : [];
 
   // In App.jsx, update the handleLog to be resilient to the Flow ID
-  const handleLog = async (ex, setIdx, weight, rpe, done) => {
+  const handleLog = async (ex, setIdx, weight, rpe, done, blockName = 'Workout') => {
     if (!token) return;
     const exId = ex.id; // This will handle "eb1" or "flow-core_warmup"
+    const normalizedWeight = weight ?? '';
+    const normalizedRpe = rpe ?? '';
 
-    const newLog = { ...sessionLog };
-    if (!newLog[dateStr]) newLog[dateStr] = {};
-    if (!newLog[dateStr][exId]) newLog[dateStr][exId] = { sets: [] };
-    newLog[dateStr][exId].sets[setIdx] = { done, rpe };
-    setSessionLog(newLog);
+    setSessionLog((prev) => {
+      const next = { ...prev };
+      const dayLog = { ...(next[dateStr] || {}) };
+      const exLog = { ...(dayLog[exId] || {}), sets: [...(dayLog[exId]?.sets || [])] };
+      exLog.sets[setIdx] = { done, rpe: normalizedRpe || null, weight: normalizedWeight };
+      dayLog[exId] = exLog;
+      next[dateStr] = dayLog;
+      return next;
+    });
 
     const rowData = [
       dateStr,
       currentDay,
       'N/A',
       isDeload ? 'yes' : 'no',
-      'Workout',
+      blockName,
       exId,
       ex.name,
       setIdx,
-      weight,
-      rpe,
+      normalizedWeight,
+      normalizedRpe,
       done ? 'yes' : 'no',
     ];
     await logSetToSheet(token, SHEET_ID, rowData, currentDay, exId, setIdx);
@@ -67,9 +73,25 @@ function App() {
       done = 0;
     dayBlocks.forEach((bkId) => {
       const block = program.blocks[bkId];
-      block?.exercises?.forEach((ex) => {
+      if (!block) return;
+
+      if (block.type === 'flow') {
         total++;
-        if (sessionLog[dateStr][ex.id]?.sets?.some((s) => s?.done)) done++;
+        if (sessionLog[dateStr][`flow-${bkId}`]?.sets?.[0]?.done) done++;
+        return;
+      }
+
+      block.exercises?.forEach((ex) => {
+        total++;
+        const numSets =
+          ex.warmup_weight != null ? (ex.sets || 1) + 1 : ex.sets || 1;
+        const allSetsDone =
+          numSets > 0 &&
+          Array.from({ length: numSets }).every(
+            (_, i) => sessionLog[dateStr][ex.id]?.sets?.[i]?.done,
+          );
+
+        if (allSetsDone) done++;
       });
     });
     return total === 0 ? 0 : (done / total) * 100;
@@ -148,6 +170,7 @@ function App() {
         {dayBlocks.map((bkId) => (
           <WorkoutBlock
             key={bkId}
+            blockId={bkId}
             block={program.blocks[bkId]}
             state={sessionLog[dateStr]}
             onLog={handleLog}
