@@ -672,47 +672,78 @@
     function invalidateCache() { rowsCache = null; }
     async function logSet(exId, exName, blockName, setNum, weight, rpe, completed) {
       if (!accessToken) return;
-      const today = localDate();
-      const row = [today, currentDay, getWeekOfYear(), isDeloadWeek() ? 'yes' : 'no', blockName, exId, exName, setNum, weight || '', rpe || '', completed ? 'yes' : 'no'];
+
+      const key = stateKey(currentDay, exId);
+      const rowDate = key.split('-').slice(0, 3).join('-');
+
+      const row = [rowDate, currentDay, getWeekOfYear(), isDeloadWeek() ? 'yes' : 'no', blockName, exId, exName, setNum, weight || '', rpe || '', completed ? 'yes' : 'no'];
       const rows = await getAllRows();
       let idx = -1;
+
       for (let i = 1; i < rows.length; i++) {
-        if (rows[i][0] === today && rows[i][1] === currentDay && rows[i][5] === exId && String(rows[i][7]) === String(setNum)) { idx = i + 1; break; }
+        // Use rowDate (defined above) instead of today
+        if (rows[i][0] === rowDate && rows[i][1] === currentDay && rows[i][5] === exId && String(rows[i][7]) === String(setNum)) {
+          idx = i + 1;
+          break;
+        }
       }
-      if (idx > 0) { await sheetsReq('PUT', `/values/${SHEET_TAB}!A${idx}:K${idx}?valueInputOption=RAW`, { values: [row] }); }
-      else { await sheetsReq('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, { values: [row] }); }
+
+      if (idx > 0) {
+        await sheetsReq('PUT', `/values/${SHEET_TAB}!A${idx}:K${idx}?valueInputOption=RAW`, { values: [row] });
+      } else {
+        await sheetsReq('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, { values: [row] });
+      }
       invalidateCache();
     }
     async function loadDayState(day) {
       if (!accessToken) return;
-      const today = localDate();
+
+      // 1. Calculate the date for the selected tab
+      const today = new Date();
+      const todayIdx = today.getDay();
+      const targetIdx = DAYS.indexOf(day);
+
+      // Calculate difference in days (handling wrap-around)
+      let diff = targetIdx - todayIdx;
+      if (diff > 0) diff -= 7; // If target is "ahead" in index, it's from last week
+
+      const targetDate = new Date(today);
+      targetDate.setDate(today.getDate() + diff);
+      const targetDateStr = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`;
+
+      // 2. Initialize the sessionLog keys for this specific date/day combo
       const allBlocks = [...(program.daily || []), ...(program.weekly[day] || [])];
       allBlocks.forEach(bkId => {
         const block = program.blocks[bkId]; if (!block) return;
-        if (block.type === 'flow') {
-          const k = stateKey(day, `flow-${bkId}`);
-          if (!sessionLog[k]) sessionLog[k] = { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
-        } else {
-          block.exercises.forEach(ex => {
-            if (ex.weighted || ex.sets) {
-              const k = stateKey(day, ex.id);
-              if (!sessionLog[k]) sessionLog[k] = { sets: Array.from({ length: numSets(ex) }, () => ({ done: false, rpe: null })), weight: '', prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : '' };
-            }
-          });
-        }
+        const ids = block.type === 'flow' ? [`flow-${bkId}`] : block.exercises.map(e => e.id);
+
+        ids.forEach(id => {
+          const k = `${targetDateStr}-${day}-${id}`; // Specific key for that date
+          if (!sessionLog[k]) {
+            const ex = block.type === 'flow' ? null : block.exercises.find(e => e.id === id);
+            sessionLog[k] = {
+              sets: Array.from({ length: ex ? numSets(ex) : 1 }, () => ({ done: false, rpe: null })),
+              weight: '',
+              prescribed: ex?.prescribed_weight ? String(ex.prescribed_weight) : ''
+            };
+          }
+        });
       });
+
+      // 3. Match rows based on the calculated targetDateStr
       const rows = await getAllRows();
       rows.forEach(r => {
-        if (!r[0] || r[0] !== today || r[1] !== day) return;
+        if (!r[0] || r[0] !== targetDateStr || r[1] !== day) return;
+
         const exId = r[5], rawSetNum = parseInt(r[7]);
-        const k = stateKey(day, exId);
-        if (!sessionLog[k]) return;
-        // setIdx is stored as-is (0-based array index) for all types
-        // flow blocks are always index 0
-        const setIdx = exId.startsWith('flow-') ? 0 : rawSetNum;
-        if (setIdx >= 0 && setIdx < sessionLog[k].sets.length) {
-          sessionLog[k].sets[setIdx].done = r[10] === 'yes';
-          sessionLog[k].sets[setIdx].rpe = r[9] ? parseInt(r[9]) : null;
+        const k = `${targetDateStr}-${day}-${exId}`;
+
+        if (sessionLog[k]) {
+          const setIdx = exId.startsWith('flow-') ? 0 : rawSetNum;
+          if (setIdx >= 0 && setIdx < sessionLog[k].sets.length) {
+            sessionLog[k].sets[setIdx].done = r[10] === 'yes';
+            sessionLog[k].sets[setIdx].rpe = r[9] ? parseInt(r[9]) : null;
+          }
         }
       });
     }
@@ -748,7 +779,18 @@
       const d = new Date();
       return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     }
-    function stateKey(day, exId) { return `${localDate()}-${day}-${exId}`; }
+    function stateKey(day, exId) {
+      const today = new Date();
+      const todayIdx = today.getDay();
+      const targetIdx = DAYS.indexOf(day);
+      let diff = targetIdx - todayIdx;
+      if (diff > 0) diff -= 7;
+
+      const d = new Date(today);
+      d.setDate(today.getDate() + diff);
+      const dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      return `${dStr}-${day}-${exId}`;
+    }
     function initState(ex) {
       const k = stateKey(currentDay, ex.id);
       if (!sessionLog[k]) sessionLog[k] = { sets: Array.from({ length: numSets(ex) }, () => ({ done: false, rpe: null })), weight: '', prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : '' };
