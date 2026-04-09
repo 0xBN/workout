@@ -1,0 +1,14 @@
+.header { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding: 12px 16px 0; z-index: 10; }
+.header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wordmark { font-size: 20px; font-weight: 800; color: var(--accent); margin: 0; letter-spacing: -1px; }
+.auth-status { display: flex; align-items: center; gap: 6px; font-family: 'Syne Mono'; font-size: 10px; color: var(--sub); }
+.auth-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+.auth-dot.connected { background: var(--accent); }
+.login-link { text-decoration: underline; cursor: pointer; }
+.day-tabs { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 12px; scrollbar-width: none; }
+.tab { padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--sub); font-family: 'Syne Mono'; font-size: 11px; cursor: pointer; }
+.tab.active { background: var(--accent); border-color: var(--accent); color: #0c0c0a; font-weight: 700; }
+.content { padding: 16px; }
+.day-title { font-size: 32px; font-weight: 800; letter-spacing: -1.5px; text-transform: capitalize; }
+.day-meta { font-family: 'Syne Mono'; font-size: 10px; color: var(--sub); text-transform: uppercase; margin-bottom: 20px; }
+.loading { padding: 40px; text-align: center; color: var(--sub); font-family: 'Syne Mono'; }

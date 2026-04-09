@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>workout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Syne+Mono&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    :root {
+      --bg: #111111;
+      --surface: #1e1e1e;
+      --border: #2e2e2e;
+      --muted: #555555;
+      --sub: #999999;
+      --text: #ffffff;
+      --accent: #c8f000;
+      --accent2: #ffc940;
+      --red: #ff5a5a;
+      --r: 8px
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 16px;
+      font-size: 14px
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px 0
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px
+    }
+
+    .wordmark {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -1px
+    }
+
+    .auth-status {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .auth-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+      flex-shrink: 0;
+      transition: background .3s
+    }
+
+    .auth-dot.connected {
+      background: var(--accent)
+    }
+
+    .auth-dot.error {
+      background: var(--red)
+    }
+
+    .day-tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch
+    }
+
+    .day-tabs::-webkit-scrollbar {
+      display: none
+    }
+
+    .tab {
+      flex-shrink: 0;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--sub);
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all .15s;
+      position: relative
+    }
+
+    .tab:hover {
+      color: var(--text);
+      border-color: var(--muted)
+    }
+
+    .tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0c0c0a;
+      font-weight: 700
+    }
+
+    .tab.today-marker::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent2)
+    }
+
+    .tab.active.today-marker::after {
+      background: #0c0c0a
+    }
+
+    .content {
+      padding: 16px
+    }
+
+    .day-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1;
+      margin-bottom: 4px
+    }
+
+    .day-meta {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 20px
+    }
+
+    .progress-wrap {
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 20px;
+      overflow: hidden
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width .5s ease;
+      width: 0%
+    }
+
+    .block {
+      margin-bottom: 24px
+    }
+
+    .block-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px
+    }
+
+    .block-name {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--sub)
+    }
+
+    .block-badge {
+      font-family: 'Syne Mono', monospace;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(212, 240, 96, .1);
+      color: var(--accent);
+      border: 1px solid rgba(212, 240, 96, .2)
+    }
+
+    .block-note {
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      margin-bottom: 8px;
+      line-height: 1.5
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-bottom: 6px;
+      transition: border-color .15s, background .15s;
+      user-select: none
+    }
+
+    .flow-row:active {
+      background: #282828
+    }
+
+    .flow-row.done {
+      border-color: var(--muted);
+      background: #191919
+    }
+
+    .flow-check {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--muted);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: transparent;
+      transition: all .2s;
+      cursor: pointer
+    }
+
+    .flow-row.done .flow-check {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111
+    }
+
+    .flow-label {
+      font-weight: 700;
+      font-size: 15px
+    }
+
+    .flow-row.done .flow-label {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--muted)
+    }
+
+    .flow-sub {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 3px
+    }
+
+    .timer-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-family: 'Syne Mono', monospace;
+      font-size: 10px;
+      color: var(--sub);
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center
+    }
+
+    .ex-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-bottom: 8px;
+      overflow: hidden
+    }
+
+    .ex-card.all-done {
+      border-color: var(--muted)
+    }
+
+    .ex-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      cursor: pointer
+    }
+
+    .ex-header:active {
+      background: #282828
+    }
+
+    .ex-name {
+      flex: 1;
+      font-weight: 700;
+      font-size: 15px
+    }
+
+    .ex-card.all-done .ex-name {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--muted)
+    }
+
+    .ex-rx {
+      font-family: 'Syne Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 2px
+    }
+
+    .ex-card.all-done .ex-rx {
+      color: var(--muted)
+    }
+
+    .ex-note-txt {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      margin-top: 2px
+    }
+
+    .ex-chip {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 8px;
+      white-space: nowrap;
+      flex-shrink: 0
+    }
+
+    .ex-chip.has-value {
+      color: var(--accent2);
+      border-color: var(--muted)
+    }
+
+    .set-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 14px
+    }
+
+    .set-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px
+    }
+
+    .set-num {
+      font-family: 'Syne Mono', monospace;
+      font-size: 11px;
+      color: var(--sub);
+      width: 44px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px
+    }
+
+    .set-check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--muted);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: transparent;
+      cursor: pointer;
+      transition: all .2s
+    }
+
+    .set-check.done {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111
+    }
+
+    .set-check.warmup {
+      border-color: var(--sub);
+      background: transparent
+    }
+
+    .set-check.warmup.done {
+      background: var(--muted);
+      border-color: var(--muted);
+      color: var(--text)
+    }
+
+    .set-num.warmup-label {
+      color: var(--muted)
+    }
+
+    .set-num.warmup-label div {
+      color: var(--muted)
+    }
+
+    .set-rpe-btns {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+      justify-content: flex-end;
+      flex-wrap: wrap
+    }
+
+    .rpe-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      color: var(--sub);
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .rpe-btn:active {
+      transform: scale(.9)
+    }
+
+    .rpe-btn.sel-low {
+      background: #2a4a00;
+      border-color: var(--accent);
+      color: var(--accent)
+    }
+
+    .rpe-btn.sel-mid {
+      background: #4a3a00;
+      border-color: var(--accent2);
+      color: var(--accent2)
+    }
+
+    .rpe-btn.sel-high {
+      background: #4a1a1a;
+      border-color: var(--red);
+      color: var(--red)
+    }
+
+    .rest-day-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+      text-align: center
+    }
+
+    .rest-icon {
+      font-size: 36px;
+      margin-bottom: 12px
+    }
+
+    .rest-label {
+      color: var(--sub);
+      font-size: 12px;
+      font-family: 'Syne Mono', monospace
+    }
+
+    .view {
+      display: none
+    }
+
+    .view.active {
+      display: block
+    }
+
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 12px;
+      color: var(--sub);
+      font-family: 'Syne Mono', monospace;
+      font-size: 12px
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn .3s ease forwards
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="header-row">
+      <div class="wordmark">workout/</div>
+      <button id="deloadBtn" onclick="toggleDeload()"
+        style="background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-family:'Syne Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;transition:all .2s">deload</button>
+      <div class="auth-status">
+        <div class="auth-dot" id="authDot"></div>
+        <span id="authLabel">connecting…</span>
+      </div>
+    </div>
+    <div class="day-tabs" id="dayTabs"></div>
+  </div>
+
+  <div id="mainView" class="view active">
+    <div class="content" id="mainContent">
+      <div class="loading">
+        <div class="spinner"></div>loading program…
+      </div>
+    </div>
+  </div>
+
+  <script src="https://accounts.google.com/gsi/client" async></script>
+  <script>
+    const CLIENT_ID = '674439380543-atvndeqpa9tpli755h879qabar53jneo.apps.googleusercontent.com';
+    const SHEET_ID = '10ApiDRmdFru5giLImN_FYTBvAUUopjU0RpvTPHPvmrg';
+    const SHEET_TAB = 'log';
+    const PROGRAM_URL = './program.json';
+    const TIMER_BASE = 'https://0xbn.github.io/interval-timer/';
+
+    const DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    let accessToken = null, tokenExpiry = 0, program = null;
+    let currentDay = DAYS[new Date().getDay()];
+    let sessionLog = {}, openCards = {}, deloadMode = false;
+
+    // ── AUTH ──────────────────────────────────────────────────────────────────
+    function setAuthUI(state, label) {
+      document.getElementById('authDot').className = 'auth-dot' + (state === 'ok' ? ' connected' : state === 'err' ? ' error' : '');
+      document.getElementById('authLabel').textContent = label;
+    }
+    function saveToken(token, expiresIn) {
+      accessToken = token;
+      tokenExpiry = Date.now() + (expiresIn - 60) * 1000;
+      localStorage.setItem('wb_token', token);
+      localStorage.setItem('wb_expiry', String(tokenExpiry));
+      const refreshIn = (expiresIn - 300) * 1000;
+      if (refreshIn > 0) setTimeout(silentRefresh, refreshIn);
+    }
+    function silentRefresh() {
+      if (typeof google === 'undefined') return;
+      google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID, scope: 'https://www.googleapis.com/auth/spreadsheets', prompt: '',
+        callback: (resp) => { if (resp.error) return; saveToken(resp.access_token, resp.expires_in); setAuthUI('ok', 'sheets connected'); }
+      }).requestAccessToken();
+    }
+    function loadCachedToken() {
+      const token = localStorage.getItem('wb_token');
+      const expiry = parseInt(localStorage.getItem('wb_expiry') || '0');
+      if (token && Date.now() < expiry) { accessToken = token; tokenExpiry = expiry; return true; }
+      return false;
+    }
+    function showSignInButton() {
+      setAuthUI('err', 'sign in');
+      const lbl = document.getElementById('authLabel');
+      lbl.style.cursor = 'pointer'; lbl.style.textDecoration = 'underline'; lbl.onclick = manualAuth;
+    }
+    function silentAuth() {
+      if (typeof google === 'undefined') { setTimeout(silentAuth, 300); return; }
+      if (loadCachedToken()) { setAuthUI('ok', 'sheets connected'); ensureSheetHeader().then(() => loadTodayState()); return; }
+      setAuthUI('', 'signing in…');
+      google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID, scope: 'https://www.googleapis.com/auth/spreadsheets', prompt: '',
+        callback: async (resp) => {
+          if (resp.error) { showSignInButton(); return; }
+          saveToken(resp.access_token, resp.expires_in);
+          setAuthUI('ok', 'sheets connected');
+          await ensureSheetHeader(); await loadTodayState();
+        }
+      }).requestAccessToken();
+    }
+    function manualAuth() {
+      setAuthUI('', 'signing in…');
+      const lbl = document.getElementById('authLabel');
+      lbl.style.cursor = 'default'; lbl.style.textDecoration = 'none'; lbl.onclick = null;
+      google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID, scope: 'https://www.googleapis.com/auth/spreadsheets', prompt: 'consent',
+        callback: async (resp) => {
+          if (resp.error) { showSignInButton(); return; }
+          saveToken(resp.access_token, resp.expires_in);
+          setAuthUI('ok', 'sheets connected');
+          await ensureSheetHeader(); await loadTodayState();
+        }
+      }).requestAccessToken();
+    }
+
+    // ── SHEETS ────────────────────────────────────────────────────────────────
+    async function sheetsReq(method, endpoint, body) {
+      if (!accessToken) return null;
+      const r = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}${endpoint}`, {
+        method, headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : undefined
+      });
+      if (!r.ok) return null;
+      return r.json();
+    }
+    let headerEnsured = false;
+    async function ensureSheetHeader() {
+      if (headerEnsured) return;
+      const d = await sheetsReq('GET', `/values/${SHEET_TAB}!A1:K1`);
+      if (d?.values?.[0]?.[0] !== 'date') {
+        await sheetsReq('PUT', `/values/${SHEET_TAB}!A1:K1?valueInputOption=RAW`, {
+          values: [['date', 'day', 'week_num', 'is_deload', 'block', 'exercise_id', 'exercise_name', 'set_num', 'weight', 'rpe', 'completed']]
+        });
+      }
+      headerEnsured = true;
+    }
+    let rowsCache = null;
+    async function getAllRows() {
+      if (rowsCache) return rowsCache;
+      const d = await sheetsReq('GET', `/values/${SHEET_TAB}!A1:K2000`);
+      rowsCache = d?.values || []; return rowsCache;
+    }
+    function invalidateCache() { rowsCache = null; }
+    async function logSet(exId, exName, blockName, setNum, weight, rpe, completed) {
+      if (!accessToken) return;
+
+      const key = stateKey(currentDay, exId);
+      const rowDate = key.split('-').slice(0, 3).join('-');
+
+      const row = [rowDate, currentDay, getWeekOfYear(), isDeloadWeek() ? 'yes' : 'no', blockName, exId, exName, setNum, weight || '', rpe || '', completed ? 'yes' : 'no'];
+      const rows = await getAllRows();
+      let idx = -1;
+
+      for (let i = 1; i < rows.length; i++) {
+        // Use rowDate (defined above) instead of today
+        if (rows[i][0] === rowDate && rows[i][1] === currentDay && rows[i][5] === exId && String(rows[i][7]) === String(setNum)) {
+          idx = i + 1;
+          break;
+        }
+      }
+
+      if (idx > 0) {
+        await sheetsReq('PUT', `/values/${SHEET_TAB}!A${idx}:K${idx}?valueInputOption=RAW`, { values: [row] });
+      } else {
+        await sheetsReq('POST', `/values/${SHEET_TAB}!A1:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, { values: [row] });
+      }
+      invalidateCache();
+    }
+    async function loadDayState(day) {
+      if (!accessToken) return;
+
+      // 1. Calculate the date for the selected tab
+      const today = new Date();
+      const todayIdx = today.getDay();
+      const targetIdx = DAYS.indexOf(day);
+
+      // Calculate difference in days (handling wrap-around)
+      let diff = targetIdx - todayIdx;
+      if (diff > 0) diff -= 7; // If target is "ahead" in index, it's from last week
+
+      const targetDate = new Date(today);
+      targetDate.setDate(today.getDate() + diff);
+      const targetDateStr = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`;
+
+      // 2. Initialize the sessionLog keys for this specific date/day combo
+      const allBlocks = [...(program.daily || []), ...(program.weekly[day] || [])];
+      allBlocks.forEach(bkId => {
+        const block = program.blocks[bkId]; if (!block) return;
+        const ids = block.type === 'flow' ? [`flow-${bkId}`] : block.exercises.map(e => e.id);
+
+        ids.forEach(id => {
+          const k = `${targetDateStr}-${day}-${id}`; // Specific key for that date
+          if (!sessionLog[k]) {
+            const ex = block.type === 'flow' ? null : block.exercises.find(e => e.id === id);
+            sessionLog[k] = {
+              sets: Array.from({ length: ex ? numSets(ex) : 1 }, () => ({ done: false, rpe: null })),
+              weight: '',
+              prescribed: ex?.prescribed_weight ? String(ex.prescribed_weight) : ''
+            };
+          }
+        });
+      });
+
+      // 3. Match rows based on the calculated targetDateStr
+      const rows = await getAllRows();
+      rows.forEach(r => {
+        if (!r[0] || r[0] !== targetDateStr || r[1] !== day) return;
+
+        const exId = r[5], rawSetNum = parseInt(r[7]);
+        const k = `${targetDateStr}-${day}-${exId}`;
+
+        if (sessionLog[k]) {
+          const setIdx = exId.startsWith('flow-') ? 0 : rawSetNum;
+          if (setIdx >= 0 && setIdx < sessionLog[k].sets.length) {
+            sessionLog[k].sets[setIdx].done = r[10] === 'yes';
+            sessionLog[k].sets[setIdx].rpe = r[9] ? parseInt(r[9]) : null;
+          }
+        }
+      });
+    }
+    async function loadTodayState() { await loadDayState(currentDay); renderDay(); }
+    async function fetchHistory() {
+      const rows = await getAllRows();
+      return rows.filter(r => r[0] && r[0] !== 'date' && r[0].match(/^\d{4}/));
+    }
+    async function fetchLastSession(exId) {
+      const rows = await fetchHistory();
+      const today = localDate();
+      const matches = rows.filter(r => r[5] === exId && r[0] !== today && r[10] === 'yes');
+      if (!matches.length) return null;
+      const last = matches[matches.length - 1];
+      return { weight: last[8] || '', rpe: last[9] || '' };
+    }
+
+    // ── PROGRAM ───────────────────────────────────────────────────────────────
+    async function loadProgram() { const r = await fetch(PROGRAM_URL); program = await r.json(); }
+    function isDeloadWeek() { return deloadMode; }
+    function getWeekOfYear() {
+      const now = new Date(), start = new Date(now.getFullYear(), 0, 1);
+      return Math.ceil(((now - start) / 86400000 + start.getDay() + 1) / 7);
+    }
+    function getRx(ex) {
+      const sets = ex.sets || 1;
+      if (ex.reps) return `${sets}×${ex.reps}`;
+      if (ex.duration) return `${sets}×${ex.duration}s`;
+      return '';
+    }
+    function numSets(ex) { return ex.warmup_weight != null ? (ex.sets || 1) + 1 : (ex.sets || 1); }
+    function localDate() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+    function stateKey(day, exId) {
+      const today = new Date();
+      const todayIdx = today.getDay();
+      const targetIdx = DAYS.indexOf(day);
+      let diff = targetIdx - todayIdx;
+      if (diff > 0) diff -= 7;
+
+      const d = new Date(today);
+      d.setDate(today.getDate() + diff);
+      const dStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      return `${dStr}-${day}-${exId}`;
+    }
+    function initState(ex) {
+      const k = stateKey(currentDay, ex.id);
+      if (!sessionLog[k]) sessionLog[k] = { sets: Array.from({ length: numSets(ex) }, () => ({ done: false, rpe: null })), weight: '', prescribed: ex.prescribed_weight != null ? String(ex.prescribed_weight) : '' };
+      return sessionLog[k];
+    }
+    function getState(exId) { return sessionLog[stateKey(currentDay, exId)] || null; }
+    function isWarmupSet(ex, setIdx) { return ex.warmup_weight != null && setIdx === 0; }
+    function getSetWeight(ex, setIdx, totalSets) {
+      const deloadMult = isDeloadWeek() ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
+      if (isWarmupSet(ex, setIdx)) return Math.round(ex.warmup_weight * deloadMult / 5) * 5;
+      const wIdx = ex.warmup_weight != null ? setIdx - 1 : setIdx;
+      const wSets = ex.warmup_weight != null ? totalSets - 1 : totalSets;
+      if (!ex.working_weight) {
+        const base = ex.prescribed_weight != null ? ex.prescribed_weight : null;
+        return base != null ? Math.round(base * deloadMult / 5) * 5 : null;
+      }
+      const prog = ex.progression || [1.0];
+      const offset = prog.length - wSets;
+      const adjIdx = Math.max(0, offset + wIdx);
+      const pct = prog[Math.min(adjIdx, prog.length - 1)];
+      return Math.round(ex.working_weight * pct * deloadMult / 5) * 5;
+    }
+    function isExDone(state) { return state && state.sets.length > 0 && state.sets.every(s => s.done); }
+
+    // ── TIMER LINK ────────────────────────────────────────────────────────────
+    const DEFAULT_REST = {
+      name: "Rest — 2 min",
+      sets: 1,
+      blocks: [{ "type": "rest", "label": "Rest", "duration": 120, "countdown_last": 10 }]
+    };
+
+    function timerUrl(routine) {
+      return TIMER_BASE + '?r=' + encodeURIComponent(JSON.stringify(routine));
+    }
+    function timerLink(routine, useDefault = false) {
+      const r = routine || (useDefault ? DEFAULT_REST : null);
+      if (!r) return '';
+      return `<a href="${timerUrl(r)}" target="_blank" onclick="event.stopPropagation()" class="timer-btn">▶ timer</a>`;
+    }
+
+    // ── RENDER ────────────────────────────────────────────────────────────────
+    function toggleDeload() {
+      deloadMode = !deloadMode;
+      const btn = document.getElementById('deloadBtn');
+      btn.style.color = deloadMode ? 'var(--accent2)' : 'var(--muted)';
+      btn.style.borderColor = deloadMode ? 'var(--accent2)' : 'var(--border)';
+      btn.textContent = deloadMode ? 'deload ✓' : 'deload';
+      renderDay();
+    }
+    function buildTabs() {
+      const today = new Date().getDay();
+      document.getElementById('dayTabs').innerHTML = DAYS.map((d, i) => {
+        const isToday = i === today, isActive = d === currentDay;
+        return `<button class="tab${isActive ? ' active' : ''}${isToday ? ' today-marker' : ''}" onclick="selectDay('${d}')">${DAY_SHORT[i]}</button>`;
+      }).join('');
+    }
+    async function renderDay() {
+      const deload = isDeloadWeek();
+      const dayBlocks = [...(program.daily || []), ...(program.weekly[currentDay] || [])];
+      const dayObj = program.blocks;
+      const dayLabel = currentDay.charAt(0).toUpperCase() + currentDay.slice(1);
+      const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+      dayBlocks.forEach(bkId => {
+        const block = dayObj[bkId]; if (!block || block.type === 'flow') return;
+        block.exercises.forEach(ex => { if (ex.weighted || ex.sets) initState(ex); });
+      });
+
+      let total = 0, done = 0;
+      dayBlocks.forEach(bkId => {
+        const block = dayObj[bkId]; if (!block) return;
+        if (block.type === 'flow') {
+          total++; const st = getState(`flow-${bkId}`); if (st?.sets[0]?.done) done++;
+        } else {
+          block.exercises.forEach(ex => { total++; if (isExDone(getState(ex.id))) done++; });
+        }
+      });
+
+      let html = `<div class="day-title fade-in">${dayLabel}</div>
+<div class="day-meta">${dateStr}</div>
+<div class="progress-wrap"><div class="progress-fill" style="width:${total ? (done / total * 100) : 0}%"></div></div>`;
+
+      if (!dayBlocks.length) {
+        html += `<div class="rest-day-card"><div class="rest-icon">○</div><div class="rest-label">rest day</div></div>`;
+      } else {
+        for (const bkId of dayBlocks) {
+          const block = dayObj[bkId]; if (!block) continue;
+          html += `<div class="block">
+<div class="block-header"><div class="block-name">${block.name}</div>${block.twice_daily ? `<div class="block-badge">2×daily</div>` : ''}</div>
+${block.note ? `<div class="block-note">${block.note}</div>` : ''}`;
+
+          if (block.type === 'flow') {
+            const flowId = `flow-${bkId}`;
+            const st = getState(flowId) || { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
+            if (!getState(flowId)) { sessionLog[stateKey(currentDay, flowId)] = st; }
+            html += `<div class="flow-row${st.sets[0].done ? ' done' : ''}">
+  <div class="flow-check" onclick="toggleFlowDone('${flowId}','${block.flow_label || block.name}','${block.name}')">${st.sets[0].done ? '✓' : ''}</div>
+  <div style="flex:1;min-width:0">
+    <div class="flow-label">${block.flow_label || block.name}</div>
+    <div class="flow-sub">${block.flow_sub || ''}</div>
+  </div>
+  ${timerLink(block.timer_routine)}
+  <div style="color:var(--muted);font-size:18px;flex-shrink:0">›</div>
+</div>`;
+          } else {
+            for (const ex of block.exercises) {
+              const st = initState(ex);
+              const rx = getRx(ex);
+              const allDone = isExDone(st);
+              const isOpen = openCards[ex.id];
+              const deloadMult = isDeloadWeek() ? (program.meta.deload_weight_multiplier || 0.5) : 1.0;
+              const workingW = ex.working_weight ? Math.round(ex.working_weight * deloadMult / 5) * 5 : ex.prescribed_weight;
+
+              html += `<div class="ex-card${allDone ? ' all-done' : ''}" id="card-${ex.id}">
+<div class="ex-header" onclick="toggleCard('${ex.id}')">
+  <div class="ex-info" style="flex:1;min-width:0">
+    <div class="ex-name">${ex.name}</div>
+    ${rx ? `<div class="ex-rx">${rx}</div>` : ''}
+    ${ex.note ? `<div class="ex-note-txt">${ex.note}</div>` : ''}
+  </div>
+  ${timerLink(ex.timer_routine, true)}
+  ${workingW != null ? `<div class="ex-chip has-value">${workingW}lb</div>` : ''}
+</div>`;
+
+              if (isOpen) {
+                st.sets.forEach((set, i) => {
+                  const rpe = set.rpe;
+                  const setW = getSetWeight(ex, i, st.sets.length);
+                  const isLastSet = i === st.sets.length - 1;
+                  const warmup = isWarmupSet(ex, i);
+                  html += `<div class="set-divider"></div>
+<div class="set-row">
+  <div class="set-num${warmup ? ' warmup-label' : ''}">
+    <div>${warmup ? 'W/U' : `Set ${ex.warmup_weight != null ? i : i + 1}`}</div>
+    ${setW != null ? `<div style="color:${warmup ? 'var(--muted)' : isLastSet ? 'var(--accent2)' : 'var(--sub)'};font-size:12px;font-family:'Syne Mono',monospace">${setW}lb</div>` : ''}
+  </div>
+  <div class="set-check${warmup ? ' warmup' : ''}${set.done ? ' done' : ''}" onclick="toggleSet('${ex.id}','${ex.name}','${block.name}',${i})">${set.done ? '✓' : ''}</div>
+  <div class="set-rpe-btns">
+    ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
+                    const cls = rpe === n ? (n <= 6 ? 'sel-low' : n <= 8 ? 'sel-mid' : 'sel-high') : '';
+                    return `<button class="rpe-btn ${cls}" onclick="event.stopPropagation();setRpe('${ex.id}','${ex.name}','${block.name}',${i},${n},${setW || 0})">${n}</button>`;
+                  }).join('')}
+  </div>
+</div>`;
+                });
+              }
+              html += `</div>`;
+            }
+          }
+          html += `</div>`;
+        }
+      }
+
+      document.getElementById('mainContent').innerHTML = html;
+      if (accessToken) {
+        dayBlocks.forEach(bkId => {
+          const block = dayObj[bkId]; if (!block || block.type === 'flow') return;
+          block.exercises.forEach(ex => { if (ex.weighted !== false) loadLastHint(ex.id); });
+        });
+      }
+    }
+
+    async function loadLastHint(exId) {
+      const last = await fetchLastSession(exId);
+      const el = document.getElementById(`hint-${exId}`);
+      if (el && last && (last.weight || last.rpe)) {
+        const parts = [];
+        if (last.weight) parts.push(last.weight + 'lb');
+        if (last.rpe) parts.push(`RPE ${last.rpe}`);
+        el.innerHTML = `last: <span>${parts.join(' · ')}</span>`;
+        el.classList.add('show');
+      }
+    }
+
+    // ── INTERACTIONS ──────────────────────────────────────────────────────────
+    function toggleCard(exId) { openCards[exId] = !openCards[exId]; renderDay(); }
+    function toggleFlowDone(flowId, exName, blockName) {
+      const k = stateKey(currentDay, flowId);
+      if (!sessionLog[k]) sessionLog[k] = { sets: [{ done: false, rpe: null }], weight: '', prescribed: '' };
+      sessionLog[k].sets[0].done = !sessionLog[k].sets[0].done;
+      logSet(flowId, exName, blockName, 1, '', null, sessionLog[k].sets[0].done);
+      renderDay();
+    }
+    function toggleSet(exId, exName, blockName, setIdx) {
+      const st = getState(exId); if (!st) return;
+      st.sets[setIdx].done = !st.sets[setIdx].done;
+      logSet(exId, exName, blockName, setIdx, st.weight, st.sets[setIdx].rpe, st.sets[setIdx].done);
+      renderDay();
+    }
+    function setRpe(exId, exName, blockName, setIdx, val, prescribedWeight) {
+      const st = getState(exId); if (!st) return;
+      st.sets[setIdx].rpe = val; st.sets[setIdx].done = true;
+      logSet(exId, exName, blockName, setIdx, prescribedWeight || '', val, true);
+      renderDay();
+    }
+
+    // ── NAV ───────────────────────────────────────────────────────────────────
+    function selectDay(day) {
+      currentDay = day; openCards = {};
+      buildTabs(); renderDay();
+      if (accessToken) loadDayState(day).then(() => renderDay());
+    }
+
+    // ── INIT ──────────────────────────────────────────────────────────────────
+    async function init() {
+      await loadProgram();
+      buildTabs(); renderDay();
+      setTimeout(() => { document.querySelector('.tab.active')?.scrollIntoView({ inline: 'center', behavior: 'smooth' }); }, 100);
+      setTimeout(silentAuth, 300);
+    }
+    init();
+  </script>
+</body>
+
+</html>
