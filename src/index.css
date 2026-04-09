@@ -1,0 +1,22 @@
+:root {
+  --bg: #111111;
+  --surface: #1e1e1e;
+  --border: #2e2e2e;
+  --muted: #555555;
+  --sub: #999999;
+  --text: #ffffff;
+  --accent: #c8f000;
+  --accent2: #ffc940;
+  --red: #ff5a5a;
+  --r: 8px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  min-height: 100vh;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
