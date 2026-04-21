@@ -2,14 +2,15 @@ export const DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'fr
 
 export const getTargetDate = (dayName) => {
   const today = new Date();
-  const todayIdx = today.getDay();
   const targetIdx = DAYS.indexOf(dayName.toLowerCase());
-  
-  let diff = targetIdx - todayIdx;
-  if (diff > 0) diff -= 7; 
-  
-  const d = new Date(today);
-  d.setDate(today.getDate() + diff);
+
+  if (targetIdx === -1) return today;
+
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay());
+
+  const d = new Date(startOfWeek);
+  d.setDate(startOfWeek.getDate() + targetIdx);
   return d;
 };
 
