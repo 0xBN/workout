@@ -1,9 +1,10 @@
 {
   "meta": {
-    "version": "3.0",
+    "version": "3.1",
     "deload_rule": "manual_toggle",
     "deload_weight_multiplier": 0.5,
-    "note": "80/20 program. Priority: climbing V12, longevity. Finger recovery ongoing. Right knee, left QL, right shoulder limitations accounted for."
+    "note": "80/20 program. Priority: climbing V12, longevity. Finger recovery ongoing. Right knee, left QL, right shoulder limitations accounted for.",
+    "db_weight_convention": "working_weight for dumbbell exercises = total weight (both DBs combined). e.g. working_weight: 60 = 30 lb per hand."
   },
 
   "daily": ["finger_prehab_1", "finger_prehab_2"],
@@ -31,59 +32,114 @@
         "blocks": [
           {
             "type": "prepare",
-            "label": "Ankle circles. Stand on one foot, draw circles with the other. Both directions, both feet",
+            "label": "Ankle circles — right foot. Stand on left foot, draw big circles with right. Both directions",
             "duration": 6,
             "countdown_last": 3
           },
           {
             "type": "work",
-            "label": "Ankle circles",
+            "label": "Ankle circles — right",
             "duration": 20,
             "countdown_last": 20
           },
           {
             "type": "rest",
-            "label": "Good. Now hip circles — hands on hips, big slow circles",
-            "duration": 6
-          },
-          {
-            "type": "work",
-            "label": "Hip circles",
-            "duration": 20,
-            "countdown_last": 20
-          },
-          {
-            "type": "rest",
-            "label": "Now shoulder circles — arms at sides, big backward rolls",
-            "duration": 6
-          },
-          {
-            "type": "work",
-            "label": "Shoulder circles — backward",
-            "duration": 20,
-            "countdown_last": 20
-          },
-          {
-            "type": "rest",
-            "label": "Switch to forward shoulder circles",
+            "label": "Switch to left foot",
             "duration": 4
           },
           {
             "type": "work",
-            "label": "Shoulder circles — forward",
+            "label": "Ankle circles — left",
             "duration": 20,
             "countdown_last": 20
           },
           {
             "type": "rest",
-            "label": "Wrist circles — arms out, draw big circles both directions",
+            "label": "Hip circles — hands on hips, big slow circles. Right direction first",
+            "duration": 6
+          },
+          {
+            "type": "work",
+            "label": "Hip circles — right direction",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Reverse direction",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Hip circles — left direction",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Shoulder circles — backward. Right arm first",
             "duration": 5
           },
           {
             "type": "work",
-            "label": "Wrist circles",
-            "duration": 20,
-            "countdown_last": 20
+            "label": "Shoulder circles backward — right arm",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch to left arm",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Shoulder circles backward — left arm",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Shoulder circles — forward. Right arm first",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Shoulder circles forward — right arm",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch to left arm",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Shoulder circles forward — left arm",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Wrist circles — right arm out, draw big circles both directions",
+            "duration": 5
+          },
+          {
+            "type": "work",
+            "label": "Wrist circles — right",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch to left wrist",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Wrist circles — left",
+            "duration": 15,
+            "countdown_last": 10
           },
           {
             "type": "rest",
@@ -159,30 +215,85 @@
         "blocks": [
           {
             "type": "prepare",
-            "label": "Ankle and knee circles. Slow, full range. Feel the joints wake up",
+            "label": "Ankle circles — right foot. Stand on left, draw big circles both directions",
             "duration": 6,
             "countdown_last": 3
           },
           {
             "type": "work",
-            "label": "Ankle and knee circles",
-            "duration": 25,
+            "label": "Ankle circles — right",
+            "duration": 15,
             "countdown_last": 10
           },
           {
             "type": "rest",
-            "label": "Hip circles and hip hinges. Hands on hips, big circles then hinge forward",
-            "duration": 6
+            "label": "Switch to left foot",
+            "duration": 4
           },
           {
             "type": "work",
-            "label": "Hip circles and hinges",
-            "duration": 25,
+            "label": "Ankle circles — left",
+            "duration": 15,
             "countdown_last": 10
           },
           {
             "type": "rest",
-            "label": "Thoracic rotation. Hands behind head, rotate side to side slowly",
+            "label": "Knee circles — hands on knees, slow circles both directions. Right leg first",
+            "duration": 5
+          },
+          {
+            "type": "work",
+            "label": "Knee circles — right",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch to left knee",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Knee circles — left",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Hip circles — hands on hips, big circles. Right direction first",
+            "duration": 5
+          },
+          {
+            "type": "work",
+            "label": "Hip circles — right direction",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Reverse direction",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Hip circles — left direction",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Hip hinges — feet hip width, hinge forward from hips, flat back",
+            "duration": 5
+          },
+          {
+            "type": "work",
+            "label": "Hip hinges",
+            "duration": 20,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Thoracic rotation — hands behind head, rotate side to side slowly",
             "duration": 5
           },
           {
@@ -193,24 +304,79 @@
           },
           {
             "type": "rest",
-            "label": "Shoulder circles and arm swings. Backward circles then cross-body swings",
+            "label": "Shoulder circles backward — right arm first",
             "duration": 5
           },
           {
             "type": "work",
-            "label": "Shoulder circles and arm swings",
-            "duration": 25,
+            "label": "Shoulder circles backward — right arm",
+            "duration": 15,
             "countdown_last": 10
           },
           {
             "type": "rest",
-            "label": "Wrist circles and finger extensions. Arms out, full wrist circles then spread fingers wide",
+            "label": "Switch to left arm",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Shoulder circles backward — left arm",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Arm swings — cross-body swings, right arm first",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Arm swings — right",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch to left arm",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Arm swings — left",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Wrist circles — right arm out, full circles both directions",
             "duration": 5
           },
           {
             "type": "work",
-            "label": "Wrist circles and finger extensions",
-            "duration": 20,
+            "label": "Wrist circles — right",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch to left wrist",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Wrist circles — left",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Finger extensions — spread fingers wide, hold, release",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Finger extensions — both hands",
+            "duration": 15,
             "countdown_last": 10
           },
           {
@@ -227,7 +393,7 @@
           },
           {
             "type": "rest",
-            "label": "Bird dog. Right arm left leg",
+            "label": "Bird dog — right arm left leg",
             "duration": 5,
             "countdown_last": 3
           },
@@ -781,9 +947,9 @@
           "sets": 2,
           "reps": 5,
           "weighted": true,
-          "working_weight": 60,
-          "progression": [0.85, 1.0],
-          "note": "added weight lb",
+          "working_weight": 50,
+          "note": "added weight lb — belt/plate. FIX: was 60 at 0.85 = 51 lb unachievable; rounded warmup to 50 lb clean.",
+          "progression": [0.8, 1.0],
           "timer_routine": {
             "name": "Rest — 60s",
             "sets": 1,
@@ -802,10 +968,11 @@
           "name": "Bulgarian split squat",
           "sets": 2,
           "reps": 8,
-          "note": "per leg",
+          "note": "per leg. working_weight = total DB weight (both DBs combined). e.g. 60 = 30 lb per hand.",
           "weighted": true,
           "working_weight": 60,
-          "progression": [0.875, 1.0],
+          "progression": [0.833, 1.0],
+          "note2": "FIX: was 0.875 = 52.5 lb total = 26.25 lb/hand (no such DB). 0.833 = 50 lb total = 25 lb/hand. Clean.",
           "timer_routine": {
             "name": "Rest — 60s",
             "sets": 1,
@@ -848,7 +1015,7 @@
           "weighted": true,
           "working_weight": 60,
           "progression": [0.875, 1.0],
-          "note": "30lb each dumbbell — shoulder safe",
+          "note": "working_weight = total DB weight. 60 = 30 lb per hand. 0.875 = 52.5 lb total = 26.25 lb/hand — same fractional issue as BSS. Consider progression: [0.833, 1.0] = 25 lb/hand warmup, or keep 30s both sets.",
           "timer_routine": {
             "name": "Rest — 60s",
             "sets": 1,
