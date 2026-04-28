@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "3.4",
+    "version": "3.6",
     "deload_rule": "manual_toggle",
     "deload_weight_multiplier": 0.5,
     "note": "80/20 program. Priority: climbing V12, longevity. Finger recovery ongoing. Right knee, left QL, right shoulder limitations accounted for.",
@@ -30,6 +30,17 @@
     "changelog_3_4": [
       "Stripped all instructional cues from timer labels \u2014 name + side only (URL length fix)",
       "Fixed missing lateral leg swing left-side switch cue in both warmups"
+    ],
+    "changelog_3_5": [
+      "Moved dead bug into floor series \u2014 after wrist rocks, before squat rocks (both warmups)"
+    ],
+    "changelog_3_6": [
+      "Reordered both warmups by gym location: mat \u2192 wall \u2192 open floor",
+      "MAT: glute bridge, clamshells, cat-cow, wrist rocks, dead bug, bird dog, + copenhagen (climbing only)",
+      "WALL: squat rocks, leg swings F/B, lateral swings, hip CARs, + hip hinges (lift only)",
+      "OPEN FLOOR: WGS, shoulder circles, step-downs, + wall sit + squat to hinge (lift only)",
+      "Removed thoracic rotation from lift warmup \u2014 redundant with WGS",
+      "WGS duration increased 20s \u2192 30s per side to compensate"
     ]
   },
   "daily": ["finger_prehab_1", "finger_prehab_2"],
@@ -50,7 +61,7 @@
       "flow_sub": "glute activation \u00b7 dynamic mobility \u00b7 climbing-specific",
       "timer_routine": {
         "name": "Climbing Warmup",
-        "description": "Floor series \u2192 standing dynamic \u2192 climbing-specific. ~8\u20139 min.",
+        "description": "Mat \u2192 wall \u2192 open floor. ~9 min.",
         "sets": 1,
         "blocks": [
           {
@@ -68,8 +79,7 @@
           {
             "type": "rest",
             "label": "Clamshells \u2014 right",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -91,8 +101,7 @@
           {
             "type": "rest",
             "label": "Cat-cow",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -103,8 +112,7 @@
           {
             "type": "rest",
             "label": "Wrist rocks",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -114,9 +122,74 @@
           },
           {
             "type": "rest",
+            "label": "Dead bug \u2014 right arm, left leg",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Dead bug \u2014 right arm, left leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Switch sides",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Dead bug \u2014 left arm, right leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Bird dog \u2014 right arm, left leg",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Bird dog \u2014 right arm, left leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Switch sides",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Bird dog \u2014 left arm, right leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Copenhagen \u2014 right",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Copenhagen \u2014 right side",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch to left side",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Copenhagen \u2014 left side",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
             "label": "Squat rocks",
-            "duration": 6,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -127,8 +200,7 @@
           {
             "type": "rest",
             "label": "Leg swings F/B \u2014 right",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -150,8 +222,7 @@
           {
             "type": "rest",
             "label": "Lateral leg swings \u2014 right",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -173,8 +244,7 @@
           {
             "type": "rest",
             "label": "Hip CARs \u2014 right",
-            "duration": 7,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -196,13 +266,12 @@
           {
             "type": "rest",
             "label": "World's Greatest \u2014 right",
-            "duration": 7,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
             "label": "World's Greatest Stretch \u2014 right",
-            "duration": 20,
+            "duration": 30,
             "countdown_last": 10
           },
           {
@@ -213,14 +282,13 @@
           {
             "type": "work",
             "label": "World's Greatest Stretch \u2014 left",
-            "duration": 20,
+            "duration": 30,
             "countdown_last": 10
           },
           {
             "type": "rest",
             "label": "Shoulder circles \u2014 backward",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -242,8 +310,7 @@
           {
             "type": "rest",
             "label": "Step-downs \u2014 right",
-            "duration": 7,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -259,75 +326,6 @@
           {
             "type": "work",
             "label": "Step-downs \u2014 left leg",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Bird dog \u2014 right arm, left leg",
-            "duration": 6,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Bird dog \u2014 right arm, left leg",
-            "duration": 20,
-            "countdown_last": 20
-          },
-          {
-            "type": "rest",
-            "label": "Switch sides",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Bird dog \u2014 left arm, right leg",
-            "duration": 20,
-            "countdown_last": 20
-          },
-          {
-            "type": "rest",
-            "label": "Dead bug \u2014 right arm, left leg",
-            "duration": 6,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Dead bug \u2014 right arm, left leg",
-            "duration": 20,
-            "countdown_last": 20
-          },
-          {
-            "type": "rest",
-            "label": "Switch sides",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Dead bug \u2014 left arm, right leg",
-            "duration": 20,
-            "countdown_last": 20
-          },
-          {
-            "type": "rest",
-            "label": "Copenhagen \u2014 right",
-            "duration": 7,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Copenhagen \u2014 right side",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Switch to left side",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Copenhagen \u2014 left side",
             "duration": 30,
             "countdown_last": 10
           }
@@ -390,7 +388,7 @@
           "id": "cw_wg",
           "name": "World's Greatest Stretch",
           "sets": 1,
-          "duration": 20,
+          "duration": 30,
           "note": "per side"
         },
         {
@@ -437,7 +435,7 @@
       "flow_sub": "glute activation \u00b7 joint prep \u00b7 movement pattern prime",
       "timer_routine": {
         "name": "Lift Warmup",
-        "description": "Floor series \u2192 standing dynamic \u2192 lift-specific pattern prime. ~10\u201311 min.",
+        "description": "Mat \u2192 wall \u2192 open floor. ~11 min.",
         "sets": 1,
         "blocks": [
           {
@@ -455,8 +453,7 @@
           {
             "type": "rest",
             "label": "Clamshells \u2014 right",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -478,8 +475,7 @@
           {
             "type": "rest",
             "label": "Cat-cow",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -490,8 +486,7 @@
           {
             "type": "rest",
             "label": "Wrist rocks",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -501,9 +496,52 @@
           },
           {
             "type": "rest",
+            "label": "Dead bug \u2014 right arm, left leg",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Dead bug \u2014 right arm, left leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Switch sides",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Dead bug \u2014 left arm, right leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Bird dog \u2014 right arm, left leg",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Bird dog \u2014 right arm, left leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Switch sides",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Bird dog \u2014 left arm, right leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          {
+            "type": "rest",
             "label": "Squat rocks",
-            "duration": 6,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -514,8 +552,7 @@
           {
             "type": "rest",
             "label": "Leg swings F/B \u2014 right",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -537,8 +574,7 @@
           {
             "type": "rest",
             "label": "Lateral leg swings \u2014 right",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -560,8 +596,7 @@
           {
             "type": "rest",
             "label": "Hip CARs \u2014 right",
-            "duration": 7,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -583,8 +618,7 @@
           {
             "type": "rest",
             "label": "Hip hinges",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -594,26 +628,13 @@
           },
           {
             "type": "rest",
-            "label": "Thoracic rotation",
-            "duration": 5,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Thoracic rotation",
-            "duration": 25,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
             "label": "World's Greatest \u2014 right",
-            "duration": 7,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
             "label": "World's Greatest Stretch \u2014 right",
-            "duration": 20,
+            "duration": 30,
             "countdown_last": 10
           },
           {
@@ -624,14 +645,13 @@
           {
             "type": "work",
             "label": "World's Greatest Stretch \u2014 left",
-            "duration": 20,
+            "duration": 30,
             "countdown_last": 10
           },
           {
             "type": "rest",
             "label": "Shoulder circles \u2014 backward",
-            "duration": 5,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -653,8 +673,7 @@
           {
             "type": "rest",
             "label": "Step-downs \u2014 right",
-            "duration": 7,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -676,8 +695,7 @@
           {
             "type": "rest",
             "label": "Wall sit",
-            "duration": 6,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
@@ -688,60 +706,13 @@
           {
             "type": "rest",
             "label": "Squat to hinge flow",
-            "duration": 6,
-            "countdown_last": 3
+            "duration": 4
           },
           {
             "type": "work",
             "label": "Squat to hinge flow",
             "duration": 30,
             "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Bird dog \u2014 right arm, left leg",
-            "duration": 5,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Bird dog \u2014 right arm, left leg",
-            "duration": 20,
-            "countdown_last": 20
-          },
-          {
-            "type": "rest",
-            "label": "Switch sides",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Bird dog \u2014 left arm, right leg",
-            "duration": 20,
-            "countdown_last": 20
-          },
-          {
-            "type": "rest",
-            "label": "Dead bug \u2014 right arm, left leg",
-            "duration": 6,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Dead bug \u2014 right arm, left leg",
-            "duration": 20,
-            "countdown_last": 20
-          },
-          {
-            "type": "rest",
-            "label": "Switch sides",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Dead bug \u2014 left arm, right leg",
-            "duration": 20,
-            "countdown_last": 20
           }
         ]
       },
@@ -805,16 +776,10 @@
           "duration": 20
         },
         {
-          "id": "lw_tr",
-          "name": "Thoracic rotation",
-          "sets": 1,
-          "duration": 25
-        },
-        {
           "id": "lw_wg",
           "name": "World's Greatest Stretch",
           "sets": 1,
-          "duration": 20,
+          "duration": 30,
           "note": "per side"
         },
         {
