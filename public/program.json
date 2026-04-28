@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "3.2",
+    "version": "3.3",
     "deload_rule": "manual_toggle",
     "deload_weight_multiplier": 0.5,
     "note": "80/20 program. Priority: climbing V12, longevity. Finger recovery ongoing. Right knee, left QL, right shoulder limitations accounted for.",
@@ -19,6 +19,13 @@
       "WEIGHT UPDATES from RPE log: pull-ups 50→55 (RPE 6 at 55lb on 2026-04-14), RDL 155→165 (consistent RPE 5-7 at 145lb)",
       "OHP progression fixed 0.875→0.833 (50lb total = 25lb/hand, clean DB weight)",
       "BSS progression confirmed 0.833 (50lb total = 25lb/hand warmup)"
+    ],
+    "changelog_3_3": [
+      "ADDED both warmups: dead bug after bird dog (anti-extension core, scoliosis correction, climbing tension)",
+      "ADDED lift_full_body: suitcase hold 2×40s per side (left QL correction, lateral stability, climbing carryover)",
+      "DROPPED: plank hold (redundant — bird dog + dead bug + Copenhagen + McGill side bridge cover it)",
+      "DROPPED: hip thrust (BSS + glute bridge covers glute demand at V12 priority level)",
+      "DROPPED: dumbbell bench (zero climbing carryover, right shoulder limitation, OHP covers pressing stimulus)"
     ]
   },
 
@@ -247,6 +254,25 @@
           },
           {
             "type": "rest",
+            "label": "Dead bug. On back, arms to ceiling, knees at 90. Lower opposite arm and leg slowly, lower back stays flat",
+            "duration": 6,
+            "countdown_last": 3
+          },
+          {
+            "type": "work",
+            "label": "Dead bug — right arm, left leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          { "type": "rest", "label": "Switch sides", "duration": 4 },
+          {
+            "type": "work",
+            "label": "Dead bug — left arm, right leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          {
+            "type": "rest",
             "label": "Copenhagen plank. Top foot on bench, right side first. Highest demand — bridges you straight into climbing",
             "duration": 7,
             "countdown_last": 3
@@ -326,6 +352,13 @@
           "sets": 1,
           "duration": 20,
           "note": "per side"
+        },
+        {
+          "id": "cw_db",
+          "name": "Dead bug",
+          "sets": 1,
+          "duration": 20,
+          "note": "per side — lower back flat throughout"
         },
         {
           "id": "cw_cop",
@@ -594,6 +627,25 @@
             "label": "Bird dog — left arm, right leg",
             "duration": 20,
             "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Dead bug. On back, arms to ceiling, knees at 90. Lower opposite arm and leg slowly, lower back stays flat",
+            "duration": 6,
+            "countdown_last": 3
+          },
+          {
+            "type": "work",
+            "label": "Dead bug — right arm, left leg",
+            "duration": 20,
+            "countdown_last": 20
+          },
+          { "type": "rest", "label": "Switch sides", "duration": 4 },
+          {
+            "type": "work",
+            "label": "Dead bug — left arm, right leg",
+            "duration": 20,
+            "countdown_last": 20
           }
         ]
       },
@@ -666,6 +718,13 @@
           "sets": 1,
           "duration": 20,
           "note": "per side"
+        },
+        {
+          "id": "lw_db",
+          "name": "Dead bug",
+          "sets": 1,
+          "duration": 20,
+          "note": "per side — lower back flat throughout"
         }
       ]
     },
@@ -1270,6 +1329,27 @@
                 "type": "rest",
                 "label": "Rest",
                 "duration": 60,
+                "countdown_last": 10
+              }
+            ]
+          }
+        },
+        {
+          "id": "lb6",
+          "name": "Suitcase hold",
+          "sets": 2,
+          "duration": 40,
+          "note": "per side. DB in one hand at side, stand tall, resist lateral lean. Left side priority — direct left QL correction. working_weight = single DB.",
+          "weighted": true,
+          "working_weight": 50,
+          "timer_routine": {
+            "name": "Rest — 45s",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 45,
                 "countdown_last": 10
               }
             ]
