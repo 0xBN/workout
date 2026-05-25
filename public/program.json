@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "3.6",
+    "version": "3.7",
     "deload_rule": "manual_toggle",
     "deload_weight_multiplier": 0.5,
     "note": "80/20 program. Priority: climbing V12, longevity. Finger recovery ongoing. Right knee, left QL, right shoulder limitations accounted for.",
@@ -41,6 +41,12 @@
       "OPEN FLOOR: WGS, shoulder circles, step-downs, + wall sit + squat to hinge (lift only)",
       "Removed thoracic rotation from lift warmup \u2014 redundant with WGS",
       "WGS duration increased 20s \u2192 30s per side to compensate"
+    ],
+    "changelog_3_7": [
+      "THURSDAY MOBILITY simplified into a short reset + optional row/bike to reduce cognitive load and improve compliance",
+      "Moved sleeper stretch into climbing post-session flow so shoulder maintenance rides on active days",
+      "Lift post-session flow trimmed to the highest-yield pieces only",
+      "Working weights increased where repeated RPE logs showed clear underloading: RDL 165\u2192185, OHP 60\u219270, suitcase hold 50\u219260"
     ]
   },
   "daily": ["finger_prehab_1", "finger_prehab_2"],
@@ -1519,8 +1525,8 @@
           "sets": 2,
           "reps": 5,
           "weighted": true,
-          "working_weight": 165,
-          "note": "Updated from 155: consistent RPE 5\u20137 at 145lb across two sessions.",
+          "working_weight": 185,
+          "note": "Updated from 165 after repeated low-RPE logs. working_weight should feel like true work again, not a warmup.",
           "progression": [0.8, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
@@ -1541,8 +1547,8 @@
           "sets": 2,
           "reps": 8,
           "weighted": true,
-          "working_weight": 60,
-          "note": "working_weight = total DB weight. 60 = 30lb per hand. Warmup set 50lb total = 25lb per hand.",
+          "working_weight": 70,
+          "note": "working_weight = total DB weight. 70 = 35lb per hand. Warmup set 60lb total = 30lb per hand.",
           "progression": [0.833, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
@@ -1560,19 +1566,61 @@
         {
           "id": "lb6",
           "name": "Suitcase hold",
-          "sets": 2,
+          "sets": 3,
           "duration": 40,
           "note": "per side. DB in one hand at side, stand tall, resist lateral lean. Left side priority \u2014 direct left QL correction. working_weight = single DB.",
           "weighted": true,
-          "working_weight": 50,
+          "working_weight": 60,
           "timer_routine": {
-            "name": "Rest \u2014 45s",
+            "name": "Suitcase Hold",
             "sets": 1,
             "blocks": [
+              {
+                "type": "prepare",
+                "label": "Suitcase hold \u2014 set 1",
+                "duration": 5,
+                "countdown_last": 3
+              },
+              {
+                "type": "work",
+                "label": "Suitcase hold \u2014 set 1",
+                "duration": 40,
+                "countdown_last": 10
+              },
               {
                 "type": "rest",
                 "label": "Rest",
                 "duration": 45,
+                "countdown_last": 10
+              },
+              {
+                "type": "prepare",
+                "label": "Suitcase hold \u2014 set 2",
+                "duration": 5,
+                "countdown_last": 3
+              },
+              {
+                "type": "work",
+                "label": "Suitcase hold \u2014 set 2",
+                "duration": 40,
+                "countdown_last": 10
+              },
+              {
+                "type": "rest",
+                "label": "Rest",
+                "duration": 45,
+                "countdown_last": 10
+              },
+              {
+                "type": "prepare",
+                "label": "Suitcase hold \u2014 set 3",
+                "duration": 5,
+                "countdown_last": 3
+              },
+              {
+                "type": "work",
+                "label": "Suitcase hold \u2014 set 3",
+                "duration": 40,
                 "countdown_last": 10
               }
             ]
@@ -1581,87 +1629,53 @@
       ]
     },
     "mobility_recovery": {
-      "name": "Thursday Mobility",
+      "name": "Thursday Reset",
       "type": "checklist",
       "exercises": [
         {
           "id": "th1",
-          "name": "QL foam roll",
+          "name": "Zone 2 row or bike",
           "sets": 1,
-          "duration": 180,
-          "note": "left side focus \u2014 lateral to spine between last rib and hip"
+          "duration": 1200,
+          "note": "optional but preferred. 20 min easy pace. If energy is low, do the reset below only."
         },
         {
           "id": "th2",
+          "name": "QL foam roll",
+          "sets": 1,
+          "duration": 120,
+          "note": "left side focus \u2014 lateral to spine between last rib and hip"
+        },
+        {
+          "id": "th3",
           "name": "McGill side bridge",
-          "sets": 3,
+          "sets": 2,
           "duration": 30,
           "note": "RIGHT side only \u2014 scoliosis correction"
         },
         {
-          "id": "th3",
+          "id": "th4",
           "name": "Cat-cow",
           "sets": 1,
           "reps": 10
         },
         {
-          "id": "th4",
-          "name": "Thread the needle",
-          "sets": 2,
-          "reps": 8,
-          "note": "per side"
-        },
-        {
           "id": "th5",
-          "name": "90/90 hip stretch",
-          "sets": 2,
-          "duration": 45,
-          "note": "per side"
-        },
-        {
-          "id": "th6",
-          "name": "Spiderman lunge",
-          "sets": 2,
-          "duration": 45,
-          "note": "per side \u2014 passive hold. Replaces couch stretch, no wall needed"
-        },
-        {
-          "id": "th7",
           "name": "Standing QL stretch",
-          "sets": 2,
+          "sets": 1,
           "duration": 30,
           "note": "left side \u2014 arm overhead, lean right"
-        },
-        {
-          "id": "th8",
-          "name": "Doorway chest stretch",
-          "sets": 2,
-          "duration": 30
-        },
-        {
-          "id": "th9",
-          "name": "Wrist extensor stretch",
-          "sets": 2,
-          "duration": 30,
-          "note": "per side"
-        },
-        {
-          "id": "th10",
-          "name": "Sleeper stretch",
-          "sets": 2,
-          "duration": 45,
-          "note": "right shoulder \u2014 lie on right side, push forearm toward floor gently"
         }
       ],
       "timer_routine": {
-        "name": "Thursday Mobility",
-        "description": "QL release, scoliosis correction, thoracic mobility, full stretch. ~20 min.",
+        "name": "Thursday Reset",
+        "description": "Short reset first. Add 20 min easy row or bike if you have the bandwidth. ~6 min reset.",
         "sets": 1,
         "blocks": [
           {
             "type": "prepare",
-            "label": "QL foam roll. Roller lateral to left spine, between last rib and hip. Let gravity work",
-            "duration": 8,
+            "label": "QL foam roll",
+            "duration": 5,
             "countdown_last": 3
           },
           {
@@ -1672,24 +1686,13 @@
           },
           {
             "type": "rest",
-            "label": "Rest. Move roller slightly",
-            "duration": 8
-          },
-          {
-            "type": "work",
-            "label": "QL foam roll \u2014 left side",
-            "duration": 60,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
             "label": "Rest",
-            "duration": 8
+            "duration": 6
           },
           {
             "type": "prepare",
-            "label": "McGill side bridge. Right side only. Forearm and feet stacked. Hold straight",
-            "duration": 7,
+            "label": "McGill side bridge \u2014 right",
+            "duration": 5,
             "countdown_last": 3
           },
           {
@@ -1700,19 +1703,8 @@
           },
           {
             "type": "rest",
-            "label": "Rest. Right side again",
-            "duration": 8
-          },
-          {
-            "type": "work",
-            "label": "McGill side bridge \u2014 right",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Rest. Final set",
-            "duration": 8
+            "label": "Rest",
+            "duration": 6
           },
           {
             "type": "work",
@@ -1723,11 +1715,11 @@
           {
             "type": "rest",
             "label": "Rest",
-            "duration": 8
+            "duration": 6
           },
           {
             "type": "prepare",
-            "label": "Cat-cow. Hands and knees. Arch up then drop belly slowly",
+            "label": "Cat-cow",
             "duration": 5,
             "countdown_last": 3
           },
@@ -1739,191 +1731,18 @@
           },
           {
             "type": "rest",
-            "label": "Rest",
+            "label": "QL stretch \u2014 left",
             "duration": 6
           },
           {
             "type": "prepare",
-            "label": "Thread the needle. Slide right arm under and rotate",
+            "label": "Standing QL stretch",
             "duration": 5,
             "countdown_last": 3
           },
           {
             "type": "work",
-            "label": "Thread the needle \u2014 right",
-            "duration": 20,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Switch to left",
-            "duration": 5
-          },
-          {
-            "type": "work",
-            "label": "Thread the needle \u2014 left",
-            "duration": 20,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Repeat",
-            "duration": 5
-          },
-          {
-            "type": "work",
-            "label": "Thread the needle \u2014 right",
-            "duration": 20,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Switch to left",
-            "duration": 5
-          },
-          {
-            "type": "work",
-            "label": "Thread the needle \u2014 left",
-            "duration": 20,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Rest",
-            "duration": 8
-          },
-          {
-            "type": "prepare",
-            "label": "90/90 hip stretch. Front and back legs at 90 degrees. Sit tall",
-            "duration": 6,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "90/90 \u2014 right hip forward",
-            "duration": 45,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Switch sides",
-            "duration": 6
-          },
-          {
-            "type": "work",
-            "label": "90/90 \u2014 left hip forward",
-            "duration": 45,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Rest",
-            "duration": 6
-          },
-          {
-            "type": "prepare",
-            "label": "Spiderman lunge \u2014 right foot forward. Step into deep lunge, drop back knee, sink hips forward. Passive hold",
-            "duration": 7,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Spiderman lunge \u2014 right",
-            "duration": 45,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Switch to left side",
-            "duration": 5
-          },
-          {
-            "type": "work",
-            "label": "Spiderman lunge \u2014 left",
-            "duration": 45,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Rest",
-            "duration": 6
-          },
-          {
-            "type": "prepare",
-            "label": "Standing QL stretch. Left arm overhead, lean right. Feel left side open",
-            "duration": 6,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
             "label": "QL stretch \u2014 left side",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Again",
-            "duration": 5
-          },
-          {
-            "type": "work",
-            "label": "QL stretch \u2014 left side",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Rest",
-            "duration": 6
-          },
-          {
-            "type": "prepare",
-            "label": "Sleeper stretch. Lie on right side. Right arm out at 90 degrees. Left hand gently pushes right forearm toward floor",
-            "duration": 8,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Sleeper stretch \u2014 right shoulder",
-            "duration": 45,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Rest",
-            "duration": 6
-          },
-          {
-            "type": "work",
-            "label": "Sleeper stretch \u2014 right shoulder",
-            "duration": 45,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Rest",
-            "duration": 6
-          },
-          {
-            "type": "prepare",
-            "label": "Wrist extensor stretch. Arm out, palm down, pull fingers back",
-            "duration": 5,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Wrist stretch \u2014 right",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Switch to left",
-            "duration": 5
-          },
-          {
-            "type": "work",
-            "label": "Wrist stretch \u2014 left",
             "duration": 30,
             "countdown_last": 10
           }
@@ -1934,7 +1753,7 @@
       "name": "Post-Session Stretch",
       "type": "flow",
       "flow_label": "Post-session stretch",
-      "flow_sub": "chest \u00b7 shoulders \u00b7 wrists \u00b7 hip flexors \u00b7 QL",
+      "flow_sub": "chest \u00b7 shoulders \u00b7 wrists \u00b7 hip flexors \u00b7 QL \u00b7 shoulder capsule",
       "exercises": [
         {
           "id": "psc1",
@@ -1964,11 +1783,17 @@
           "name": "Standing QL stretch",
           "duration": 30,
           "note": "left side"
+        },
+        {
+          "id": "psc6",
+          "name": "Sleeper stretch",
+          "duration": 45,
+          "note": "right shoulder"
         }
       ],
       "timer_routine": {
         "name": "Post-Session Stretch \u2014 Climbing",
-        "description": "After climbing. ~5 min.",
+        "description": "After climbing. ~6 min.",
         "sets": 1,
         "blocks": [
           {
@@ -2070,6 +1895,17 @@
             "label": "QL stretch \u2014 left side",
             "duration": 30,
             "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Sleeper stretch \u2014 right shoulder",
+            "duration": 5
+          },
+          {
+            "type": "work",
+            "label": "Sleeper stretch \u2014 right shoulder",
+            "duration": 45,
+            "countdown_last": 10
           }
         ]
       }
@@ -2078,7 +1914,7 @@
       "name": "Post-Session Stretch",
       "type": "flow",
       "flow_label": "Post-session stretch",
-      "flow_sub": "hamstrings \u00b7 hip flexors \u00b7 QL \u00b7 wrists",
+      "flow_sub": "hamstrings \u00b7 hip flexors \u00b7 QL",
       "exercises": [
         {
           "id": "psl1",
@@ -2097,17 +1933,11 @@
           "name": "Standing QL stretch",
           "duration": 30,
           "note": "left side"
-        },
-        {
-          "id": "psl4",
-          "name": "Wrist extensor stretch",
-          "duration": 30,
-          "note": "per side"
         }
       ],
       "timer_routine": {
         "name": "Post-Session Stretch \u2014 Lifting",
-        "description": "After lifting. ~5 min.",
+        "description": "After lifting. ~4 min.",
         "sets": 1,
         "blocks": [
           {
@@ -2174,28 +2004,6 @@
           {
             "type": "work",
             "label": "QL stretch \u2014 left side",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Wrist extensor stretch \u2014 arm out, palm down, pull fingers back",
-            "duration": 5
-          },
-          {
-            "type": "work",
-            "label": "Wrist stretch \u2014 right",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Switch to left",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Wrist stretch \u2014 left",
             "duration": 30,
             "countdown_last": 10
           }
