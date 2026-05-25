@@ -9,8 +9,10 @@ function tokenForBlock(block, forceType) {
   const type = forceType || block.type;
   const prefix = type === 'prepare' ? 'p' : type === 'work' ? 'w' : 'r';
   const countdown = block.countdown_last ? `@${block.countdown_last}` : '';
+  const restLabel =
+    type === 'rest' && block.label ? `^${block.label}` : '';
   const suffix = block.skip_on_last ? '!' : '';
-  return `${prefix}${block.duration}${countdown}${suffix}`;
+  return `${prefix}${block.duration}${countdown}${restLabel}${suffix}`;
 }
 
 function toCompactRoutine(routine) {
@@ -35,7 +37,7 @@ function toCompactRoutine(routine) {
     const previous = blocks[i - 1];
     const hasPrepCandidate =
       previous &&
-      (previous.type === 'prepare' || previous.type === 'rest') &&
+      previous.type === 'prepare' &&
       (i - 1 === 0 || blocks[i - 2]?.type !== 'work');
 
     const prepareLabel = hasPrepCandidate ? previous.label : null;
