@@ -1,0 +1,30 @@
+# Feedback Log
+
+## 2026-05-25
+
+### Scope
+
+- CSV reviewed: `public/program-csv/workout app - log.csv`
+- Review window: `2026-04-06` through `2026-05-24`
+
+### Adherence
+
+- Main training adherence is solid. Climbing, lifting, and `Abrahangs` are happening consistently.
+- The stand-alone recovery day is the weak point, not overall discipline.
+- Thursday mobility appears on only `2026-04-09` and `2026-04-30`, and both entries only logged `QL foam roll`.
+- Post-session stretching is completed more often than stand-alone mobility, which suggests attached recovery works better than separate recovery sessions.
+- The current Thursday recovery block likely has too much cognitive load for a rest day.
+
+### Effort
+
+- Several lifts look underloaded relative to current ability.
+- `Overhead press` is especially easy at current working weight.
+- `Romanian deadlift` also appears easier than intended.
+- `Suitcase hold` and `Dumbbell row` look light.
+- `Weighted pull-ups` and `Bulgarian split squat` look closer to an appropriate challenge.
+
+### Coaching Takeaways
+
+- No immediate reason to remove pistol squats, step-down logic, finger prehab, QL work, or shoulder-friendly pressing choices.
+- Biggest coaching takeaway: recovery design should match actual behavior patterns.
+- Short, attached mobility is landing; long stand-alone mobility is not.
