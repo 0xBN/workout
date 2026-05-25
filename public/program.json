@@ -1573,87 +1573,87 @@
 	            "name": "Suitcase Hold",
 	            "sets": 1,
 	            "blocks": [
-	              {
-	                "type": "prepare",
-	                "label": "Suitcase hold \u2014 right, set 1",
-	                "duration": 5,
-	                "countdown_last": 3
-	              },
-	              {
-	                "type": "work",
-	                "label": "Suitcase hold \u2014 right, set 1",
-	                "duration": 40,
-	                "countdown_last": 10
-	              },
+		              {
+		                "type": "prepare",
+		                "label": "Right 1",
+		                "duration": 5,
+		                "countdown_last": 3
+		              },
+		              {
+		                "type": "work",
+		                "label": "Right 1",
+		                "duration": 40,
+		                "countdown_last": 10
+		              },
 	              {
 	                "type": "rest",
 	                "label": "Switch to left side",
 	                "duration": 5
 	              },
-	              {
-	                "type": "work",
-	                "label": "Suitcase hold \u2014 left, set 1",
-	                "duration": 40,
-	                "countdown_last": 10
-	              },
+		              {
+		                "type": "work",
+		                "label": "Left 1",
+		                "duration": 40,
+		                "countdown_last": 10
+		              },
 	              {
 	                "type": "rest",
 	                "label": "Rest",
 	                "duration": 45,
 	                "countdown_last": 10
 	              },
-	              {
-	                "type": "prepare",
-	                "label": "Suitcase hold \u2014 right, set 2",
-	                "duration": 5,
-	                "countdown_last": 3
-	              },
-	              {
-	                "type": "work",
-	                "label": "Suitcase hold \u2014 right, set 2",
-	                "duration": 40,
-	                "countdown_last": 10
-	              },
+		              {
+		                "type": "prepare",
+		                "label": "Right 2",
+		                "duration": 5,
+		                "countdown_last": 3
+		              },
+		              {
+		                "type": "work",
+		                "label": "Right 2",
+		                "duration": 40,
+		                "countdown_last": 10
+		              },
 	              {
 	                "type": "rest",
 	                "label": "Switch to left side",
 	                "duration": 5
 	              },
-	              {
-	                "type": "work",
-	                "label": "Suitcase hold \u2014 left, set 2",
-	                "duration": 40,
-	                "countdown_last": 10
-	              },
+		              {
+		                "type": "work",
+		                "label": "Left 2",
+		                "duration": 40,
+		                "countdown_last": 10
+		              },
 	              {
 	                "type": "rest",
 	                "label": "Rest",
 	                "duration": 45,
 	                "countdown_last": 10
 	              },
-	              {
-	                "type": "prepare",
-	                "label": "Suitcase hold \u2014 right, set 3",
-	                "duration": 5,
-	                "countdown_last": 3
-	              },
-	              {
-	                "type": "work",
-	                "label": "Suitcase hold \u2014 right, set 3",
-	                "duration": 40,
-	                "countdown_last": 10
-	              },
+		              {
+		                "type": "prepare",
+		                "label": "Right 3",
+		                "duration": 5,
+		                "countdown_last": 3
+		              },
+		              {
+		                "type": "work",
+		                "label": "Right 3",
+		                "duration": 40,
+		                "countdown_last": 10
+		              },
 	              {
 	                "type": "rest",
 	                "label": "Switch to left side",
 	                "duration": 5
 	              },
-	              {
-	                "type": "work",
-	                "label": "Suitcase hold \u2014 left, set 3",
-	                "duration": 40,
-	                "countdown_last": 10
-	              }
+		              {
+		                "type": "work",
+		                "label": "Left 3",
+		                "duration": 40,
+		                "countdown_last": 10
+		              }
 	            ]
 	          }
         }
