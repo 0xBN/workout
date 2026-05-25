@@ -26,6 +26,8 @@ When a new CSV log is added to `public/program-csv/`, the agent should:
    - Acknowledge that the CSV is ready for review.
    - Ask if the user is ready for review.
    - Then ask the one lightweight update question.
+   - Keep this first prompt short.
+   - Do not include adherence findings, effort findings, coaching takeaways, or review summaries yet.
 5. Accept a short natural-language reply. Do not ask a long checklist unless the user explicitly wants one.
 6. Compare the CSV against the current live program in `public/program.json`.
 7. Use the most recent feedback entry date as the default lower bound for fresh log parsing.
@@ -46,6 +48,8 @@ When a new CSV log is added to `public/program-csv/`, the agent should:
 - Ask if the user is ready for review.
 - Ask only one lightweight follow-up question after that.
 - Preferred prompt shape: `Last review was YYYY-MM-DD, about X days/weeks ago. Ready for review? Anything new to body, schedule, or energy since last review?`
+- Keep the first post-drop response to a short acknowledgment and question only.
+- Do not front-load the review summary before the user answers.
 - Accept short voice-style updates.
 - Do not force structured answers.
 - If the user says `nothing else`, continue with the review.
