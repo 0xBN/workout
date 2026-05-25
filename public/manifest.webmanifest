@@ -1,0 +1,18 @@
+{
+  "name": "Workout",
+  "short_name": "Workout",
+  "description": "Climbing-focused workout tracker and timer launcher.",
+  "start_url": "/workout/",
+  "scope": "/workout/",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "/workout/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
