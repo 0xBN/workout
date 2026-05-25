@@ -40,7 +40,10 @@
 
 ## Coaching Priorities
 
-- Priority goal: climbing progression with longevity.
+- Primary goal: optimize for climbing progression toward V12 while protecting longevity.
+- When tradeoffs appear, bias toward what improves climbing carryover without creating avoidable injury risk or recovery debt.
+- Do not optimize equally for every fitness quality at once; climbing performance and durability come first.
+- Use body context not only as a limitation list, but as a constraint system for choosing the highest-ROI options safely.
 - Protect finger recovery.
 - Keep right knee support work intact.
 - Keep scoliosis-aware left QL and right-side McGill logic intact.
@@ -49,3 +52,17 @@
 - Progressively overload, but keep most working sets in the `RPE 6-8` zone when possible.
 - Prefer high-compliance solutions over ideal-but-skipped solutions.
 - If a recovery block is repeatedly skipped, reduce cognitive load before adding more work.
+
+## Prioritization Order
+
+1. Protect long-term ability to climb consistently.
+2. Support the V12 climbing goal.
+3. Preserve or improve injury-sensitive areas: finger, right knee, left QL/scoliosis pattern, right shoulder.
+4. Improve adherence by reducing friction and cognitive load.
+5. Progress secondary strength work when it supports climbing and recovery capacity.
+
+## Programming Bias
+
+- Favor exercises and progressions with strong climbing carryover.
+- Be skeptical of work that adds fatigue but offers little climbing or durability benefit.
+- If a choice exists between the theoretically ideal plan and the one the user will actually complete, prefer the one with better real adherence unless it meaningfully compromises safety or the main goal.

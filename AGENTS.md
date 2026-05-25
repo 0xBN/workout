@@ -23,6 +23,7 @@ When a new CSV log is added to `public/program-csv/`, the agent should:
 4. Prompt the user immediately with the last review jog plus the review check-in.
    - Include the exact last feedback date.
    - Include the elapsed time since that review.
+   - Acknowledge that the CSV is ready for review.
    - Ask if the user is ready for review.
    - Then ask the one lightweight update question.
 5. Accept a short natural-language reply. Do not ask a long checklist unless the user explicitly wants one.
@@ -32,13 +33,16 @@ When a new CSV log is added to `public/program-csv/`, the agent should:
 9. Use earlier feedback entries to identify repeated themes and trends over time.
 10. In the review, explicitly mention the last feedback date and the elapsed time since that review, for example: `Last review was 2026-05-25, about 2 weeks ago.`
 11. Give coaching feedback before changing the program.
-12. Avoid editing `public/program.json` until the user explicitly asks for changes.
-13. After giving feedback, append a new dated entry to `FEEDBACK_LOG.md`.
+12. Ask clarifying questions only if they are needed to safely refine or change the prescription.
+13. If no clarification is needed, proceed directly from feedback to recommendation.
+14. Avoid editing `public/program.json` until the user explicitly asks for changes.
+15. After giving feedback, append a new dated entry to `FEEDBACK_LOG.md`.
 
 ## User Prompt Style
 
 - Default assumption: the user will drop a CSV and then wait for the agent to prompt them.
 - Surface the last review date and elapsed time immediately after the CSV drop.
+- Acknowledge that the CSV is ready for review.
 - Ask if the user is ready for review.
 - Ask only one lightweight follow-up question after that.
 - Preferred prompt shape: `Last review was YYYY-MM-DD, about X days/weeks ago. Ready for review? Anything new to body, schedule, or energy since last review?`
@@ -46,6 +50,7 @@ When a new CSV log is added to `public/program-csv/`, the agent should:
 - Do not force structured answers.
 - If the user says `nothing else`, continue with the review.
 - If the user mentions one important new factor, treat that as sufficient context.
+- Before changing the prescription, ask clarifying questions only when the feedback or data is genuinely ambiguous.
 
 ## Notes Storage
 
