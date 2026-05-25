@@ -9,24 +9,41 @@ This repo uses CSV workout logs dropped into `public/program-csv/` for coaching 
 When a new CSV log is added to `public/program-csv/`, the agent should:
 
 1. Read the newest CSV file in `public/program-csv/`.
-2. Compare it against the current live program in `public/program.json`.
-3. Read `.agents/BODY_CONTEXT.md` for physical constraints and non-negotiables.
-4. Read `FEEDBACK_LOG.md` for the most recent review date and recurring trends.
-5. Use the most recent feedback entry date as the default lower bound for fresh log parsing.
-6. Parse CSV entries from that date forward by default, unless the user asks for a longer historical review.
-7. Use earlier feedback entries to identify repeated themes and trends over time.
-8. Review adherence trends first:
+2. Prompt the user with one short question only: `Anything new to body, schedule, or energy since last review?`
+3. Accept a short natural-language reply. Do not ask a long checklist unless the user explicitly wants one.
+4. Compare the CSV against the current live program in `public/program.json`.
+5. Read `.agents/BODY_CONTEXT.md` for physical constraints and non-negotiables.
+6. Read `FEEDBACK_LOG.md` for the most recent review date and recurring trends.
+7. Use the most recent feedback entry date as the default lower bound for fresh log parsing.
+8. Parse CSV entries from that date forward by default, unless the user asks for a longer historical review.
+9. Use earlier feedback entries to identify repeated themes and trends over time.
+10. Review adherence trends first:
    - missed days
    - partially completed blocks
    - recurring skipped items
    - what gets done reliably vs what does not
-9. Review effort trends second:
+11. Review effort trends second:
    - exercises with consistently very low RPE
    - exercises with consistently very high RPE
    - signs that loading is too easy, too hard, or drifting
-10. Give coaching feedback before changing the program.
-11. Avoid editing `public/program.json` until the user explicitly asks for changes.
-12. After giving feedback, append a new dated entry to `FEEDBACK_LOG.md`.
+12. Incorporate any user update into the review, especially:
+   - new pain or tightness
+   - schedule or adherence issues
+   - unusual extra activity like long rides, hikes, or sports
+   - time or energy constraints
+13. Give coaching feedback before changing the program.
+14. Avoid editing `public/program.json` until the user explicitly asks for changes.
+15. After giving feedback, append a new dated entry to `FEEDBACK_LOG.md`.
+
+## User Prompt Style
+
+- Default assumption: the user will drop a CSV and then wait for the agent to prompt them.
+- Ask only one lightweight follow-up question after the CSV drop.
+- Preferred prompt: `Anything new to body, schedule, or energy since last review?`
+- Accept short voice-style updates.
+- Do not force structured answers.
+- If the user says `nothing else`, continue with the review.
+- If the user mentions one important new factor, treat that as sufficient context.
 
 ## Coaching Priorities
 
