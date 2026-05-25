@@ -17,6 +17,16 @@
   - unusual extra activity like long rides, hikes, or sports
   - time or energy constraints
 
+## Review Cadence
+
+- Default full-review cadence: about 14-15 days of new data.
+- Reason: this usually gives enough signal to see adherence patterns, missed days, recovery behavior, and early RPE trends without overreacting to noise.
+- If less than about 14 days has passed since the last review, be more cautious about doing another full review unless:
+  - the user explicitly wants one
+  - there is a meaningful body/recovery change
+  - there is a clear performance problem, pain issue, or prescription question
+- Same-day or near-same-day re-review should usually trigger a confirmation check before running a full review.
+
 ## Movement Audit Rules
 
 - When editing `public/program.json`, audit unilateral and side-biased movements before finalizing.
