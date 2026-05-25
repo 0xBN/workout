@@ -17,16 +17,20 @@ This repo uses CSV workout logs dropped into `public/program-csv/` for coaching 
 
 When a new CSV log is added to `public/program-csv/`, the agent should:
 
-1. Read the newest CSV file in `public/program-csv/`.
-2. Prompt the user with one short question only: `Anything new to body, schedule, or energy since last review?`
-3. Accept a short natural-language reply. Do not ask a long checklist unless the user explicitly wants one.
-4. Compare the CSV against the current live program in `public/program.json`.
-5. Read `.agents/BODY_CONTEXT.md` for physical constraints and non-negotiables.
-6. Read `.agents/COACHING_RULES.md` for coaching rules, movement-audit logic, and progression rules.
-7. Read `FEEDBACK_LOG.md` for the most recent review date and recurring trends.
-8. Use the most recent feedback entry date as the default lower bound for fresh log parsing.
-9. Parse CSV entries from that date forward by default, unless the user asks for a longer historical review.
-10. Use earlier feedback entries to identify repeated themes and trends over time.
+1. Read this workflow file fully before acting.
+2. Read `.agents/COACHING_RULES.md`, `.agents/BODY_CONTEXT.md`, and `FEEDBACK_LOG.md` before prompting the user.
+3. Read the newest CSV file in `public/program-csv/`.
+4. Prompt the user immediately with the last review jog plus the review check-in.
+   - Include the exact last feedback date.
+   - Include the elapsed time since that review.
+   - Ask if the user is ready for review.
+   - Then ask the one lightweight update question.
+5. Accept a short natural-language reply. Do not ask a long checklist unless the user explicitly wants one.
+6. Compare the CSV against the current live program in `public/program.json`.
+7. Use the most recent feedback entry date as the default lower bound for fresh log parsing.
+8. Parse CSV entries from that date forward by default, unless the user asks for a longer historical review.
+9. Use earlier feedback entries to identify repeated themes and trends over time.
+10. In the review, explicitly mention the last feedback date and the elapsed time since that review, for example: `Last review was 2026-05-25, about 2 weeks ago.`
 11. Give coaching feedback before changing the program.
 12. Avoid editing `public/program.json` until the user explicitly asks for changes.
 13. After giving feedback, append a new dated entry to `FEEDBACK_LOG.md`.
@@ -34,8 +38,10 @@ When a new CSV log is added to `public/program-csv/`, the agent should:
 ## User Prompt Style
 
 - Default assumption: the user will drop a CSV and then wait for the agent to prompt them.
-- Ask only one lightweight follow-up question after the CSV drop.
-- Preferred prompt: `Anything new to body, schedule, or energy since last review?`
+- Surface the last review date and elapsed time immediately after the CSV drop.
+- Ask if the user is ready for review.
+- Ask only one lightweight follow-up question after that.
+- Preferred prompt shape: `Last review was YYYY-MM-DD, about X days/weeks ago. Ready for review? Anything new to body, schedule, or energy since last review?`
 - Accept short voice-style updates.
 - Do not force structured answers.
 - If the user says `nothing else`, continue with the review.
