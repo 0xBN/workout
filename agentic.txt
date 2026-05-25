@@ -1,0 +1,57 @@
+# Agentic Learning — Scratch / TODO
+
+Personal sandbox: use the workout app's *real* recurring work to learn each pattern.
+Rule: no scaffolding for its own sake. Apply the pattern to a task I actually do.
+One pattern at a time. Done = used on real input once, then refined.
+
+---
+
+## 1. Slash commands  ← START HERE
+**Highest work-transfer. Smallest lift (prompt text already exists).**
+
+Goal: promote existing prompt templates from passive docs into pressable actions.
+
+- [ ] Create `.claude/commands/` in the workout repo
+- [ ] `/review` — wrap the coaching-review protocol from AGENTS.md into one command
+      (read rules + body context + log, parse from last review date, feedback before
+      changes, append dated entry to FEEDBACK_LOG.md)
+- [ ] `/extract` — wrap `clean-extraction.prompt.md` into a command
+- [ ] Test `/review` on a real CSV once, see if it follows all steps
+- [ ] Refine the command based on what it skipped/got wrong (don't pre-perfect it)
+
+Why it matters: same as Garrett Brands repeated work. A `/migrate` or `/debug`
+command at work = my standard steps fire every time without re-explaining.
+
+---
+
+## 2. MCP connector
+**Medium transfer. Removes a real papercut + teaches integration.**
+
+Goal: let the agent read the workout log directly instead of manual CSV export.
+
+- [ ] Wire a Google Sheets MCP connector so agent reads the log sheet directly
+- [ ] (Skips the export → drop-in-folder → tell-agent dance)
+- [ ] Caveat: same Google auth limits as the app — treat as a LEARNING exercise,
+      not a guaranteed clean win
+- [ ] Once working, note what the integration pattern was (transfers to wiring
+      BigCommerce API / work data sources later)
+
+---
+
+## 3. Parallel agents (git worktrees)
+**Coolest, lowest transfer for solo work. Do LAST, only when real parallel work exists.**
+
+Goal: learn the mechanics once so it's not foreign at work.
+
+- [ ] Wait until there's a genuine 2-independent-task moment (don't invent one)
+- [ ] Set up two worktrees, agent in each, on separate branches
+- [ ] Practice: keep them from colliding, merge both back cleanly
+- [ ] That's it — just the mechanics, not a workflow to maintain
+
+---
+
+## Guardrails (the actual skill being learned)
+- The building is NOT the goal. Applying the pattern to real work is.
+- If I'm creating structure with no real task behind it → that's grooming, stop.
+- Add a rule/command/step when something real fails, not when I imagine it might.
+- "Good enough and used" beats "perfect and unused."
