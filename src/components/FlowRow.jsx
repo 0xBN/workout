@@ -1,12 +1,12 @@
 import React from 'react';
-const TIMER_BASE = 'https://0xbn.github.io/interval-timer/';
+import { buildTimerUrl } from '../utils/timerUrl';
 
 const FlowRow = ({ blockId, block, state, onLog }) => {
   const flowId = `flow-${blockId}`;
   const isDone = state?.[flowId]?.sets?.[0]?.done || false;
   const openTimer = (e) => {
     e.stopPropagation();
-    if (block.timer_routine) window.open(`${TIMER_BASE}?r=${encodeURIComponent(JSON.stringify(block.timer_routine))}`, '_blank');
+    if (block.timer_routine) window.open(buildTimerUrl(block.timer_routine), '_blank');
   };
   return (
     <div className={`flow-row ${isDone ? 'done' : ''}`} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '16px 14px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--r)', marginBottom: '6px' }}>

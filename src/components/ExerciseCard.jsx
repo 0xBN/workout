@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import SetRow from './SetRow';
 import { getSetWeight } from '../utils/workoutMath';
-
-const TIMER_BASE = 'https://0xbn.github.io/interval-timer/';
+import { buildTimerUrl } from '../utils/timerUrl';
 
 const ExerciseCard = ({ ex, state, onLog, isDeload, blockName }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +17,7 @@ const ExerciseCard = ({ ex, state, onLog, isDeload, blockName }) => {
       sets: 1,
       blocks: [{ type: 'rest', duration: 120 }],
     };
-    window.open(
-      `${TIMER_BASE}?r=${encodeURIComponent(JSON.stringify(routine))}`,
-      '_blank',
-    );
+    window.open(buildTimerUrl(routine), '_blank');
   };
 
   const toggleExerciseDone = (e) => {
