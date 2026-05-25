@@ -4,6 +4,15 @@
 
 This repo uses CSV workout logs dropped into `public/program-csv/` for coaching review before any program changes are made.
 
+## File Map
+
+- `AGENTS.md`: root workflow entrypoint
+- `.agents/BODY_CONTEXT.md`: physical constraints and non-negotiables
+- `.agents/COACHING_RULES.md`: coaching rules, progression logic, and movement-audit rules
+- `FEEDBACK_LOG.md`: rolling coaching history and change reasoning
+- `public/program.json`: live workout program used by the app
+- `public/program-csv/`: CSV drop folder for review input
+
 ## CSV Review Workflow
 
 When a new CSV log is added to `public/program-csv/`, the agent should:
@@ -13,27 +22,14 @@ When a new CSV log is added to `public/program-csv/`, the agent should:
 3. Accept a short natural-language reply. Do not ask a long checklist unless the user explicitly wants one.
 4. Compare the CSV against the current live program in `public/program.json`.
 5. Read `.agents/BODY_CONTEXT.md` for physical constraints and non-negotiables.
-6. Read `FEEDBACK_LOG.md` for the most recent review date and recurring trends.
-7. Use the most recent feedback entry date as the default lower bound for fresh log parsing.
-8. Parse CSV entries from that date forward by default, unless the user asks for a longer historical review.
-9. Use earlier feedback entries to identify repeated themes and trends over time.
-10. Review adherence trends first:
-   - missed days
-   - partially completed blocks
-   - recurring skipped items
-   - what gets done reliably vs what does not
-11. Review effort trends second:
-   - exercises with consistently very low RPE
-   - exercises with consistently very high RPE
-   - signs that loading is too easy, too hard, or drifting
-12. Incorporate any user update into the review, especially:
-   - new pain or tightness
-   - schedule or adherence issues
-   - unusual extra activity like long rides, hikes, or sports
-   - time or energy constraints
-13. Give coaching feedback before changing the program.
-14. Avoid editing `public/program.json` until the user explicitly asks for changes.
-15. After giving feedback, append a new dated entry to `FEEDBACK_LOG.md`.
+6. Read `.agents/COACHING_RULES.md` for coaching rules, movement-audit logic, and progression rules.
+7. Read `FEEDBACK_LOG.md` for the most recent review date and recurring trends.
+8. Use the most recent feedback entry date as the default lower bound for fresh log parsing.
+9. Parse CSV entries from that date forward by default, unless the user asks for a longer historical review.
+10. Use earlier feedback entries to identify repeated themes and trends over time.
+11. Give coaching feedback before changing the program.
+12. Avoid editing `public/program.json` until the user explicitly asks for changes.
+13. After giving feedback, append a new dated entry to `FEEDBACK_LOG.md`.
 
 ## User Prompt Style
 
@@ -45,19 +41,9 @@ When a new CSV log is added to `public/program-csv/`, the agent should:
 - If the user says `nothing else`, continue with the review.
 - If the user mentions one important new factor, treat that as sufficient context.
 
-## Coaching Priorities
-
-- Priority goal: climbing progression with longevity.
-- Protect finger recovery.
-- Keep right knee support work intact.
-- Keep scoliosis-aware left QL and right-side McGill logic intact.
-- Keep right-shoulder-friendly exercise selection intact unless the user asks otherwise.
-- Prefer high-compliance solutions over ideal-but-skipped solutions.
-- If a recovery block is repeatedly skipped, reduce cognitive load before adding more work.
-
 ## Notes Storage
 
-- Keep instructions and workflow rules in `AGENTS.md`.
-- Keep physical context and injury constraints in `.agents/BODY_CONTEXT.md`.
-- Keep coaching history in `FEEDBACK_LOG.md`.
-- Append new feedback by date in one rolling file so trends are easy to inspect.
+- Keep the root `AGENTS.md` lightweight and focused on the flow.
+- Keep richer coach-facing context and rules in `.agents/`.
+- Keep coaching history and reasoning in `FEEDBACK_LOG.md`.
+- Keep `public/program.json` focused on the current live plan, not historical rationale.
