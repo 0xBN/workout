@@ -51,6 +51,4 @@
 
 ### Benchmark Context
 
-- User-reported weighted pull-up benchmark: about `90 lb x 4`, close to `5`, near max effort.
-- This is a stronger performance signal than the older conservative CSV-only read.
-- Future weighted pull-up progression should treat this benchmark as an override-level context point rather than ignoring it when setting the next working load.
+- User-reported weighted pull-up benchmark: about `90 lb x 4`, close to `5`, near max effort. Treat this as override-level context over the older conservative CSV-only read; the pull-up top working set was corrected from `70` to `80` so the next `2 x 5` exposure has a real chance to land closer to the intended `RPE 7-8` zone.

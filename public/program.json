@@ -1481,7 +1481,7 @@
           "sets": 2,
           "reps": 5,
           "weighted": true,
-          "working_weight": 70,
+          "working_weight": 80,
           "progression": [0.833, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
