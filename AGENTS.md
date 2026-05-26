@@ -41,8 +41,16 @@ When a new CSV log is added to `public/program-csv/`, the agent should:
 11. Give coaching feedback before changing the program.
 12. Ask clarifying questions only if they are needed to safely refine or change the prescription.
 13. If no clarification is needed, proceed directly from feedback to recommendation.
-14. Avoid editing `public/program.json` until the user explicitly asks for changes.
-15. After giving feedback, append a new dated entry to `FEEDBACK_LOG.md`.
+14. When the user asks for progression or program changes, review the full fresh CSV slice, not just one highlighted exercise or one named day.
+15. In that progression pass, scan for all meaningful candidates:
+   - lifts or exercises with repeated low RPE that likely need load increases
+   - lifts or exercises with repeated high RPE or incomplete work that may need load decreases
+   - recurring skipped items, missed days, or partial completions that point to a compliance problem
+   - sessions or blocks whose structure is creating unnecessary cognitive load
+16. Prefer one coherent progression/compliance pass over piecemeal edits when the user is asking for a broader adjustment.
+17. Do not claim that the program was updated unless the actual file changes were made in `public/program.json`.
+18. Avoid editing `public/program.json` until the user explicitly asks for changes.
+19. After giving feedback, append a new dated entry to `FEEDBACK_LOG.md`.
 
 ## User Prompt Style
 

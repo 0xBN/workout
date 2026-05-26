@@ -28,3 +28,29 @@
 - No immediate reason to remove pistol squats, step-down logic, finger prehab, QL work, or shoulder-friendly pressing choices.
 - Biggest coaching takeaway: recovery design should match actual behavior patterns.
 - Short, attached mobility is landing; long stand-alone mobility is not.
+
+## 2026-05-26
+
+### Program Update
+
+- Reviewed Tuesday lift trend with the current RPE progression rules in mind.
+- Tuesday lift adjustments were applied more broadly, not just to one movement.
+- `Weighted pull-ups` were increased from `60` to `70` working weight.
+- `Bulgarian split squat` was increased from `60` to `70`.
+- `Romanian deadlift` was increased from `185` to `205`.
+- `Overhead press` was increased from `70` to `80`.
+- `Suitcase hold` was increased from `60` to `70`.
+
+### Reasoning
+
+- The system target is to keep working sets around `RPE 6-8`.
+- The Tuesday trend showed a broader pattern of underloading across the lift day, not just on pull-ups.
+- Recent Tuesday working-set RPEs for pull-ups, split squats, RDL, overhead press, and suitcase holds were consistently below the intended effort zone.
+- The set and rep structure stayed the same; the change was to push load back toward the intended `RPE 6-8` range.
+- The app rounds to the nearest `5 lb`, so these changes still produce clean working numbers.
+
+### Benchmark Context
+
+- User-reported weighted pull-up benchmark: about `90 lb x 4`, close to `5`, near max effort.
+- This is a stronger performance signal than the older conservative CSV-only read.
+- Future weighted pull-up progression should treat this benchmark as an override-level context point rather than ignoring it when setting the next working load.

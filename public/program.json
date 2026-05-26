@@ -1481,7 +1481,7 @@
           "sets": 2,
           "reps": 5,
           "weighted": true,
-          "working_weight": 60,
+          "working_weight": 70,
           "progression": [0.833, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
@@ -1503,7 +1503,7 @@
           "reps": 8,
           "note": "per leg. working_weight = total DB weight. 60 = 30lb per hand.",
           "weighted": true,
-          "working_weight": 60,
+          "working_weight": 70,
           "progression": [0.833, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
@@ -1524,7 +1524,7 @@
           "sets": 2,
           "reps": 5,
           "weighted": true,
-          "working_weight": 185,
+          "working_weight": 205,
           "progression": [0.8, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
@@ -1545,8 +1545,8 @@
           "sets": 2,
           "reps": 8,
           "weighted": true,
-          "working_weight": 70,
-          "note": "working_weight = total DB weight. 70 = 35lb per hand. Warmup set 60lb total = 30lb per hand.",
+          "working_weight": 80,
+          "note": "working_weight = total DB weight. 80 = 40lb per hand.",
           "progression": [0.833, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
@@ -1568,7 +1568,7 @@
           "duration": 40,
           "note": "per side. DB in one hand at side, stand tall, resist lateral lean. Left side priority \u2014 direct left QL correction. working_weight = single DB.",
           "weighted": true,
-          "working_weight": 60,
+          "working_weight": 70,
 	          "timer_routine": {
 	            "name": "Suitcase Hold",
 	            "sets": 1,
