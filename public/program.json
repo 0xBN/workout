@@ -128,12 +128,12 @@
           },
           {
             "type": "rest",
-            "label": "Dead bug \u2014 right arm, left leg",
+            "label": "Dead bug \u2014 right arm and left leg",
             "duration": 4
           },
           {
             "type": "work",
-            "label": "Dead bug \u2014 right arm, left leg",
+            "label": "Dead bug \u2014 right arm and left leg",
             "duration": 20,
             "countdown_last": 20
           },
@@ -150,12 +150,12 @@
           },
           {
             "type": "rest",
-            "label": "Bird dog \u2014 right arm, left leg",
+            "label": "Bird dog \u2014 right arm and left leg",
             "duration": 4
           },
           {
             "type": "work",
-            "label": "Bird dog \u2014 right arm, left leg",
+            "label": "Bird dog \u2014 right arm and left leg",
             "duration": 20,
             "countdown_last": 20
           },
@@ -502,12 +502,12 @@
           },
           {
             "type": "rest",
-            "label": "Dead bug \u2014 right arm, left leg",
+            "label": "Dead bug \u2014 right arm and left leg",
             "duration": 4
           },
           {
             "type": "work",
-            "label": "Dead bug \u2014 right arm, left leg",
+            "label": "Dead bug \u2014 right arm and left leg",
             "duration": 20,
             "countdown_last": 20
           },
@@ -524,12 +524,12 @@
           },
           {
             "type": "rest",
-            "label": "Bird dog \u2014 right arm, left leg",
+            "label": "Bird dog \u2014 right arm and left leg",
             "duration": 4
           },
           {
             "type": "work",
-            "label": "Bird dog \u2014 right arm, left leg",
+            "label": "Bird dog \u2014 right arm and left leg",
             "duration": 20,
             "countdown_last": 20
           },
@@ -1863,7 +1863,7 @@
           },
           {
             "type": "rest",
-            "label": "Wrist extensor stretch \u2014 arm out, palm down, pull fingers back",
+            "label": "Wrist extensor stretch \u2014 arm out. Palm down. Pull fingers back.",
             "duration": 5
           },
           {
@@ -1885,7 +1885,7 @@
           },
           {
             "type": "rest",
-            "label": "Spiderman lunge \u2014 right foot forward. Step deep, drop back knee, sink hips. Passive hold",
+            "label": "Spiderman lunge \u2014 right foot forward. Step deep. Drop back knee. Sink hips. Passive hold.",
             "duration": 6
           },
           {
@@ -1907,7 +1907,7 @@
           },
           {
             "type": "rest",
-            "label": "Standing QL stretch \u2014 left arm overhead, lean right",
+            "label": "Standing QL stretch \u2014 left arm overhead. Lean right.",
             "duration": 5
           },
           {
@@ -2008,7 +2008,7 @@
           },
           {
             "type": "rest",
-            "label": "Spiderman lunge \u2014 right foot forward. Step deep, drop back knee, sink hips. Passive hold",
+            "label": "Spiderman lunge \u2014 right foot forward. Step deep. Drop back knee. Sink hips. Passive hold.",
             "duration": 6
           },
           {
@@ -2030,7 +2030,7 @@
           },
           {
             "type": "rest",
-            "label": "Standing QL stretch \u2014 left arm overhead, lean right",
+            "label": "Standing QL stretch \u2014 left arm overhead. Lean right.",
             "duration": 5
           },
           {
@@ -2052,7 +2052,7 @@
           },
           {
             "type": "rest",
-            "label": "Kneeling hip flexor \u2014 right knee down, push hips forward",
+            "label": "Kneeling hip flexor \u2014 right knee down. Push hips forward.",
             "duration": 5
           },
           {
@@ -2074,7 +2074,7 @@
           },
           {
             "type": "rest",
-            "label": "Figure-4 \u2014 right ankle on left knee, sit back",
+            "label": "Figure-4 \u2014 right ankle on left knee. Sit back.",
             "duration": 5
           },
           {
