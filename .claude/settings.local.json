@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf \"c:/Users/Brian Nguyen/code/test/workout/.claude/skills/review-log\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\Brian Nguyen\\code\\test\\workout\\.claude\\skills\\review-log"
+    ]
+  }
+}

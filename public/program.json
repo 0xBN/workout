@@ -1547,7 +1547,7 @@
           "weighted": true,
           "working_weight": 80,
           "note": "working_weight = total DB weight. 80 = 40lb per hand.",
-          "progression": [0.833, 1.0],
+          "progression": [0.875, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
             "sets": 1,
