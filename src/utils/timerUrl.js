@@ -67,6 +67,13 @@ function toCompactRoutine(routine) {
       j += 2;
     }
 
+    // Include trailing rest (transition cue to the next exercise) even when
+    // the following work block has a different label and wouldn't be grouped here.
+    if (j < blocks.length && blocks[j]?.type === 'rest') {
+      pattern.push(tokenForBlock(blocks[j]));
+      j += 1;
+    }
+
     sections.push(buildLabel(block.label, prepareLabel));
     sections.push(pattern.join(','));
     i = j;
