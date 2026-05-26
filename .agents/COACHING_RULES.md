@@ -73,6 +73,18 @@
 - If CSV history and a recent high-signal benchmark disagree, do not ignore the benchmark; reconcile the two and bias away from obviously stale underloading.
 - In those cases, progression should still stay within reason, but the top working set should be pushed enough that the next exposure has a real chance to land near `RPE 7-8` rather than obviously below it.
 
+## Timer Design Rules
+
+- **Audio-first. Visual-second.** Every timer routine must be fully navigable by audio alone. The user may never look at the screen.
+- The `rest` block that precedes a new exercise must announce the exercise by name and any position cue ("right knee down", "foot on bench", etc.) so the user can get into position before the work starts.
+- Work blocks must announce the exercise name when they begin. The timer speaks `b.label` on work-block start, not a generic "Start". Never reduce this to a generic cue — it removes the only in-work audio context.
+- Rest/transition durations:
+  - Position change (new exercise or side from the floor): **5 seconds minimum**
+  - Simple side switch (same position): **4 seconds**
+  - Direction-only change (e.g., shoulder circles backward → forward): **3 seconds**
+- When editing `program.json` timer blocks, verify that every `rest` block has a meaningful label and every `work` block has a descriptive label (exercise + side). Generic labels like `"Rest"` or unlabeled work blocks fail the audio-first check.
+- This rule has caused regressions multiple times. Before finalizing any timer edit, run through the block sequence and confirm: could someone with eyes closed follow this entire routine from audio alone?
+
 ## Compliance Rules
 
 - Compliance matters as much as progression quality. A program that is theoretically ideal but repeatedly skipped is underperforming.

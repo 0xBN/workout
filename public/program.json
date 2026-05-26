@@ -1945,7 +1945,7 @@
       "name": "Post-Session Stretch",
       "type": "flow",
       "flow_label": "Post-session stretch",
-      "flow_sub": "hamstrings \u00b7 hip flexors \u00b7 QL",
+      "flow_sub": "hamstrings \u00b7 hip flexors \u00b7 glutes \u00b7 QL",
       "exercises": [
         {
           "id": "psl1",
@@ -1964,11 +1964,23 @@
           "name": "Standing QL stretch",
           "duration": 30,
           "note": "left side"
+        },
+        {
+          "id": "psl4",
+          "name": "Kneeling hip flexor stretch",
+          "duration": 30,
+          "note": "per side \u2014 back knee down, push hips forward"
+        },
+        {
+          "id": "psl5",
+          "name": "Figure-4 glute stretch",
+          "duration": 30,
+          "note": "per side \u2014 seated, ankle on opposite knee, sit back"
         }
       ],
       "timer_routine": {
         "name": "Post-Session Stretch \u2014 Lifting",
-        "description": "After lifting. ~4 min.",
+        "description": "After lifting. ~6 min.",
         "sets": 1,
         "blocks": [
           {
@@ -2035,6 +2047,50 @@
           {
             "type": "work",
             "label": "QL stretch \u2014 left side",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Kneeling hip flexor \u2014 right knee down, push hips forward",
+            "duration": 5
+          },
+          {
+            "type": "work",
+            "label": "Hip flexor stretch \u2014 right",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch sides",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Hip flexor stretch \u2014 left",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Figure-4 \u2014 right ankle on left knee, sit back",
+            "duration": 5
+          },
+          {
+            "type": "work",
+            "label": "Figure-4 glute stretch \u2014 right",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch sides",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Figure-4 glute stretch \u2014 left",
             "duration": 30,
             "countdown_last": 10
           }
