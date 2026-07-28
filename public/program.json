@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "3.7",
+    "version": "3.8",
     "deload_rule": "manual_toggle",
     "deload_weight_multiplier": 0.5,
     "note": "80/20 program. Priority: climbing V12, longevity. Finger recovery ongoing. Right knee, left QL, right shoulder limitations accounted for.",
@@ -47,6 +47,14 @@
       "Moved sleeper stretch into climbing post-session flow so shoulder maintenance rides on active days",
       "Lift post-session flow trimmed to the highest-yield pieces only",
       "Working weights increased where repeated RPE logs showed clear underloading: RDL 165\u2192185, OHP 60\u219270, suitcase hold 50\u219260"
+    ],
+    "changelog_3_8": [
+      "Reordered climbing and lifting warmups into one floor/mat block followed by one standing block",
+      "Moved World's Greatest Stretch before squat rocks so the athlete stands only once",
+      "Replaced assisted pistol squats with 10 lb counterbalanced pistol squats, retaining 2x5 per side",
+      "Replaced bilateral RDLs with contralateral single-leg kettlebell RDLs at 40 lb, 2x8 per leg",
+      "Increased weighted pull-ups 80\u219285 lb and overhead press 80\u219290 lb from fresh-window RPE trends",
+      "Held Bulgarian split squat and suitcase hold loads"
     ]
   },
   "daily": ["finger_prehab_1", "finger_prehab_2"],
@@ -194,8 +202,30 @@
           },
           {
             "type": "rest",
-            "label": "Squat rocks",
+            "label": "World's Greatest Stretch \u2014 right. Stay on the floor.",
+            "duration": 5
+          },
+          {
+            "type": "work",
+            "label": "World's Greatest Stretch \u2014 right",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch to left side",
             "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "World's Greatest Stretch \u2014 left",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Stand up for squat rocks",
+            "duration": 6
           },
           {
             "type": "work",
@@ -271,28 +301,6 @@
           },
           {
             "type": "rest",
-            "label": "World's Greatest \u2014 right",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "World's Greatest Stretch \u2014 right",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Switch to left side",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "World's Greatest Stretch \u2014 left",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
             "label": "Shoulder circles \u2014 backward",
             "duration": 4
           },
@@ -364,6 +372,34 @@
           "duration": 20
         },
         {
+          "id": "cw_db",
+          "name": "Dead bug",
+          "sets": 1,
+          "duration": 20,
+          "note": "per side \u2014 lower back flat throughout"
+        },
+        {
+          "id": "cw_bd",
+          "name": "Bird dog",
+          "sets": 1,
+          "duration": 20,
+          "note": "per side"
+        },
+        {
+          "id": "cw_cop",
+          "name": "Copenhagen plank",
+          "sets": 1,
+          "duration": 30,
+          "note": "per side"
+        },
+        {
+          "id": "cw_wg",
+          "name": "World's Greatest Stretch",
+          "sets": 1,
+          "duration": 30,
+          "note": "per side"
+        },
+        {
           "id": "cw_sr",
           "name": "Squat rocks",
           "sets": 1,
@@ -391,13 +427,6 @@
           "note": "per side \u2014 hand on wall, drive knee up and around deliberately"
         },
         {
-          "id": "cw_wg",
-          "name": "World's Greatest Stretch",
-          "sets": 1,
-          "duration": 30,
-          "note": "per side"
-        },
-        {
           "id": "cw_sc",
           "name": "Shoulder circles",
           "sets": 1,
@@ -410,27 +439,6 @@
           "sets": 1,
           "duration": 30,
           "note": "per side \u2014 slow eccentric, bench or block"
-        },
-        {
-          "id": "cw_bd",
-          "name": "Bird dog",
-          "sets": 1,
-          "duration": 20,
-          "note": "per side"
-        },
-        {
-          "id": "cw_db",
-          "name": "Dead bug",
-          "sets": 1,
-          "duration": 20,
-          "note": "per side \u2014 lower back flat throughout"
-        },
-        {
-          "id": "cw_cop",
-          "name": "Copenhagen plank",
-          "sets": 1,
-          "duration": 30,
-          "note": "per side"
         }
       ]
     },
@@ -546,8 +554,30 @@
           },
           {
             "type": "rest",
-            "label": "Squat rocks",
+            "label": "World's Greatest Stretch \u2014 right. Stay on the floor.",
+            "duration": 5
+          },
+          {
+            "type": "work",
+            "label": "World's Greatest Stretch \u2014 right",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Switch to left side",
             "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "World's Greatest Stretch \u2014 left",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Stand up for squat rocks",
+            "duration": 6
           },
           {
             "type": "work",
@@ -630,28 +660,6 @@
             "type": "work",
             "label": "Hip hinges",
             "duration": 20,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "World's Greatest \u2014 right",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "World's Greatest Stretch \u2014 right",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Switch to left side",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "World's Greatest Stretch \u2014 left",
-            "duration": 30,
             "countdown_last": 10
           },
           {
@@ -749,6 +757,27 @@
           "duration": 20
         },
         {
+          "id": "lw_db",
+          "name": "Dead bug",
+          "sets": 1,
+          "duration": 20,
+          "note": "per side \u2014 lower back flat throughout"
+        },
+        {
+          "id": "lw_bd",
+          "name": "Bird dog",
+          "sets": 1,
+          "duration": 20,
+          "note": "per side"
+        },
+        {
+          "id": "lw_wg",
+          "name": "World's Greatest Stretch",
+          "sets": 1,
+          "duration": 30,
+          "note": "per side"
+        },
+        {
           "id": "lw_sr",
           "name": "Squat rocks",
           "sets": 1,
@@ -782,13 +811,6 @@
           "duration": 20
         },
         {
-          "id": "lw_wg",
-          "name": "World's Greatest Stretch",
-          "sets": 1,
-          "duration": 30,
-          "note": "per side"
-        },
-        {
           "id": "lw_sc",
           "name": "Shoulder circles",
           "sets": 1,
@@ -813,20 +835,6 @@
           "name": "Squat to hinge flow",
           "sets": 1,
           "reps": 5
-        },
-        {
-          "id": "lw_bd",
-          "name": "Bird dog",
-          "sets": 1,
-          "duration": 20,
-          "note": "per side"
-        },
-        {
-          "id": "lw_db",
-          "name": "Dead bug",
-          "sets": 1,
-          "duration": 20,
-          "note": "per side \u2014 lower back flat throughout"
         }
       ]
     },
@@ -1457,18 +1465,20 @@
       "exercises": [
         {
           "id": "lb1",
-          "name": "Assisted pistol squat",
+          "name": "Counterbalanced pistol squat",
           "sets": 2,
           "reps": 5,
-          "note": "per side \u2014 knee warmup and single leg pattern",
-          "prescribed_weight": 0,
+          "note": "per side \u2014 hold 10 lb forward only as far as needed for balance. 3-second descent, smooth ascent, no bounce. Right-knee support work.",
+          "weighted": true,
+          "working_weight": 10,
+          "progression": [1.0, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
             "sets": 1,
             "blocks": [
               {
                 "type": "rest",
-                "label": "Rest",
+                "label": "Rest after both sides of counterbalanced pistol squats",
                 "duration": 60,
                 "countdown_last": 10
               }
@@ -1481,7 +1491,7 @@
           "sets": 2,
           "reps": 5,
           "weighted": true,
-          "working_weight": 80,
+          "working_weight": 85,
           "progression": [0.833, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
@@ -1489,7 +1499,7 @@
             "blocks": [
               {
                 "type": "rest",
-                "label": "Rest",
+                "label": "Rest before the next weighted pull-up set",
                 "duration": 60,
                 "countdown_last": 10
               }
@@ -1511,7 +1521,7 @@
             "blocks": [
               {
                 "type": "rest",
-                "label": "Rest",
+                "label": "Rest after both legs of Bulgarian split squats",
                 "duration": 60,
                 "countdown_last": 10
               }
@@ -1520,19 +1530,20 @@
         },
         {
           "id": "lb4",
-          "name": "Romanian deadlift",
+          "name": "Single-leg kettlebell RDL",
           "sets": 2,
-          "reps": 5,
+          "reps": 8,
+          "note": "per leg \u2014 hold one kettlebell in the hand opposite the planted leg. Train both sides equally; control balance and hip position.",
           "weighted": true,
-          "working_weight": 205,
-          "progression": [0.8, 1.0],
+          "working_weight": 40,
+          "progression": [1.0, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
             "sets": 1,
             "blocks": [
               {
                 "type": "rest",
-                "label": "Rest",
+                "label": "Rest after both legs of single-leg kettlebell RDLs",
                 "duration": 60,
                 "countdown_last": 10
               }
@@ -1545,8 +1556,8 @@
           "sets": 2,
           "reps": 8,
           "weighted": true,
-          "working_weight": 80,
-          "note": "working_weight = total DB weight. 80 = 40lb per hand.",
+          "working_weight": 90,
+          "note": "working_weight = total DB weight. 90 = 45lb per hand.",
           "progression": [0.875, 1.0],
           "timer_routine": {
             "name": "Rest \u2014 60s",
@@ -1554,7 +1565,7 @@
             "blocks": [
               {
                 "type": "rest",
-                "label": "Rest",
+                "label": "Rest before the next overhead press set",
                 "duration": 60,
                 "countdown_last": 10
               }
@@ -1575,13 +1586,13 @@
 	            "blocks": [
 		              {
 		                "type": "prepare",
-		                "label": "Right 1",
+		                "label": "Prepare for suitcase hold \u2014 right side, set 1",
 		                "duration": 5,
 		                "countdown_last": 3
 		              },
 		              {
 		                "type": "work",
-		                "label": "Right 1",
+		                "label": "Suitcase hold \u2014 right side, set 1",
 		                "duration": 40,
 		                "countdown_last": 10
 		              },
@@ -1592,25 +1603,25 @@
 	              },
 		              {
 		                "type": "work",
-		                "label": "Left 1",
+		                "label": "Suitcase hold \u2014 left side, set 1",
 		                "duration": 40,
 		                "countdown_last": 10
 		              },
 	              {
 	                "type": "rest",
-	                "label": "Rest",
+	                "label": "Rest before suitcase hold set 2",
 	                "duration": 45,
 	                "countdown_last": 10
 	              },
 		              {
 		                "type": "prepare",
-		                "label": "Right 2",
+		                "label": "Prepare for suitcase hold \u2014 right side, set 2",
 		                "duration": 5,
 		                "countdown_last": 3
 		              },
 		              {
 		                "type": "work",
-		                "label": "Right 2",
+		                "label": "Suitcase hold \u2014 right side, set 2",
 		                "duration": 40,
 		                "countdown_last": 10
 		              },
@@ -1621,25 +1632,25 @@
 	              },
 		              {
 		                "type": "work",
-		                "label": "Left 2",
+		                "label": "Suitcase hold \u2014 left side, set 2",
 		                "duration": 40,
 		                "countdown_last": 10
 		              },
 	              {
 	                "type": "rest",
-	                "label": "Rest",
+	                "label": "Rest before suitcase hold set 3",
 	                "duration": 45,
 	                "countdown_last": 10
 	              },
 		              {
 		                "type": "prepare",
-		                "label": "Right 3",
+		                "label": "Prepare for suitcase hold \u2014 right side, set 3",
 		                "duration": 5,
 		                "countdown_last": 3
 		              },
 		              {
 		                "type": "work",
-		                "label": "Right 3",
+		                "label": "Suitcase hold \u2014 right side, set 3",
 		                "duration": 40,
 		                "countdown_last": 10
 		              },
@@ -1650,7 +1661,7 @@
 	              },
 		              {
 		                "type": "work",
-		                "label": "Left 3",
+		                "label": "Suitcase hold \u2014 left side, set 3",
 		                "duration": 40,
 		                "countdown_last": 10
 		              }
