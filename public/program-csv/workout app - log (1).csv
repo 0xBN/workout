@@ -198,3 +198,110 @@ date,day,week_num,is_deload,block,exercise_id,exercise_name,set_num,weight,rpe,c
 2026-05-22,friday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
 2026-05-22,friday,N/A,no,Bouldering,flow-easy_bouldering,Bouldering,0,,,yes
 2026-05-24,sunday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-05-25,monday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-05-25,monday,N/A,no,Abrahangs — Session 2,flow-finger_prehab_2,Abrahangs — Session 2,0,,,yes
+2026-05-26,tuesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-05-26,tuesday,N/A,no,Lift Warmup,flow-lift_warmup,Lift Warmup,0,,,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb1,Assisted pistol squat,0,0,2,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb1,Assisted pistol squat,1,0,2,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb2,Weighted pull-ups,0,65,6,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb2,Weighted pull-ups,1,80,8,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb3,Bulgarian split squat,0,60,5,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb3,Bulgarian split squat,1,70,7,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb4,Romanian deadlift,0,165,4,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb4,Romanian deadlift,1,205,7,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb5,Overhead press,0,70,4,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb5,Overhead press,1,80,5,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,0,70,5,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,1,70,7,yes
+2026-05-26,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,2,70,9,yes
+2026-05-26,tuesday,N/A,no,Abrahangs — Session 2,flow-finger_prehab_2,Abrahangs — Session 2,0,,,yes
+2026-05-27,wednesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-05-28,thursday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-05-29,friday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
+2026-05-30,saturday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-01,monday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
+2026-06-01,monday,N/A,no,Bouldering,flow-easy_bouldering,Bouldering,0,,,yes
+2026-06-02,tuesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-03,wednesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-05,friday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-05,friday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
+2026-06-06,saturday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-08,monday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-09,tuesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-19,friday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
+2026-06-15,monday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-15,monday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
+2026-06-16,tuesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-17,wednesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-18,thursday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-22,monday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
+2026-06-23,tuesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-23,tuesday,N/A,no,Lift Warmup,flow-lift_warmup,Lift Warmup,0,,,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb1,Assisted pistol squat,0,0,4,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb1,Assisted pistol squat,1,0,4,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb2,Weighted pull-ups,0,65,4,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb2,Weighted pull-ups,1,80,6,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb3,Bulgarian split squat,0,60,4,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb3,Bulgarian split squat,1,70,6,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb4,Romanian deadlift,0,165,4,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb4,Romanian deadlift,1,205,6,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb5,Overhead press,0,70,4,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb5,Overhead press,1,80,5,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,0,70,5,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,1,70,6,yes
+2026-06-23,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,2,70,7,yes
+2026-06-23,tuesday,N/A,no,Post-Session Stretch,flow-post_stretch_lift,Post-Session Stretch,0,,,yes
+2026-06-25,thursday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-06-26,friday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-07-06,monday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
+2026-07-06,monday,N/A,no,Bouldering,flow-easy_bouldering,Bouldering,0,,,yes
+2026-07-07,tuesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-07-07,tuesday,N/A,no,Lift Warmup,flow-lift_warmup,Lift Warmup,0,,,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb1,Assisted pistol squat,0,0,5,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb1,Assisted pistol squat,1,0,5,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb2,Weighted pull-ups,0,65,4,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb2,Weighted pull-ups,1,80,6,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb3,Bulgarian split squat,0,60,6,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb3,Bulgarian split squat,1,70,7,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb4,Romanian deadlift,0,165,6,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb4,Romanian deadlift,1,205,9,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb5,Overhead press,0,70,5,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb5,Overhead press,1,80,6,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,0,70,5,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,1,70,6,yes
+2026-07-07,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,2,70,6,yes
+2026-07-07,tuesday,N/A,no,Post-Session Stretch,flow-post_stretch_lift,Post-Session Stretch,0,,,yes
+2026-07-08,wednesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-07-08,wednesday,N/A,no,Wed — 4×4 or Speed,flow-climbing_wed,Wed — 4×4 or Speed,0,,,yes
+2026-07-08,wednesday,N/A,no,Post-Session Stretch,flow-post_stretch_climb,Post-Session Stretch,0,,,yes
+2026-07-13,monday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-07-13,monday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
+2026-07-13,monday,N/A,no,Bouldering,flow-easy_bouldering,Bouldering,0,,,yes
+2026-07-14,tuesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-07-14,tuesday,N/A,no,Lift Warmup,flow-lift_warmup,Lift Warmup,0,,,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb1,Assisted pistol squat,0,0,5,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb1,Assisted pistol squat,1,0,5,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb2,Weighted pull-ups,0,65,5,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb2,Weighted pull-ups,1,80,5,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb3,Bulgarian split squat,0,60,5,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb3,Bulgarian split squat,1,70,5,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb4,Romanian deadlift,0,165,,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb4,Romanian deadlift,1,205,,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb5,Overhead press,0,70,4,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb5,Overhead press,1,80,4,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,0,70,5,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,1,70,5,yes
+2026-07-14,tuesday,N/A,no,Lift — Full Body,lb6,Suitcase hold,2,70,5,yes
+2026-07-14,tuesday,N/A,no,Post-Session Stretch,flow-post_stretch_lift,Post-Session Stretch,0,,,yes
+2026-07-14,tuesday,N/A,no,Abrahangs — Session 2,flow-finger_prehab_2,Abrahangs — Session 2,0,,,yes
+2026-07-15,wednesday,N/A,no,Wed — 4×4 or Speed,flow-climbing_wed,Wed — 4×4 or Speed,0,,,yes
+2026-07-15,wednesday,N/A,no,Post-Session Stretch,flow-post_stretch_climb,Post-Session Stretch,0,,,yes
+2026-07-15,wednesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-07-15,wednesday,N/A,no,Abrahangs — Session 2,flow-finger_prehab_2,Abrahangs — Session 2,0,,,yes
+2026-07-27,monday,N/A,no,Climbing Warmup,flow-climbing_warmup,Climbing Warmup,0,,,yes
+2026-07-27,monday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
+2026-07-27,monday,N/A,no,Bouldering,flow-easy_bouldering,Bouldering,0,,,yes
+2026-07-27,monday,N/A,no,Post-Session Stretch,flow-post_stretch_climb,Post-Session Stretch,0,,,yes
+2026-07-27,monday,N/A,no,Abrahangs — Session 2,flow-finger_prehab_2,Abrahangs — Session 2,0,,,yes
+2026-07-28,tuesday,N/A,no,Abrahangs — Session 1,flow-finger_prehab_1,Abrahangs — Session 1,0,,,yes
