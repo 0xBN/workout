@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "3.8",
+    "version": "3.9",
     "deload_rule": "manual_toggle",
     "deload_weight_multiplier": 0.5,
     "note": "80/20 program. Priority: climbing V12, longevity. Finger recovery ongoing. Right knee, left QL, right shoulder limitations accounted for.",
@@ -55,6 +55,10 @@
       "Replaced bilateral RDLs with contralateral single-leg kettlebell RDLs at 40 lb, 2x8 per leg",
       "Increased weighted pull-ups 80\u219285 lb and overhead press 80\u219290 lb from fresh-window RPE trends",
       "Held Bulgarian split squat and suitcase hold loads"
+    ],
+    "changelog_3_9": [
+      "Moved dead bug immediately after clamshells in both warmups",
+      "Moved shoulder circles immediately after squat rocks in both warmups"
     ]
   },
   "daily": ["finger_prehab_1", "finger_prehab_2"],
@@ -114,28 +118,6 @@
           },
           {
             "type": "rest",
-            "label": "Cat-cow",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Cat-cow",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Wrist rocks",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Wrist rocks",
-            "duration": 20,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
             "label": "Dead bug \u2014 right arm and left leg",
             "duration": 4
           },
@@ -155,6 +137,28 @@
             "label": "Dead bug \u2014 left arm, right leg",
             "duration": 20,
             "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Cat-cow",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Cat-cow",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Wrist rocks",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Wrist rocks",
+            "duration": 20,
+            "countdown_last": 10
           },
           {
             "type": "rest",
@@ -235,6 +239,28 @@
           },
           {
             "type": "rest",
+            "label": "Shoulder circles \u2014 backward",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Shoulder circles \u2014 backward",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Now forward",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Shoulder circles \u2014 forward",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
             "label": "Leg swings F/B \u2014 right",
             "duration": 4
           },
@@ -301,28 +327,6 @@
           },
           {
             "type": "rest",
-            "label": "Shoulder circles \u2014 backward",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Shoulder circles \u2014 backward",
-            "duration": 15,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Now forward",
-            "duration": 3
-          },
-          {
-            "type": "work",
-            "label": "Shoulder circles \u2014 forward",
-            "duration": 15,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
             "label": "Step-downs \u2014 right",
             "duration": 4
           },
@@ -360,6 +364,13 @@
           "note": "per side"
         },
         {
+          "id": "cw_db",
+          "name": "Dead bug",
+          "sets": 1,
+          "duration": 20,
+          "note": "per side \u2014 lower back flat throughout"
+        },
+        {
           "id": "cw_cc",
           "name": "Cat-cow",
           "sets": 1,
@@ -370,13 +381,6 @@
           "name": "Wrist rocks",
           "sets": 1,
           "duration": 20
-        },
-        {
-          "id": "cw_db",
-          "name": "Dead bug",
-          "sets": 1,
-          "duration": 20,
-          "note": "per side \u2014 lower back flat throughout"
         },
         {
           "id": "cw_bd",
@@ -406,6 +410,13 @@
           "duration": 30
         },
         {
+          "id": "cw_sc",
+          "name": "Shoulder circles",
+          "sets": 1,
+          "duration": 15,
+          "note": "bilateral \u2014 backward then forward"
+        },
+        {
           "id": "cw_ls",
           "name": "Leg swings front/back",
           "sets": 1,
@@ -425,13 +436,6 @@
           "sets": 1,
           "duration": 20,
           "note": "per side \u2014 hand on wall, drive knee up and around deliberately"
-        },
-        {
-          "id": "cw_sc",
-          "name": "Shoulder circles",
-          "sets": 1,
-          "duration": 15,
-          "note": "bilateral \u2014 backward then forward"
         },
         {
           "id": "cw_sd",
@@ -488,28 +492,6 @@
           },
           {
             "type": "rest",
-            "label": "Cat-cow",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Cat-cow",
-            "duration": 30,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Wrist rocks",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Wrist rocks",
-            "duration": 20,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
             "label": "Dead bug \u2014 right arm and left leg",
             "duration": 4
           },
@@ -529,6 +511,28 @@
             "label": "Dead bug \u2014 left arm, right leg",
             "duration": 20,
             "countdown_last": 20
+          },
+          {
+            "type": "rest",
+            "label": "Cat-cow",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Cat-cow",
+            "duration": 30,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Wrist rocks",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Wrist rocks",
+            "duration": 20,
+            "countdown_last": 10
           },
           {
             "type": "rest",
@@ -587,6 +591,28 @@
           },
           {
             "type": "rest",
+            "label": "Shoulder circles \u2014 backward",
+            "duration": 4
+          },
+          {
+            "type": "work",
+            "label": "Shoulder circles \u2014 backward",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
+            "label": "Now forward",
+            "duration": 3
+          },
+          {
+            "type": "work",
+            "label": "Shoulder circles \u2014 forward",
+            "duration": 15,
+            "countdown_last": 10
+          },
+          {
+            "type": "rest",
             "label": "Leg swings F/B \u2014 right",
             "duration": 4
           },
@@ -660,28 +686,6 @@
             "type": "work",
             "label": "Hip hinges",
             "duration": 20,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Shoulder circles \u2014 backward",
-            "duration": 4
-          },
-          {
-            "type": "work",
-            "label": "Shoulder circles \u2014 backward",
-            "duration": 15,
-            "countdown_last": 10
-          },
-          {
-            "type": "rest",
-            "label": "Now forward",
-            "duration": 3
-          },
-          {
-            "type": "work",
-            "label": "Shoulder circles \u2014 forward",
-            "duration": 15,
             "countdown_last": 10
           },
           {
@@ -745,6 +749,13 @@
           "note": "per side"
         },
         {
+          "id": "lw_db",
+          "name": "Dead bug",
+          "sets": 1,
+          "duration": 20,
+          "note": "per side \u2014 lower back flat throughout"
+        },
+        {
           "id": "lw_cc",
           "name": "Cat-cow",
           "sets": 1,
@@ -755,13 +766,6 @@
           "name": "Wrist rocks",
           "sets": 1,
           "duration": 20
-        },
-        {
-          "id": "lw_db",
-          "name": "Dead bug",
-          "sets": 1,
-          "duration": 20,
-          "note": "per side \u2014 lower back flat throughout"
         },
         {
           "id": "lw_bd",
@@ -782,6 +786,13 @@
           "name": "Squat rocks",
           "sets": 1,
           "duration": 30
+        },
+        {
+          "id": "lw_sc",
+          "name": "Shoulder circles",
+          "sets": 1,
+          "duration": 15,
+          "note": "bilateral \u2014 backward then forward"
         },
         {
           "id": "lw_ls",
@@ -809,13 +820,6 @@
           "name": "Hip hinges",
           "sets": 1,
           "duration": 20
-        },
-        {
-          "id": "lw_sc",
-          "name": "Shoulder circles",
-          "sets": 1,
-          "duration": 15,
-          "note": "bilateral \u2014 backward then forward"
         },
         {
           "id": "lw_sd",
