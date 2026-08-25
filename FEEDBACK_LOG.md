@@ -96,3 +96,51 @@
 - Coaching review and recommendations completed.
 - User approved the proposed update on 2026-07-28.
 - Updated `public/program.json` to version 3.8 with the counterbalanced pistol squat, single-leg kettlebell RDL, floor-first warm-up ordering, pull-up progression, and overhead-press progression.
+
+## 2026-08-25
+
+### Scope
+
+- CSV reviewed: `public/program-csv/workout app - log (2).csv`
+- Review window: `2026-07-28` through `2026-08-24`
+- Previous review: `2026-07-28` (28 days earlier)
+
+### User Update
+
+- Wednesday is used as a simple-movement warmup day; requested dropping the climbing warmup on that day.
+- Replace speed climbing with Cindy: AMRAP 20 min of 5 pull-ups, 10 push-ups, 15 air squats, with a timer.
+- Keep Norwegian 4x4 as the other Wednesday option.
+- Sometimes has sled access on Tuesday and wants it added slowly as a finisher, with added plate weight tracked.
+
+### Adherence
+
+- Training is still happening most weeks. Monday, Wednesday, and Friday show up reliably; Tuesday lifting landed 3 of 4 weeks (`2026-07-28`, `2026-08-04`, `2026-08-18`).
+- Saturday and Sunday never appear in this window. Either those days are not happening or they are not being logged.
+- Easy bouldering is under-logged relative to climbing warmups: warmup was completed on most Mon/Fri sessions, but bouldering was only checked on `2026-08-10` (and marked no on `2026-08-24`).
+- Wednesday 4x4/speed was completed on `2026-07-29`, `2026-08-05`, and `2026-08-19`. Climbing warmup on Wednesday was skipped or unused, which matches the user update.
+- Thursday Reset was completed in full on `2026-08-06`. That is better than the prior window, where stand-alone recovery did not appear.
+- Abrahangs Session 1 was logged 5 times in 28 days. Session 2 was not logged. Finger prehab remains the biggest gap versus the twice-daily prescription.
+
+### Effort
+
+- Weighted pull-ups at 85 lb: `2026-08-04` RPE 10, then `2026-08-18` RPE 9. The last session at 80 lb (`2026-07-28`) was already RPE 9. 85 lb is too hard.
+- Overhead press at 90 lb: RPE 8 on both new-program sessions. Hold.
+- Bulgarian split squat at 70 lb: RPE 6 on all three sessions. Hold.
+- Suitcase hold at 70 lb: RPE 5, 6, then 5. Coasting. Small increase is reasonable.
+- Single-leg kettlebell RDL at 40 lb: only two sessions, RPE 5-6. Hold and collect more data.
+- Counterbalanced pistol squat at 10 lb: RPE 5 both sessions. Hold; this is still balance/knee-support work, not a load target.
+
+### Program Changes Applied
+
+- Updated `public/program.json` to version 3.11.
+- Removed climbing warmup from Wednesday.
+- Replaced speed climbing with Cindy and added a 20-minute AMRAP timer on the Wednesday flow row.
+- Kept Norwegian 4x4 as the other pick-one option.
+- Kept Wednesday post-session stretch.
+- Added optional Tuesday sled block after the main lifts: sled push and sled backward drag. 1 logged set each of 4 x 20 m. `working_weight` is added plates only, starting at 90 lb. Skip the block when there is no sled.
+
+### Proposed Next Adjustments (not applied)
+
+- Weighted pull-ups 85 → 80 lb.
+- Suitcase hold 70 → 75 lb.
+- Hold overhead press, Bulgarian split squat, single-leg RDL, and pistol squat.

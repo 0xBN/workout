@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "3.9",
+    "version": "3.11",
     "deload_rule": "manual_toggle",
     "deload_weight_multiplier": 0.5,
     "note": "80/20 program. Priority: climbing V12, longevity. Finger recovery ongoing. Right knee, left QL, right shoulder limitations accounted for.",
@@ -59,13 +59,23 @@
     "changelog_3_9": [
       "Moved dead bug immediately after clamshells in both warmups",
       "Moved shoulder circles immediately after squat rocks in both warmups"
+    ],
+    "changelog_3_10": [
+      "Wednesday no longer includes climbing warmup \u2014 4x4 or Cindy is the warmup",
+      "Replaced speed climbing with Cindy: AMRAP 20 min of 5 pull-ups. 10 push-ups. 15 air squats",
+      "Added a 20-minute Cindy timer on the Wednesday block"
+    ],
+    "changelog_3_11": [
+      "Added optional Tuesday sled finisher after the main lifts: forward push and backward drag",
+      "Sled working_weight tracks added plates so load and RPE can log to the sheet",
+      "Started both sled patterns at 90 lb added. Skip the block if no sled"
     ]
   },
   "daily": ["finger_prehab_1", "finger_prehab_2"],
   "weekly": {
     "monday": ["climbing_warmup", "easy_bouldering", "post_stretch_climb"],
-    "tuesday": ["lift_warmup", "lift_full_body", "post_stretch_lift"],
-    "wednesday": ["climbing_warmup", "climbing_wed", "post_stretch_climb"],
+    "tuesday": ["lift_warmup", "lift_full_body", "sled_optional", "post_stretch_lift"],
+    "wednesday": ["climbing_wed", "post_stretch_climb"],
     "thursday": ["mobility_recovery"],
     "friday": ["climbing_warmup", "easy_bouldering", "post_stretch_climb"],
     "saturday": ["climbing_warmup", "easy_bouldering", "post_stretch_climb"],
@@ -1446,15 +1456,34 @@
       ]
     },
     "climbing_wed": {
-      "name": "Wed \u2014 4\u00d74 or Speed",
+      "name": "Wed \u2014 4\u00d74 or Cindy",
       "type": "flow",
-      "flow_label": "Norwegian 4\u00d74 or Speed climbing",
-      "flow_sub": "pick one \u2014 tap when done",
+      "flow_label": "Norwegian 4\u00d74 or Cindy",
+      "flow_sub": "pick one \u2014 Cindy timer on the right",
+      "timer_routine": {
+        "name": "Cindy",
+        "description": "AMRAP 20 min. 5 pull-ups. 10 push-ups. 15 air squats.",
+        "sets": 1,
+        "blocks": [
+          {
+            "type": "prepare",
+            "label": "Cindy. 5 pull-ups. 10 push-ups. 15 air squats.",
+            "duration": 10,
+            "countdown_last": 3
+          },
+          {
+            "type": "work",
+            "label": "Cindy. 5 pull-ups. 10 push-ups. 15 air squats.",
+            "duration": 1200,
+            "countdown_last": 10
+          }
+        ]
+      },
       "exercises": [
         {
           "id": "w4a",
-          "name": "Speed climbing",
-          "reps": "10\u00d7 speed wall \u2014 HR to 4\u00d74 zone"
+          "name": "Cindy",
+          "reps": "AMRAP 20 min \u2014 5 pull-ups. 10 push-ups. 15 air squats"
         },
         {
           "id": "w4b",
@@ -1671,6 +1700,134 @@
 		              }
 	            ]
 	          }
+        }
+      ]
+    },
+    "sled_optional": {
+      "name": "Sled \u2014 optional",
+      "type": "checklist",
+      "exercises": [
+        {
+          "id": "sd1",
+          "name": "Sled push",
+          "sets": 1,
+          "reps": "4\u00d720m",
+          "note": "Skip if no sled. working_weight = added plates only. not the sled frame. Upright torso. easy pace. Log RPE for the 4 trips as one set.",
+          "weighted": true,
+          "working_weight": 90,
+          "progression": [1.0],
+          "timer_routine": {
+            "name": "Sled push",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "prepare",
+                "label": "Sled push. Upright torso. Easy pace.",
+                "duration": 8,
+                "countdown_last": 3
+              },
+              {
+                "type": "work",
+                "label": "Sled push",
+                "duration": 20,
+                "countdown_last": 10
+              },
+              {
+                "type": "rest",
+                "label": "Walk the sled back",
+                "duration": 40
+              },
+              {
+                "type": "work",
+                "label": "Sled push",
+                "duration": 20,
+                "countdown_last": 10
+              },
+              {
+                "type": "rest",
+                "label": "Walk the sled back",
+                "duration": 40
+              },
+              {
+                "type": "work",
+                "label": "Sled push",
+                "duration": 20,
+                "countdown_last": 10
+              },
+              {
+                "type": "rest",
+                "label": "Walk the sled back",
+                "duration": 40
+              },
+              {
+                "type": "work",
+                "label": "Sled push",
+                "duration": 20,
+                "countdown_last": 10
+              }
+            ]
+          }
+        },
+        {
+          "id": "sd2",
+          "name": "Sled backward drag",
+          "sets": 1,
+          "reps": "4\u00d720m",
+          "note": "Skip if no sled. working_weight = added plates only. Face the sled and walk backward. Easy pace. Log RPE for the 4 trips as one set.",
+          "weighted": true,
+          "working_weight": 90,
+          "progression": [1.0],
+          "timer_routine": {
+            "name": "Sled backward drag",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "prepare",
+                "label": "Sled backward drag. Face the sled. Easy pace.",
+                "duration": 8,
+                "countdown_last": 3
+              },
+              {
+                "type": "work",
+                "label": "Sled backward drag",
+                "duration": 20,
+                "countdown_last": 10
+              },
+              {
+                "type": "rest",
+                "label": "Walk the sled back",
+                "duration": 40
+              },
+              {
+                "type": "work",
+                "label": "Sled backward drag",
+                "duration": 20,
+                "countdown_last": 10
+              },
+              {
+                "type": "rest",
+                "label": "Walk the sled back",
+                "duration": 40
+              },
+              {
+                "type": "work",
+                "label": "Sled backward drag",
+                "duration": 20,
+                "countdown_last": 10
+              },
+              {
+                "type": "rest",
+                "label": "Walk the sled back",
+                "duration": 40
+              },
+              {
+                "type": "work",
+                "label": "Sled backward drag",
+                "duration": 20,
+                "countdown_last": 10
+              }
+            ]
+          }
         }
       ]
     },
