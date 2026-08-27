@@ -1,6 +1,6 @@
 # Brian - Physical Context & Training Notes
 
-Last updated: April 2026
+Last updated: August 2026
 
 ---
 
@@ -65,13 +65,13 @@ Male, Chicago. Former Taekwondo practitioner (full squat, front split, middle sp
 - **Helpful**: cross-body stretch, sleeper stretch for posterior capsule
 - Slowly improving over time
 
-### Left Ring Finger - Active Recovery
+### Left Ring Finger - Cleared enough to load
 - PIP joint injury - likely A2 pulley or joint capsule strain
-- Currently 95% recovered
-- **Crimping with left hand avoided** - open hand positions are fine
-- Pain occurs specifically on crimping, not on three-finger drag or open hand
-- Abrahangs twice daily are the primary rehab and prehab tool
-- **Protocol: no crimping left hand until 100% and sustained for 2-3 weeks. Then cautious reintroduction on easy problems only**
+- User report 2026-08-27: ~99% and quiet. Treat as cleared enough to restart structured hard climbing.
+- Crimping is allowed again. Do not spike load in the first 2-3 weeks of board/crimp work.
+- Abrahangs once daily on Beastmaker 1000: 4-finger half crimp and 3-finger drag, 6x10s / 20s rest, ~40% effort, feet on floor.
+- Max hangs stay paused until board weeks stay quiet.
+- **Protocol: mixed grips on the board. Stop a session if the finger niggles. Density down before climbing volume down.**
 
 ---
 
@@ -82,7 +82,7 @@ Male, Chicago. Former Taekwondo practitioner (full squat, front split, middle sp
 | Right | Knee (limited flexion, history of injury) |
 | Left | QL/lower back (scoliosis compression) |
 | Right | Shoulder (limited internal rotation) |
-| Left | Ring finger (PIP recovery, avoid crimp) |
+| Left | Ring finger (PIP ~99%, quiet; don't spike board/crimp load) |
 
 Right side takes more structural impact. Left side has the chronic contracture pattern from scoliosis.
 
@@ -99,7 +99,7 @@ Right side takes more structural impact. Left side has the chronic contracture p
 
 ## Training Implications
 
-1. Abrahangs are the single highest ROI activity - finger tendon health is the V12 bottleneck
+1. Abrahangs remain high-ROI finger stimulus. One daily session, two grips. Board/limit is the hard climbing dose.
 2. Glute activation work is therapeutic for the right knee, not just fitness
 3. Overhead press is safer than bench press given right shoulder restriction
 4. Pistol squat and eccentric step-down are joint health exercises, not just strength work

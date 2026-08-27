@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "3.11",
+    "version": "3.12",
     "deload_rule": "manual_toggle",
     "deload_weight_multiplier": 0.5,
-    "note": "80/20 program. Priority: climbing V12, longevity. Finger recovery ongoing. Right knee, left QL, right shoulder limitations accounted for.",
+    "note": "80/20 program. Priority: climbing V12, longevity. Left ring finger ~99% and quiet. Right knee, left QL, right shoulder limitations accounted for.",
     "db_weight_convention": "working_weight for dumbbell exercises = total weight (both DBs combined). e.g. working_weight: 60 = 30 lb per hand.",
     "changelog_3_2": [
       "WARMUP OVERHAUL \u2014 climbing coach prescription for V12 goal at 32",
@@ -69,16 +69,22 @@
       "Added optional Tuesday sled finisher after the main lifts: forward push and backward drag",
       "Sled working_weight tracks added plates so load and RPE can log to the sheet",
       "Started both sled patterns at 90 lb added. Skip the block if no sled"
+    ],
+    "changelog_3_12": [
+      "Monday / Friday / Saturday climbing days now have distinct jobs shown on the flow row",
+      "Monday: skill volume. Friday: board limit with try caps. Saturday: optional volume",
+      "Wednesday is Norwegian 4x4 only. Cindy removed",
+      "Abrahangs reduced to one daily session: 4-finger half crimp and 3-finger drag only"
     ]
   },
-  "daily": ["finger_prehab_1", "finger_prehab_2"],
+  "daily": ["finger_prehab_1"],
   "weekly": {
-    "monday": ["climbing_warmup", "easy_bouldering", "post_stretch_climb"],
+    "monday": ["climbing_warmup", "skill_volume", "post_stretch_climb"],
     "tuesday": ["lift_warmup", "lift_full_body", "sled_optional", "post_stretch_lift"],
     "wednesday": ["climbing_wed", "post_stretch_climb"],
     "thursday": ["mobility_recovery"],
-    "friday": ["climbing_warmup", "easy_bouldering", "post_stretch_climb"],
-    "saturday": ["climbing_warmup", "easy_bouldering", "post_stretch_climb"],
+    "friday": ["climbing_warmup", "board_limit", "post_stretch_climb"],
+    "saturday": ["climbing_warmup", "optional_volume", "post_stretch_climb"],
     "sunday": ["post_stretch_climb"]
   },
   "blocks": {
@@ -853,11 +859,11 @@
       ]
     },
     "finger_prehab_1": {
-      "name": "Abrahangs \u2014 Session 1",
+      "name": "Abrahangs",
       "type": "flow",
-      "flow_label": "Abrahangs \u2014 Session 1",
-      "flow_sub": "~10 min \u00b7 40% effort \u00b7 morning",
-      "note": "~40% effort, feet on floor. Light strain on forearms only.",
+      "flow_label": "Abrahangs",
+      "flow_sub": "~8 min \u00b7 40% effort \u00b7 2 grips",
+      "note": "~40% effort, feet on floor. Light strain on forearms only. One session per day.",
       "exercises": [
         {
           "id": "fp1",
@@ -872,39 +878,11 @@
           "duration": 10,
           "rest": 20,
           "sets": 6
-        },
-        {
-          "id": "fp3",
-          "name": "Front-2 open (idx/mid)",
-          "duration": 10,
-          "rest": 20,
-          "sets": 2
-        },
-        {
-          "id": "fp4",
-          "name": "Middle-2 open (mid/ring)",
-          "duration": 10,
-          "rest": 20,
-          "sets": 2
-        },
-        {
-          "id": "fp5",
-          "name": "Front-2 half crimp (idx/mid)",
-          "duration": 10,
-          "rest": 20,
-          "sets": 2
-        },
-        {
-          "id": "fp6",
-          "name": "Middle-2 half crimp (mid/ring)",
-          "duration": 10,
-          "rest": 20,
-          "sets": 2
         }
       ],
       "timer_routine": {
-        "name": "Abrahangs \u2014 Session 1",
-        "description": "Emil Abrahamsson no-hang protocol. 40% effort, feet on floor. 6hr min between sessions.",
+        "name": "Abrahangs",
+        "description": "No-hang finger stimulus. 40% effort, feet on floor. Half crimp then 3-finger drag.",
         "sets": 1,
         "blocks": [
           {
@@ -1037,110 +1015,7 @@
           },
           {
             "type": "rest",
-            "duration": 20
-          },
-          {
-            "type": "prepare",
-            "label": "Front-2 open, index and middle",
-            "duration": 5,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Front-2 open",
-            "duration": 10,
-            "countdown_last": 3
-          },
-          {
-            "type": "rest",
-            "duration": 20
-          },
-          {
-            "type": "work",
-            "label": "Front-2 open",
-            "duration": 10,
-            "countdown_last": 3
-          },
-          {
-            "type": "rest",
-            "duration": 20
-          },
-          {
-            "type": "prepare",
-            "label": "Middle-2 open, middle and ring",
-            "duration": 5,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Middle-2 open",
-            "duration": 10,
-            "countdown_last": 3
-          },
-          {
-            "type": "rest",
-            "duration": 20
-          },
-          {
-            "type": "work",
-            "label": "Middle-2 open",
-            "duration": 10,
-            "countdown_last": 3
-          },
-          {
-            "type": "rest",
-            "duration": 20
-          },
-          {
-            "type": "prepare",
-            "label": "Front-2 half crimp, index and middle",
-            "duration": 5,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Front-2 half crimp",
-            "duration": 10,
-            "countdown_last": 3
-          },
-          {
-            "type": "rest",
-            "duration": 20
-          },
-          {
-            "type": "work",
-            "label": "Front-2 half crimp",
-            "duration": 10,
-            "countdown_last": 3
-          },
-          {
-            "type": "rest",
-            "duration": 20
-          },
-          {
-            "type": "prepare",
-            "label": "Middle-2 half crimp, middle and ring",
-            "duration": 5,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Middle-2 half crimp",
-            "duration": 10,
-            "countdown_last": 3
-          },
-          {
-            "type": "rest",
-            "duration": 20
-          },
-          {
-            "type": "work",
-            "label": "Middle-2 half crimp",
-            "duration": 10,
-            "countdown_last": 3
-          },
-          {
-            "type": "rest",
+            "label": "Done",
             "duration": 10,
             "skip_on_last": true
           }
@@ -1442,49 +1317,51 @@
         ]
       }
     },
-    "easy_bouldering": {
-      "name": "Bouldering",
+    "skill_volume": {
+      "name": "Monday \u2014 Skill volume",
       "type": "flow",
-      "flow_label": "Easy bouldering",
-      "flow_sub": "no limit attempts \u00b7 stay below threshold \u00b7 no crimpy holds left hand",
+      "flow_label": "Skill volume",
+      "flow_sub": "below limit \u00b7 movement quality \u00b7 not projecting",
       "exercises": [
         {
-          "id": "eb1",
-          "name": "Easy bouldering",
+          "id": "sv1",
+          "name": "Skill volume",
+          "reps": "open"
+        }
+      ]
+    },
+    "board_limit": {
+      "name": "Friday \u2014 Board limit",
+      "type": "flow",
+      "flow_label": "Board limit",
+      "flow_sub": "4\u20136 problems \u00b7 3\u20135 tries \u00b7 long rest \u00b7 stop when quality drops",
+      "exercises": [
+        {
+          "id": "bl1",
+          "name": "Board limit",
+          "reps": "4\u20136 problems"
+        }
+      ]
+    },
+    "optional_volume": {
+      "name": "Saturday \u2014 Optional volume",
+      "type": "flow",
+      "flow_label": "Optional volume",
+      "flow_sub": "only if Friday felt good \u00b7 no board \u00b7 skip is fine",
+      "exercises": [
+        {
+          "id": "ov1",
+          "name": "Optional volume",
           "reps": "open"
         }
       ]
     },
     "climbing_wed": {
-      "name": "Wed \u2014 4\u00d74 or Cindy",
+      "name": "Wednesday \u2014 4\u00d74",
       "type": "flow",
-      "flow_label": "Norwegian 4\u00d74 or Cindy",
-      "flow_sub": "pick one \u2014 Cindy timer on the right",
-      "timer_routine": {
-        "name": "Cindy",
-        "description": "AMRAP 20 min. 5 pull-ups. 10 push-ups. 15 air squats.",
-        "sets": 1,
-        "blocks": [
-          {
-            "type": "prepare",
-            "label": "Cindy. 5 pull-ups. 10 push-ups. 15 air squats.",
-            "duration": 10,
-            "countdown_last": 3
-          },
-          {
-            "type": "work",
-            "label": "Cindy. 5 pull-ups. 10 push-ups. 15 air squats.",
-            "duration": 1200,
-            "countdown_last": 10
-          }
-        ]
-      },
+      "flow_label": "Norwegian 4\u00d74",
+      "flow_sub": "15\u00d7 continuous V3 \u00b7 engine day",
       "exercises": [
-        {
-          "id": "w4a",
-          "name": "Cindy",
-          "reps": "AMRAP 20 min \u2014 5 pull-ups. 10 push-ups. 15 air squats"
-        },
         {
           "id": "w4b",
           "name": "Norwegian 4\u00d74",

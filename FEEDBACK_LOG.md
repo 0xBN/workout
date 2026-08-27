@@ -144,3 +144,20 @@
 - Weighted pull-ups 85 → 80 lb.
 - Suitcase hold 70 → 75 lb.
 - Hold overhead press, Bulgarian split squat, single-leg RDL, and pistol squat.
+
+## 2026-08-27
+
+### Scope
+
+- Live sheet pulled from the shared Google log.
+- User update: left ring finger ~99% and quiet. Starting board climbing soon (Kubos). Solutions too tight for regular use.
+- Requested dropping Cindy, splitting Mon/Fri/Sat stimuli, and simplifying Abrahangs.
+
+### Program Changes Applied
+
+- Updated `public/program.json` to version 3.12.
+- Wednesday is Norwegian 4x4 only. Cindy removed.
+- Monday is skill volume. Friday is board limit with try caps. Saturday is optional volume.
+- Abrahangs reduced to one daily session: 4-finger half crimp and 3-finger drag only.
+- Max hangs remain paused.
+- Pull-up 85→80 and suitcase 70→75 still not applied.
