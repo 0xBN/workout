@@ -161,3 +161,20 @@
 - Abrahangs reduced to one daily session: 4-finger half crimp and 3-finger drag only.
 - Max hangs remain paused.
 - Pull-up 85→80 and suitcase 70→75 still not applied.
+
+## 2026-08-28
+
+### Program Changes Applied
+
+- Updated `public/program.json` to version 3.13.
+- Monday / Friday / Saturday climbing work is checklist plus RPE, same logging path as Tuesday.
+- Monday: ladder 4 then silent feet / flagging sublimit 3. No limit block.
+- Friday: ladder 4, static lock-off limit, two steep feet-on limits, guaranteed-smash sublimit 2. Unused tries stay unchecked.
+- Saturday: one open-session row. Skip is fine.
+- Block info modal on those days plus Wednesday 4x4. Timer button only shows when a timer exists.
+
+### 2026-08-28 later
+
+- Finger no longer treated as paused. Injury is historical.
+- Added Friday max hangs: 20mm half crimp 4x7s bodyweight, 3 min rest timer, before the board session.
+- Still one max-hang day per week, not Schedule 2's twice-weekly hangs.

@@ -9,6 +9,7 @@ This repo uses CSV workout logs dropped into `public/program-csv/` for coaching 
 - `AGENTS.md`: root workflow entrypoint
 - `.agents/BODY_CONTEXT.md`: physical constraints and non-negotiables
 - `.agents/COACHING_RULES.md`: coaching rules, progression logic, and movement-audit rules
+- `.agents/CLIMBING_BLOCK_PLAN.md`: working draft for Mon/Fri climbing blocks (not live until written into `program.json`)
 - `FEEDBACK_LOG.md`: rolling coaching history and change reasoning
 - `public/program.json`: live workout program used by the app
 - `public/program-csv/`: CSV drop folder for review input

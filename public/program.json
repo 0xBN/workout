@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "3.12",
+    "version": "3.14",
     "deload_rule": "manual_toggle",
     "deload_weight_multiplier": 0.5,
     "note": "80/20 program. Priority: climbing V12, longevity. Left ring finger ~99% and quiet. Right knee, left QL, right shoulder limitations accounted for.",
@@ -75,6 +75,17 @@
       "Monday: skill volume. Friday: board limit with try caps. Saturday: optional volume",
       "Wednesday is Norwegian 4x4 only. Cindy removed",
       "Abrahangs reduced to one daily session: 4-finger half crimp and 3-finger drag only"
+    ],
+    "changelog_3_13": [
+      "Monday Friday Saturday climbing work is now checklist plus RPE like Tuesday lifts",
+      "Monday skill day: ladder then silent feet / flagging sublimit",
+      "Friday hard day: ladder then static limit plus steep feet-on plus guaranteed-smash sublimit",
+      "Saturday is an open session. Skip is fine",
+      "Block info modal for extra instructions without cluttering the cards"
+    ],
+    "changelog_3_14": [
+      "Finger treated as cleared. Max hangs unpaused as a short Friday dose before the board session",
+      "20mm half crimp 4x7s bodyweight to start. One max-hang day per week not two"
     ]
   },
   "daily": ["finger_prehab_1"],
@@ -83,7 +94,7 @@
     "tuesday": ["lift_warmup", "lift_full_body", "sled_optional", "post_stretch_lift"],
     "wednesday": ["climbing_wed", "post_stretch_climb"],
     "thursday": ["mobility_recovery"],
-    "friday": ["climbing_warmup", "board_limit", "post_stretch_climb"],
+    "friday": ["climbing_warmup", "max_hangs", "board_limit", "post_stretch_climb"],
     "saturday": ["climbing_warmup", "optional_volume", "post_stretch_climb"],
     "sunday": ["post_stretch_climb"]
   },
@@ -1317,42 +1328,182 @@
         ]
       }
     },
-    "skill_volume": {
-      "name": "Monday \u2014 Skill volume",
-      "type": "flow",
-      "flow_label": "Skill volume",
-      "flow_sub": "below limit \u00b7 movement quality \u00b7 not projecting",
+    "max_hangs": {
+      "name": "Friday \u2014 Max hangs",
+      "type": "checklist",
+      "info": {
+        "title": "Max hangs \u2014 once a week",
+        "sections": [
+          {
+            "heading": "What you are building",
+            "text": "Finger max strength. 20mm half crimp on the Beastmaker. Bodyweight to start. This is the only max-hang day. Abrahangs stay easy tissue work."
+          },
+          {
+            "heading": "How",
+            "text": "4 hangs of 7 seconds. About 90 percent. Full 3 min rest. Timer is on the card. Shoulders packed. If you cannot hold 7s clean, the edge is too small or you added too soon."
+          },
+          {
+            "heading": "Stop",
+            "text": "Any finger niggle, form break, or a hang that is not a green hang: stop. Do not grind a fifth set. Then go to the board session."
+          }
+        ]
+      },
       "exercises": [
         {
-          "id": "sv1",
-          "name": "Skill volume",
-          "reps": "open"
+          "id": "mh1",
+          "name": "20mm half crimp",
+          "sets": 4,
+          "duration": 7,
+          "note": "bodyweight to start. 3 min rest",
+          "timer_routine": {
+            "name": "Rest \u2014 3 min",
+            "sets": 1,
+            "blocks": [
+              {
+                "type": "rest",
+                "label": "Rest before the next max hang",
+                "duration": 180,
+                "countdown_last": 10
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "skill_volume": {
+      "name": "Monday \u2014 Skill day",
+      "type": "checklist",
+      "info": {
+        "title": "Monday \u2014 skill day",
+        "sections": [
+          {
+            "heading": "What you are building",
+            "text": "Silent feet and flagging on gym terrain. Not a project day. Not the board."
+          },
+          {
+            "heading": "Ladder",
+            "text": "4 easy problems. Movement quality only. No grade chasing."
+          },
+          {
+            "heading": "Sublimit",
+            "text": "3 problems at RPE 7-8 that force quiet feet or a flag. If it turns into projecting, 2 tries then move on."
+          },
+          {
+            "heading": "Stop",
+            "text": "Quality drops, fingers niggle, or you start limit-trying. Unused boxes can stay empty."
+          },
+          {
+            "heading": "Failed beta",
+            "text": "If last week did not work, change one variable (foot, hip, timing) or move on. Do not repeat the same try."
+          }
+        ]
+      },
+      "exercises": [
+        {
+          "id": "sv_lad",
+          "name": "Ladder",
+          "sets": 4,
+          "reps": "problems"
+        },
+        {
+          "id": "sv_sub",
+          "name": "Sublimit \u2014 silent feet / flagging",
+          "sets": 3,
+          "reps": "problems"
         }
       ]
     },
     "board_limit": {
-      "name": "Friday \u2014 Board limit",
-      "type": "flow",
-      "flow_label": "Board limit",
-      "flow_sub": "4\u20136 problems \u00b7 3\u20135 tries \u00b7 long rest \u00b7 stop when quality drops",
+      "name": "Friday \u2014 Hard day",
+      "type": "checklist",
+      "info": {
+        "title": "Friday \u2014 hard day",
+        "sections": [
+          {
+            "heading": "What you are building",
+            "text": "Steep feet-on tension on the board. Kubos. This is the week's strength / power climbing dose."
+          },
+          {
+            "heading": "Ladder",
+            "text": "4 easy board problems. Quality only. Then start limit."
+          },
+          {
+            "heading": "Limit",
+            "text": "3 boulders, 4 tries each. Log RPE per try. Rest 3-5 min. No other problems during rest. Limit 1 is static lock-off: squeeze harder than you need. Limits 2 and 3 are steep feet-on. Limit 3 is optional if quality already dropped."
+          },
+          {
+            "heading": "Stop an attempt",
+            "text": "If you pump or fade, that try is done. That has become power endurance and blunts the strength signal. Leave sharp."
+          },
+          {
+            "heading": "Sublimit \u2014 guaranteed smash",
+            "text": "2 easier problems. Hit holds as hard and fast as you can. Successful contacts. Stop the second you are not snappy."
+          },
+          {
+            "heading": "Failed beta",
+            "text": "Change one variable or move on. Unused tries stay unchecked."
+          }
+        ]
+      },
       "exercises": [
         {
-          "id": "bl1",
-          "name": "Board limit",
-          "reps": "4\u20136 problems"
+          "id": "bl_lad",
+          "name": "Ladder",
+          "sets": 4,
+          "reps": "problems"
+        },
+        {
+          "id": "bl_lim1",
+          "name": "Limit 1 \u2014 static lock-off",
+          "sets": 4,
+          "reps": "tries"
+        },
+        {
+          "id": "bl_lim2",
+          "name": "Limit 2 \u2014 steep feet-on",
+          "sets": 4,
+          "reps": "tries"
+        },
+        {
+          "id": "bl_lim3",
+          "name": "Limit 3 \u2014 steep feet-on",
+          "sets": 4,
+          "reps": "tries"
+        },
+        {
+          "id": "bl_sub",
+          "name": "Sublimit \u2014 guaranteed smash",
+          "sets": 2,
+          "reps": "problems"
         }
       ]
     },
     "optional_volume": {
-      "name": "Saturday \u2014 Optional volume",
-      "type": "flow",
-      "flow_label": "Optional volume",
-      "flow_sub": "only if Friday felt good \u00b7 no board \u00b7 skip is fine",
+      "name": "Saturday \u2014 Open",
+      "type": "checklist",
+      "info": {
+        "title": "Saturday \u2014 open day",
+        "sections": [
+          {
+            "heading": "What this is",
+            "text": "Friends, new sets, or skip. No prescribed skill. This is the only day that is allowed to be social or random."
+          },
+          {
+            "heading": "Skip",
+            "text": "Skip if Friday fingers or skin feel off, or if you are talking yourself into a third hard day. Empty is a valid session."
+          },
+          {
+            "heading": "If you climb",
+            "text": "Keep it below Friday intensity. Log one RPE for how the session felt."
+          }
+        ]
+      },
       "exercises": [
         {
           "id": "ov1",
-          "name": "Optional volume",
-          "reps": "open"
+          "name": "Open session",
+          "sets": 1,
+          "reps": "session"
         }
       ]
     },
@@ -1361,6 +1512,23 @@
       "type": "flow",
       "flow_label": "Norwegian 4\u00d74",
       "flow_sub": "15\u00d7 continuous V3 \u00b7 engine day",
+      "info": {
+        "title": "Wednesday \u2014 engine day",
+        "sections": [
+          {
+            "heading": "What you are building",
+            "text": "Power endurance / engine. 15 continuous V3. Not a limit day. Not a board day."
+          },
+          {
+            "heading": "How",
+            "text": "Keep moving. Form stays clean. Heart and pump are the point. If you start camping on crimps at your limit, you are in the wrong session."
+          },
+          {
+            "heading": "Stop",
+            "text": "If fingers niggle, drop to easier terrain or call it. Do not stack this with Friday-style limit tries."
+          }
+        ]
+      },
       "exercises": [
         {
           "id": "w4b",
@@ -2189,7 +2357,7 @@
     "_paused_max_hangs": {
       "name": "Max Hangs",
       "type": "checklist",
-      "note": "PAUSED \u2014 finger recovery",
+      "note": "RETIRED \u2014 live block is max_hangs on Friday",
       "exercises": [
         {
           "id": "mh1",

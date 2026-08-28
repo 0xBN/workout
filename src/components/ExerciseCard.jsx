@@ -96,7 +96,6 @@ const ExerciseCard = ({ ex, state, onLog, isDeload, blockName }) => {
           </div>
         </div>
 
-        {/* WEIGHT ELEMENT (Now correctly to the right of timer) */}
         {ex.working_weight && (
           <div
             style={{
@@ -114,22 +113,23 @@ const ExerciseCard = ({ ex, state, onLog, isDeload, blockName }) => {
           </div>
         )}
 
-        {/* TIMER ELEMENT */}
-        <button
-          onClick={openTimer}
-          style={{
-            background: 'none',
-            border: '1px solid var(--border)',
-            borderRadius: '6px',
-            padding: '4px 8px',
-            color: 'var(--sub)',
-            fontSize: '10px',
-            fontFamily: 'Syne Mono',
-            cursor: 'pointer',
-          }}
-        >
-          ▶ timer
-        </button>
+        {ex.timer_routine && (
+          <button
+            onClick={openTimer}
+            style={{
+              background: 'none',
+              border: '1px solid var(--border)',
+              borderRadius: '6px',
+              padding: '4px 8px',
+              color: 'var(--sub)',
+              fontSize: '10px',
+              fontFamily: 'Syne Mono',
+              cursor: 'pointer',
+            }}
+          >
+            ▶ timer
+          </button>
+        )}
       </div>
 
       {isOpen && (

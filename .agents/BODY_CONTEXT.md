@@ -65,13 +65,11 @@ Male, Chicago. Former Taekwondo practitioner (full squat, front split, middle sp
 - **Helpful**: cross-body stretch, sleeper stretch for posterior capsule
 - Slowly improving over time
 
-### Left Ring Finger - Cleared enough to load
-- PIP joint injury - likely A2 pulley or joint capsule strain
-- User report 2026-08-27: ~99% and quiet. Treat as cleared enough to restart structured hard climbing.
-- Crimping is allowed again. Do not spike load in the first 2-3 weeks of board/crimp work.
-- Abrahangs once daily on Beastmaker 1000: 4-finger half crimp and 3-finger drag, 6x10s / 20s rest, ~40% effort, feet on floor.
-- Max hangs stay paused until board weeks stay quiet.
-- **Protocol: mixed grips on the board. Stop a session if the finger niggles. Density down before climbing volume down.**
+### Left Ring Finger
+- PIP joint injury - likely A2 pulley or joint capsule strain. Historical. User 2026-08-28: injury was a long time ago, ready to load, not paused.
+- Abrahangs once daily: 4-finger half crimp and 3-finger drag, 6x10s / 20s rest, ~40% effort, feet on floor.
+- Max hangs: Friday only, 20mm half crimp 4x7s bodyweight. Do not add a second max-hang day until this dose stays quiet.
+- **Protocol: stop a session if the finger niggles. Drop hang volume before dropping Friday board.**
 
 ---
 
@@ -82,7 +80,7 @@ Male, Chicago. Former Taekwondo practitioner (full squat, front split, middle sp
 | Right | Knee (limited flexion, history of injury) |
 | Left | QL/lower back (scoliosis compression) |
 | Right | Shoulder (limited internal rotation) |
-| Left | Ring finger (PIP ~99%, quiet; don't spike board/crimp load) |
+| Left | Ring finger (PIP historical; loading again; one max-hang day) |
 
 Right side takes more structural impact. Left side has the chronic contracture pattern from scoliosis.
 
@@ -99,7 +97,7 @@ Right side takes more structural impact. Left side has the chronic contracture p
 
 ## Training Implications
 
-1. Abrahangs remain high-ROI finger stimulus. One daily session, two grips. Board/limit is the hard climbing dose.
+1. Abrahangs = easy daily tissue work. Friday max hangs = the finger strength dose. Board/limit is the hard climbing dose.
 2. Glute activation work is therapeutic for the right knee, not just fitness
 3. Overhead press is safer than bench press given right shoulder restriction
 4. Pistol squat and eccentric step-down are joint health exercises, not just strength work
