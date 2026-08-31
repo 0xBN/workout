@@ -1,16 +1,30 @@
-# React + Vite
+# workout
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Brian’s training program app + coaching playbook.
 
-Currently, two official plugins are available:
+- **Live program:** `public/program.json` (what the app runs)
+- **Logs:** drop CSVs into `public/program-csv/` for agent coaching review
+- **Coaching doctrine:** `AGENTS.md` + `.agents/` + `FEEDBACK_LOG.md`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Related (separate repos — don’t merge):
 
-## React Compiler
+- [`interval-timer`](https://github.com/0xBN/interval-timer) — URL-driven timer that runs hangboard / interval flows in real life  
+- [`life-ops`](https://github.com/0xBN/life-ops) — personal/work ops playbook (points here; doesn’t own the program)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Dev
 
-## Expanding the ESLint configuration
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run build
+npm run preview
+```
+
+React + Vite. PWA bits live under `public/` (`manifest.webmanifest`, `sw.js`).
+
+## Coaching (agents)
+
+When a new CSV lands in `public/program-csv/`, follow **`AGENTS.md`** (prompt first, then review; don’t edit `program.json` until Brian asks).
