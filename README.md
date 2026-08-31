@@ -3,7 +3,7 @@
 Brian’s training program app + coaching playbook.
 
 - **Live program:** `public/program.json` (what the app runs)
-- **Logs:** drop CSVs into `public/program-csv/` for agent coaching review
+- **Live log:** Google Sheet tab `log` (app writes here; agents fetch for coaching — see `AGENTS.md`)
 - **Coaching doctrine:** `AGENTS.md` + `.agents/` + `FEEDBACK_LOG.md`
 
 Related (separate repos — don’t merge):
@@ -23,8 +23,10 @@ npm run build
 npm run preview
 ```
 
-React + Vite. PWA bits live under `public/` (`manifest.webmanifest`, `sw.js`).
+React + Vite. PWA bits under `public/` (`manifest.webmanifest`, `sw.js`).  
+Sheet ID is hardcoded in `src/App.jsx` (`SHEET_ID`) — same spreadsheet agents pull for review.
 
 ## Coaching (agents)
 
-When a new CSV lands in `public/program-csv/`, follow **`AGENTS.md`** (prompt first, then review; don’t edit `program.json` until Brian asks).
+On review asks: fetch the shared **`log`** sheet, then follow **`AGENTS.md`** (prompt first; don’t edit `program.json` until Brian asks).  
+`public/program-csv/` is legacy manual exports only.

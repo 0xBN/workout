@@ -16,7 +16,7 @@ Goal: promote existing prompt templates from passive docs into pressable actions
       (read rules + body context + log, parse from last review date, feedback before
       changes, append dated entry to FEEDBACK_LOG.md)
 - [ ] `/extract` — wrap `clean-extraction.prompt.md` into a command
-- [ ] Test `/review` on a real CSV once, see if it follows all steps
+- [ ] Test `/review` on a real live-sheet pull once, see if it follows all steps
 - [ ] Refine the command based on what it skipped/got wrong (don't pre-perfect it)
 
 Why it matters: same as Garrett Brands repeated work. A `/migrate` or `/debug`
@@ -25,16 +25,13 @@ command at work = my standard steps fire every time without re-explaining.
 ---
 
 ## 2. MCP connector
-**Medium transfer. Removes a real papercut + teaches integration.**
+**Mostly done via shared CSV export URL — MCP optional.**
 
-Goal: let the agent read the workout log directly instead of manual CSV export.
+Goal: agent reads the workout log without manual CSV export.
 
-- [ ] Wire a Google Sheets MCP connector so agent reads the log sheet directly
-- [ ] (Skips the export → drop-in-folder → tell-agent dance)
-- [ ] Caveat: same Google auth limits as the app — treat as a LEARNING exercise,
-      not a guaranteed clean win
-- [ ] Once working, note what the integration pattern was (transfers to wiring
-      BigCommerce API / work data sources later)
+- [x] Document live sheet pull in `AGENTS.md` (gviz CSV URL, tab `log`)
+- [ ] Optional later: Google Sheets MCP if gviz/auth ever breaks
+- [ ] Once used in a real review, note the pattern (transfers to work data sources)
 
 ---
 

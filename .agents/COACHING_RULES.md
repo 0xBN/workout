@@ -21,13 +21,13 @@
 
 ## Review Scope Rules
 
-- When reviewing a new CSV, analyze the full fresh review window by default, not just the one exercise or day most recently discussed.
+- When reviewing a new log pull, analyze the full fresh review window by default, not just the one exercise or day most recently discussed.
 - If the user asks to `progress`, `adjust`, or `update` the program, run a whole-program scan across the current prescription for:
   - repeated low-RPE candidates to move up
   - repeated high-RPE or incomplete candidates to move down
   - recurring skipped or partially completed items that may need simplification
   - structure problems that are hurting compliance even if the exercise choice itself is good
-- Do not wait for the user to point out each individual movement if the broader CSV trend already shows multiple adjustment candidates.
+- Do not wait for the user to point out each individual movement if the broader log trend already shows multiple adjustment candidates.
 - Summarize the full set of meaningful adjustment candidates before or while applying changes so the reasoning matches the actual file edits.
 - Favor coherent block-level updates when several lifts on the same day are clearly drifting together.
 
@@ -63,14 +63,14 @@
 - If recovery, illness, unusual fatigue, or extra endurance work likely affected performance, mention that before changing load.
 - When several exercises in the same training block all drift below target RPE, treat that as a programming-signal problem, not a one-exercise exception.
 - Default progression behavior should be: keep the set/rep structure, change the load first, and aim to bring the next exposure back toward `RPE 7-8`.
-- The coaching system should use the user's logged RPE as the main progression signal; extra verbal context is helpful, but the CSV should already be strong enough to drive most load changes.
+- The coaching system should use the user's logged RPE as the main progression signal; extra verbal context is helpful, but the live log should already be strong enough to drive most load changes.
 - High-signal user-reported benchmark efforts can override or upgrade a conservative CSV-only interpretation when they clearly represent current ability.
 - Examples of high-signal benchmark context:
   - `90 lb x 4 on weighted pull-ups, near max`
   - a recent heavy test set
   - a near-complete top set noticeably above the current programmed load
 - When the user gives that kind of benchmark, record it in `FEEDBACK_LOG.md` so future reviews do not lose the context.
-- If CSV history and a recent high-signal benchmark disagree, do not ignore the benchmark; reconcile the two and bias away from obviously stale underloading.
+- If log history and a recent high-signal benchmark disagree, do not ignore the benchmark; reconcile the two and bias away from obviously stale underloading.
 - In those cases, progression should still stay within reason, but the top working set should be pushed enough that the next exposure has a real chance to land near `RPE 7-8` rather than obviously below it.
 
 ## Timer Design Rules
@@ -100,7 +100,7 @@
   - attach it to an existing session
   - move it to a better day
   - reduce optional complexity
-- When reviewing compliance, look for patterns across the CSV, not just explicit user complaints.
+- When reviewing compliance, look for patterns across the log, not just explicit user complaints.
 
 ## Coaching Priorities
 

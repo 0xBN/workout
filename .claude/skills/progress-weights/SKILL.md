@@ -6,9 +6,13 @@ description: Bump weighted-lift loads based on RPE trends. Narrow tool — not t
 
 Bump `working_weight` values for weighted lifts based on RPE trends from the log.
 
-## Step 1 — Find and read the CSV
+## Step 1 — Fetch the live log
 
-Glob `public/program-csv/*.csv`, read the most recently modified file.
+Pull the shared sheet CSV (same source the app writes):
+
+`https://docs.google.com/spreadsheets/d/10ApiDRmdFru5giLImN_FYTBvAUUopjU0RpvTPHPvmrg/gviz/tq?tqx=out:csv&sheet=log`
+
+Do not use `public/program-csv/` unless Brian explicitly points at a file there.
 
 ## Step 2 — Read the program
 
@@ -19,11 +23,11 @@ Read `public/program.json`. The weighted exercises to review are in `blocks.lift
 - `lb5` Overhead press
 - `lb6` Suitcase hold
 
-Note: the CSV may use old exercise IDs (`ll1`, `ll2`, etc.) from a previous program version. Match by `exercise_name` column, not `exercise_id`.
+Note: the log may use old exercise IDs (`ll1`, `ll2`, etc.) from a previous program version. Match by `exercise_name` column, not `exercise_id`.
 
 ## Step 3 — Find top sets
 
-For each weighted exercise, group CSV rows by `date`. Within each session, the **top set** is the row with the highest numeric `weight` for that exercise. Collect the top set `weight` and `rpe` for each session, sorted by date descending.
+For each weighted exercise, group log rows by `date`. Within each session, the **top set** is the row with the highest numeric `weight` for that exercise. Collect the top set `weight` and `rpe` for each session, sorted by date descending.
 
 ## Step 4 — Apply progression rules
 

@@ -1,9 +1,5 @@
-Drop updated CSV exports for your workout program in this folder.
+# program-csv (legacy)
 
-Suggested workflow:
-- Keep the latest CSV here.
-- Use consistent filenames when possible, for example `program-latest.csv`.
-- After dropping a CSV here, review it against `public/program.json` before making any program changes.
-- Coaching feedback should come first; program edits should only happen after explicit approval.
-- See `AGENTS.md` in the repo root for the standard CSV review workflow.
-- Check `FEEDBACK_LOG.md` to resume review from the most recent feedback date and watch longer-term trends.
+**Prefer the live Google Sheet** for coaching — see root `AGENTS.md` (tab `log`).
+
+This folder held manual CSV exports. Keep only if Brian drops a one-off file and points at it; otherwise agents should not wait on new drops here.
